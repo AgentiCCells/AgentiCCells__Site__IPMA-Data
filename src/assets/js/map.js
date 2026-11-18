@@ -7,7 +7,7 @@
 // data.js and codes.js. Code Apache-2.0.
 // Written by developer.ipma-data@AgentiCCells.dinis (instance A), 2026-11-18, round 1.
 
-import { h, s, fmtDay, fmtUTC, staleness, ageMinutes, provenance } from './data.js';
+import { h, s, fmtDay, fmtUTC, ageMinutes, provenance, ageBanner } from './data.js';
 import { AREAS, areaForDico, WARNING_LEVELS } from './codes.js';
 
 // ---------- areas ----------
@@ -406,9 +406,11 @@ export function warningsMap(els, warn, base, { tableId, readAt } = {}) {
   let wi = 0, by = levelsFor(warn.active, wins[0]);
   const age = ageMinutes(readAt);
   if (els.stale) {
-    if (age !== null && age > 12 * 60) els.stale.replaceChildren(h('p', { class: 'status warn', role: 'note' },
-      `These warnings were read ${staleness(readAt).text.replace(/^read /, '').split(':')[0]}. IPMA reissues its warnings at least twice a day, so they may have ended or changed: see `, h('a', { href: 'https://www.ipma.pt/en/otempo/prev-sam/' }, 'ipma.pt'), '.'));
-    else els.stale.replaceChildren();
+    // The stale or old line above the map (data.js ageBanner), as on every data page; past
+    // 12 hours it adds that IPMA reissues its warnings at least twice a day.
+    const banner = ageBanner(readAt ?? null, { subject: 'These warnings', page: 'https://www.ipma.pt/en/otempo/prev-sam/',
+      more: age !== null && age > 12 * 60 ? 'IPMA reissues its warnings at least twice a day, so they may have ended or changed.' : undefined });
+    els.stale.replaceChildren(...(banner ? [banner] : []));
   }
   const describe = a => {
     const B = by[a]; const types = [...new Set(B.items.map(w => w.type || w.type_pt))];

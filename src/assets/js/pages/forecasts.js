@@ -3,7 +3,7 @@
 // Every figure comes from latest.json as read; nothing is guessed, smoothed or interpolated.
 // ES module, no dependencies beyond data.js and codes.js. Code Apache-2.0.
 // Written by developer.ipma-data@AgentiCCells.dinis (instance B), 2026-11-18, round 1.
-import { loadSource, provenance, runStrip, loading, failure, staleness, fmtUTC, fmtDay, h } from '../data.js';
+import { loadSource, ageBanner, provenance, runStrip, loading, failure, fmtUTC, fmtDay, h } from '../data.js';
 import { AREAS, WEATHER_TYPES, WIND_CLASS, RAIN_CLASS } from '../codes.js';
 
 const ID = 'ipma-city-forecasts';
@@ -32,19 +32,14 @@ const wind = d => {
   if (!d.wind_dir && !cls) return 'no wind given';
   return `wind ${[d.wind_dir || 'no direction', cls || 'no class'].join(', ')}`;
 };
-const tText = d => fin(d.t_min_c) && fin(d.t_max_c) ? `${d.t_min_c}–${d.t_max_c}°`
+const tText = d => fin(d.t_min_c) && fin(d.t_max_c) ? `${d.t_min_c} to ${d.t_max_c}°`
   : fin(d.t_max_c) ? `max ${d.t_max_c}°` : fin(d.t_min_c) ? `min ${d.t_min_c}°` : 'no value';
 const tWords = d => fin(d.t_min_c) && fin(d.t_max_c) ? `${d.t_min_c} to ${d.t_max_c} °C`
   : fin(d.t_max_c) ? `maximum ${d.t_max_c} °C, no minimum given` : fin(d.t_min_c) ? `minimum ${d.t_min_c} °C, no maximum given` : 'no temperature given';
 const rainText = d => fin(d.rain_prob_pct) ? `${d.rain_prob_pct}%` : 'none';
 
-function ageLine(readAt) {
-  const st = staleness(readAt);
-  if (st.level === 'fresh') return null;
-  if (st.level === 'unknown') return h('p', { class: 'cb-age', role: 'note' }, h('strong', {}, 'The read time is unknown. '), 'These figures may not be current: see ipma.pt.');
-  return h('p', { class: `cb-age cb-age-${st.level}`, role: 'note' }, h('strong', {}, `These figures were ${st.text}. `),
-    st.level === 'old' ? "A newer forecast is almost certainly on IPMA's page: " : 'See IPMA for the latest: ', h('a', { href: IPMA_PAGE }, 'ipma.pt'), '.');
-}
+// The stale or old line above the chart (data.js ageBanner), as on every data page.
+const AGE = { page: IPMA_PAGE, oldLead: "A newer forecast is almost certainly on IPMA's page:" };
 
 async function main() {
   const root = document.getElementById('fc');
@@ -69,7 +64,7 @@ async function main() {
   });
   const dates = [...new Set(cities.flatMap(c => c.days.map(d => d.date)))].filter(Boolean).sort();
   if (!dates.length) {
-    put(root, ageLine(L.read_at), h('p', { class: 'status', role: 'status' },
+    put(root, ageBanner(src.latest, AGE), h('p', { class: 'status', role: 'status' },
       `Every day in the file is before today (${fmtDay(today)}, Lisbon date), so there is no current forecast to draw. See `, h('a', { href: IPMA_PAGE }, 'IPMA'), '.'), provenance(src));
     return;
   }
@@ -217,7 +212,7 @@ async function main() {
     : `IPMA's update times differ between places (${ups.length} different times); each card shows its own.`;
 
   put(root, 
-    ageLine(L.read_at),
+    ageBanner(src.latest, AGE),
     upAgeH !== null && upAgeH > UPDATE_STALE_H ? h('p', { class: 'cb-age', role: 'note' }, h('strong', {}, `IPMA's forecast was last updated ${Math.round(upAgeH)} h ago. `), 'IPMA updates it twice a day, so a newer one may be on ', h('a', { href: IPMA_PAGE }, 'ipma.pt'), '.') : null,
     h('div', { class: 'cb-ctl' }, h('label', { for: 'fc-place' }, 'Place'), select, h('span', { class: 'cb-note', style: 'margin:0' }, 'Grouped Mainland (north to south), Madeira, Azores.')),
     focusBox,

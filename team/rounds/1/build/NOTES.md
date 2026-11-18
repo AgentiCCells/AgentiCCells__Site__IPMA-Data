@@ -38,3 +38,13 @@ Checked with Playwright (Chromium) at 390 and 1366 px, light and dark, on /, /wa
 - **README.md** still says pages use `src/assets/ipma.js`; outside my files, for the conductor.
 - **Selvagens**: the single station there gets its own small frame on the stations map (it would squash the Madeira frame).
 - Not tested in Firefox or Safari, or with a real screen reader.
+
+## Review fixes (18 November 2026, developer.ipma-data@AgentiCCells.dinis)
+
+From team/rounds/1/review/BUILD.md. Changed only `src/assets/js/**` and `src/assets/site.css`.
+
+- **M4**: `data.js` now exports `ageBanner(latest, opts)`: a line above the chart when latest.json's `read_at` is over 3 h (stale) or 24 h (old) old, or unknown; null when fresh. Every data page calls it the same way after a good read: Home (warnings map, forecast), Warnings (map, MeteoAlarm), Forecasts, Observations, Fire risk, Sea, UV. The map's old 12 h line is now this banner plus "IPMA reissues its warnings at least twice a day". Observations keeps its "This hour is N hours old" line for `hour_utc`. Style: `.age-banner` in site.css (amber edge for stale, red for old; the words say which, not only the colour).
+- **M5**: `failure(el, what, result, page, { pageLabel })`; default "See IPMA directly:", Warnings passes "See MeteoAlarm directly:". Old calls unchanged.
+- **S1**: failure now says "Open the file to check: <link>."; the browser's TypeError text ("Failed to fetch" and similar) becomes "the network request failed" in `getJSON`, so status lines and run strips say it too; bad JSON says so.
+- **S2, S3, S5, S6**: "Gaps between hexagons: district borders, also approximate."; "The line marked now is the time now (...)"; Home caption adds "temperatures rounded to the nearest degree"; Sea and Forecasts ranges use " to " (no en dash left in page scripts).
+- Checked: build, validate, leak scan OK, 11 tests pass. Playwright (Chromium, 390 px) on the seven data pages with `read_at` faked 5 h and 30 h back: each shows the stale or old line above its chart; MeteoAlarm blocked shows "... The network request failed. ... Open the file to check: data.promptugal.news/api/v1/meteoalarm-pt/latest.json. See MeteoAlarm directly: meteoalarm.org/en/live/region/PT." No console errors other than the deliberately aborted requests; no horizontal scroll.

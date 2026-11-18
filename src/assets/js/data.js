@@ -14,6 +14,15 @@ export const OLD_MIN = 24 * 60;
 
 const cache = new Map();
 
+// A plain reason for a failed read. The browser's own TypeError text ("Failed to fetch",
+// "NetworkError when attempting to fetch resource", "Load failed") becomes one phrase; a bad
+// JSON body says so.
+function readError(e) {
+  if (e instanceof TypeError || /fetch|network|load failed/i.test(e?.message || '')) return 'the network request failed';
+  if (e instanceof SyntaxError) return 'the file was read but is not valid JSON';
+  return `the file could not be read (${e?.message || 'unknown error'})`;
+}
+
 // Fetch one JSON file. Resolves (never rejects) to
 // { ok, data, status, error, ms, url }. onSlow() is called once if the file takes longer than SLOW_MS.
 export function getJSON(url, { timeout = TIMEOUT_MS, onSlow } = {}) {
@@ -31,7 +40,7 @@ export function getJSON(url, { timeout = TIMEOUT_MS, onSlow } = {}) {
       return { ok: true, status: r.status, data, ms, url };
     } catch (e) {
       const ms = Math.round(performance.now() - t0);
-      const error = e.name === 'AbortError' ? `no answer within ${Math.round(timeout / 1000)} seconds` : `the file could not be read (${e.message})`;
+      const error = e.name === 'AbortError' ? `no answer within ${Math.round(timeout / 1000)} seconds` : readError(e);
       return { ok: false, status: 0, error, ms, url };
     } finally { clearTimeout(kill); if (slow) clearTimeout(slow); }
   })();
@@ -123,12 +132,34 @@ export function loading(el, what) {
 }
 
 // When a file cannot be read: say which, why, and where to look instead. Never a guessed value.
-export function failure(el, what, result, ipmaPage) {
+// page: where to look instead (IPMA's page unless the source is someone else's). Options:
+// pageLabel, the words before that link ("See IPMA directly:" unless given, e.g.
+// "See MeteoAlarm directly:").
+export function failure(el, what, result, page, { pageLabel = 'See IPMA directly:' } = {}) {
   el.replaceChildren(h('div', { class: 'status fail', role: 'alert' },
     h('strong', {}, `Could not read ${what}. `),
     `${(e => e.charAt(0).toUpperCase() + e.slice(1))(result?.error || 'unknown error')}. Nothing is shown in its place: this page does not guess. `,
-    result?.url ? h('a', { href: result.url }, 'The file') : null, result?.url ? '. ' : null,
-    ipmaPage ? h('span', {}, 'See IPMA directly: ', h('a', { href: ipmaPage }, ipmaPage.replace(/^https?:\/\//, '')), '.') : null));
+    result?.url ? h('span', {}, 'Open the file to check: ', h('a', { href: result.url }, result.url.replace(/^https?:\/\//, '')), '. ') : null,
+    page ? h('span', {}, `${pageLabel} `, h('a', { href: page }, page.replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/$/, '')), '.') : null));
+}
+
+// The line above a chart when its file is stale (over STALE_MIN) or old (over OLD_MIN), or
+// its read time is unknown; null when the file is fresh. Every data page calls it the same way,
+// straight after a successful read, and puts the element (if any) above its chart.
+// latest: a getJSON() result for latest.json, or a read_at string. Options: subject ("These
+// figures" unless given), page and pageLabel (where to look for the latest: IPMA unless given),
+// more (a sentence added after the age), oldLead (replaces "For the latest, see" when old).
+export function ageBanner(latest, { subject = 'These figures', page = 'https://www.ipma.pt/en/', pageLabel = 'ipma.pt', more, oldLead } = {}) {
+  const L = typeof latest === 'string' ? null : (latest?.ok ? latest.data : null);
+  const readAt = typeof latest === 'string' ? latest : (L?.read_at || L?.provenance?.read_at);
+  const st = staleness(readAt);
+  if (st.level === 'fresh') return null;
+  const link = [h('a', { href: page }, pageLabel), '.'];
+  if (st.level === 'unknown') return h('p', { class: 'status warn age-banner', role: 'note' },
+    h('strong', {}, 'The read time is unknown. '), `${subject} may not be current. For the latest, see `, link);
+  return h('p', { class: `status warn age-banner age-banner-${st.level}`, role: 'note' },
+    h('strong', {}, `${subject} were ${st.text}.`), more ? ` ${more}` : '', ' ',
+    st.level === 'old' && oldLead ? `${oldLead} ` : 'For the latest, see ', link);
 }
 
 // The provenance box beside every chart: IPMA as the source, the read time (and how stale),

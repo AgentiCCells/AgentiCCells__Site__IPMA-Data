@@ -3,7 +3,7 @@
 // data.promptugal.news; nothing is guessed. Code Apache-2.0.
 // Written by developer.ipma-data@AgentiCCells.dinis (instance A), 2026-11-18, round 1.
 
-import { loadSource, provenance, loading, failure, fmtDay, h } from '../data.js';
+import { loadSource, ageBanner, provenance, loading, failure, fmtDay, h } from '../data.js';
 import { RCM_LEVELS, areaForDico } from '../codes.js';
 import { buildGrid, classMap, lisbonNow, MAINLAND, areaName } from '../map.js';
 
@@ -18,10 +18,12 @@ async function main() {
   const src = await loadSource('ipma-fire-risk', { onSlow: () => { slow(); slowT(); } });
   if (!src.latest.ok) { failure(el, "IPMA's fire risk", src.latest, IPMA_RCM); failure(tb, "IPMA's fire risk", src.latest, IPMA_RCM); return; }
   const F = src.latest.data;
+  // The stale or old line above the chart (data.js ageBanner), as on every data page.
+  const age = ageBanner(src.latest, { page: IPMA_RCM });
   const munis = (F.municipalities || []).filter(m => areaForDico(m.dico));
   const dates = (F.files || []).map(f => f.date).filter(Boolean);
   if (!munis.length || !dates.length) {
-    el.replaceChildren(h('p', { class: 'status' }, "IPMA's fire risk file holds no municipalities or no days. Nothing is shown in their place."), provenance(src));
+    el.replaceChildren(...[age, h('p', { class: 'status' }, "IPMA's fire risk file holds no municipalities or no days. Nothing is shown in their place."), provenance(src)].filter(Boolean));
     tb.replaceChildren(); return;
   }
   const today = lisbonNow().slice(0, 10);
@@ -50,9 +52,9 @@ async function main() {
       one ? h('p', {}, `All ${munis.length} municipalities are in class ${one}, ${rcmName(one).toLowerCase()}, on this day. The map is one colour because the file says so.`) : null].filter(Boolean));
   };
   ctl.replaceChildren(...dates.map((d, i) => h('button', { type: 'button', 'aria-pressed': String(i === di), onclick: () => { di = i; draw(); } }, label(d))));
-  el.replaceChildren(h('div', { class: 'panel' }, ctl, h('div', { class: 'grid two' }, mapEl, side), h('ul', { class: 'legend', 'aria-label': 'Legend' }, CLASSES.map(c => h('li', {}, sw(c), `${c} ${rcmName(c)}`))),
-    h('p', { class: 'map-note' }, `Each hexagon takes the class of the nearest municipality point in IPMA's file, so edges are approximate. White lines: district borders, also approximate. Madeira and the Azores are not in this file. ${run.length ? `IPMA's model run: ${run.join(', ')}.` : ''} Days are labelled by IPMA's dates${dates[0] === today ? '' : '; none of them is today in Lisbon, so none is called today'}.`)),
-  provenance(src));
+  el.replaceChildren(...[age, h('div', { class: 'panel' }, ctl, h('div', { class: 'grid two' }, mapEl, side), h('ul', { class: 'legend', 'aria-label': 'Legend' }, CLASSES.map(c => h('li', {}, sw(c), `${c} ${rcmName(c)}`))),
+    h('p', { class: 'map-note' }, `Each hexagon takes the class of the nearest municipality point in IPMA's file, so edges are approximate. Gaps between hexagons: district borders, also approximate. Madeira and the Azores are not in this file. ${run.length ? `IPMA's model run: ${run.join(', ')}.` : ''} Days are labelled by IPMA's dates${dates[0] === today ? '' : '; none of them is today in Lisbon, so none is called today'}.`)),
+  provenance(src)].filter(Boolean));
   draw();
 
   // Table by district: counts per class per day, then every municipality by DICO code.

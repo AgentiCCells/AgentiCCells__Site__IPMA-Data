@@ -4,7 +4,7 @@
 // or interpolated. Code Apache-2.0.
 // Written by developer.ipma-data@AgentiCCells.dinis (instance A), 2026-11-18, round 1.
 
-import { loadSource, provenance, loading, failure, runStrip, fmtUTC, ageMinutes, h, s } from '../data.js';
+import { loadSource, ageBanner, provenance, loading, failure, runStrip, fmtUTC, ageMinutes, h, s } from '../data.js';
 import { WIND_DIR_ID } from '../codes.js';
 import { buildGrid, pointMap } from '../map.js';
 
@@ -117,6 +117,8 @@ async function main() {
   runs.replaceChildren(h('div', { class: 'panel' }, runStrip(src.reads)));
   if (!src.latest.ok) { failure(el, "IPMA's station readings", src.latest, IPMA_OBS); failure(tb, "IPMA's station readings", src.latest, IPMA_OBS); return; }
   const O = src.latest.data;
+  // The stale or old line above the chart (data.js ageBanner), as on every data page.
+  const age = ageBanner(src.latest, { subject: "These stations' figures", page: IPMA_OBS });
   const st = (O.stations || []).filter(p => isNum(p.lat) && isNum(p.lon));
   const O2 = { ...O, stations: st };
   const G = F.latest.ok ? buildGrid(F.latest.data.municipalities) : null;
@@ -125,7 +127,7 @@ async function main() {
   const head = h('p', {}, h('strong', {}, `Hour: ${O.hour_utc ? fmtUTC(O.hour_utc) : 'not given in the file'}. `),
     `${reporting} of ${(O.stations || []).length} stations reported for this hour; ${(O.stations || []).length - reporting} sent nothing (most are late, not broken).`,
     hourAge !== null && hourAge > 180 ? h('strong', {}, ` This hour is ${Math.round(hourAge / 60)} hours old${hourAge > 1440 ? ', older than IPMA\'s own 24-hour feed' : ''}.`) : '');
-  if (!st.length) { el.replaceChildren(h('div', { class: 'panel' }, head, h('p', { class: 'status' }, 'The file lists no station with a position. Nothing is drawn.')), provenance(src)); tb.replaceChildren(); return; }
+  if (!st.length) { el.replaceChildren(...[age, h('div', { class: 'panel' }, head, h('p', { class: 'status' }, 'The file lists no station with a position. Nothing is drawn.')), provenance(src)].filter(Boolean)); tb.replaceChildren(); return; }
   const ctl = h('div', { class: 'ctl', role: 'group', 'aria-label': 'Measure on the map' });
   const holder = h('div', { class: 'mapbox' }), legend = h('ul', { class: 'legend', 'aria-label': 'Legend' }), note = h('p', { class: 'map-note' });
   let measure = 'temp';
@@ -135,7 +137,7 @@ async function main() {
     note.textContent = `${t} ${G ? "Grey land is drawn from IPMA's municipality points, as on the warnings map, so coasts are approximate." : "The land outline could not be drawn (ipma-fire-risk could not be read); station positions are still IPMA's."} The Azores, Madeira and the Selvagens are framed, each at its own scale.`;
   };
   ctl.replaceChildren(...[['temp', 'Temperature'], ['wind', 'Wind']].map(([m, t]) => h('button', { type: 'button', 'data-m': m, 'aria-pressed': String(m === measure), onclick: () => { measure = m; draw(); } }, t)));
-  el.replaceChildren(h('div', { class: 'panel' }, head, ctl, holder, legend, note), provenance(src));
+  el.replaceChildren(...[age, h('div', { class: 'panel' }, head, ctl, holder, legend, note), provenance(src)].filter(Boolean));
   draw();
   let narrow = holder.clientWidth < 560;
   if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => { const n = holder.clientWidth < 560; if (n !== narrow) { narrow = n; draw(); } }).observe(holder);

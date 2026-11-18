@@ -3,10 +3,11 @@
 // Read live from data.promptugal.news; nothing is guessed. Code Apache-2.0.
 // Written by developer.ipma-data@AgentiCCells.dinis (instance A), 2026-11-18, round 1.
 
-import { loadSource, provenance, loading, failure, runStrip, fmtUTC, fmtDay, h, s } from '../data.js';
+import { loadSource, ageBanner, provenance, loading, failure, runStrip, fmtUTC, fmtDay, h, s } from '../data.js';
 import { warningsBlock, warningTable, currentWarnings, lisbonNow, areaName, ORDER, HATCH, swatch, lvl, levelWord, ensureHatches } from '../map.js';
 
 const IPMA_WARN = 'https://www.ipma.pt/en/otempo/prev-sam/';
+const MA_PAGE = 'https://www.meteoalarm.org/en/live/region/PT';
 const $ = id => document.getElementById(id);
 
 // ---------- timeline ----------
@@ -55,7 +56,7 @@ function timeline(el, src) {
       });
     });
     panel.replaceChildren(svg, h('ul', { class: 'legend' }, ['yellow', 'orange', 'red'].map(l => h('li', {}, swatch(l), levelWord(l)))),
-      h('p', { class: 'note' }, `Bars run from IPMA's start to end time. A small gap between bars marks where one warning ends and the next begins. The black line is now (${now.slice(11, 16)} in Portugal).`));
+      h('p', { class: 'note' }, `Bars run from IPMA's start to end time. A small gap between bars marks where one warning ends and the next begins. The line marked now is the time now (${now.slice(11, 16)} in Portugal).`));
   };
   el.replaceChildren(panel, provenance(src));
   draw();
@@ -83,13 +84,13 @@ function meteoalarm(el, src, ipmaCount) {
         h('td', { 'data-label': 'Expires' }, t(m.expires_utc)),
         h('td', { 'data-label': 'Issued' }, t(m.sent_utc)))))))
     : h('p', {}, 'No CAP message in MeteoAlarm\'s feed is in force or upcoming now.');
-  el.replaceChildren(h('div', { class: 'panel' },
+  el.replaceChildren(...[ageBanner(src.latest, { subject: "MeteoAlarm's messages", page: MA_PAGE, pageLabel: 'meteoalarm.org' }), h('div', { class: 'panel' },
     h('p', {}, `MeteoAlarm: ${msgs.length} message${msgs.length === 1 ? '' : 's'} not expired now. IPMA's file: ${ipmaCount === null ? 'could not be read' : `${ipmaCount} warning${ipmaCount === 1 ? '' : 's'} in force or upcoming`}. The two are counted differently (a CAP message can be an update of another), so they are not matched one by one.`),
     body,
     h('p', { class: 'note' }, h('strong', {}, 'National service: '), at.national_service || 'IPMA, Instituto Português do Mar e da Atmosfera', '. ',
       'Via ', h('a', { href: 'https://www.meteoalarm.org/' }, 'www.meteoalarm.org'), '. Each message keeps its time of issue.'),
     h('p', { class: 'note' }, h('strong', {}, "MeteoAlarm's disclaimer: "), at.disclaimer || h('em', {}, 'the disclaimer was not in the file; see www.meteoalarm.org.'))),
-  provenance(src, { pageLabel: 'MeteoAlarm page' }));
+  provenance(src, { pageLabel: 'MeteoAlarm page' })].filter(Boolean));
 }
 
 async function main() {
@@ -111,7 +112,7 @@ async function main() {
   }
   runs.replaceChildren(h('div', { class: 'panel' }, runStrip(W.reads)));
   const M = await pM;
-  if (!M.latest.ok) failure(ma, "MeteoAlarm's feed", M.latest, 'https://www.meteoalarm.org/en/live/region/PT');
+  if (!M.latest.ok) failure(ma, "MeteoAlarm's feed", M.latest, MA_PAGE, { pageLabel: 'See MeteoAlarm directly:' });
   else meteoalarm(ma, M, ipmaCount);
 }
 main();

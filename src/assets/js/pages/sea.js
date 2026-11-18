@@ -5,7 +5,7 @@
 // waveHighMin/Max, the swell; sea_* is IPMA's totalSeaMin/Max, the significant wave height.
 // Nothing is guessed, averaged or interpolated. ES module. Code Apache-2.0.
 // Written by developer.ipma-data@AgentiCCells.dinis (instance B), 2026-11-18, round 1.
-import { loadSource, provenance, runStrip, loading, failure, staleness, fmtDay, h } from '../data.js';
+import { loadSource, ageBanner, provenance, runStrip, loading, failure, fmtDay, h } from '../data.js';
 import { AREAS } from '../codes.js';
 
 const ID = 'ipma-sea';
@@ -25,7 +25,7 @@ const range = (a, b, unit = '') => {
   if (!fin(a) && !fin(b)) return 'no value';
   if (!fin(a)) return `max ${b}${unit}`;
   if (!fin(b)) return `min ${a}${unit}`;
-  return Number(a) === Number(b) ? `${a}${unit}` : `${a}–${b}${unit}`;
+  return Number(a) === Number(b) ? `${a}${unit}` : `${a} to ${b}${unit}`;
 };
 const rangeWords = (a, b, unit) => {
   if (!fin(a) && !fin(b)) return 'no value';
@@ -37,12 +37,8 @@ const crossed = d => fin(d.wave_period_min_s) && fin(d.wave_period_max_s) && Num
 const period = d => (!fin(d.wave_period_min_s) && !fin(d.wave_period_max_s)) ? 'no value'
   : `min ${fin(d.wave_period_min_s) ? d.wave_period_min_s : 'none'}, max ${fin(d.wave_period_max_s) ? d.wave_period_max_s : 'none'} s`;
 
-function ageLine(readAt) {
-  const st = staleness(readAt);
-  if (st.level === 'fresh') return null;
-  if (st.level === 'unknown') return h('p', { class: 'cb-age', role: 'note' }, h('strong', {}, 'The read time is unknown. '), 'These figures may not be current: see ipma.pt.');
-  return h('p', { class: `cb-age cb-age-${st.level}`, role: 'note' }, h('strong', {}, `These figures were ${st.text}. `), 'See IPMA for the latest: ', h('a', { href: IPMA_PAGE }, 'ipma.pt'), '.');
-}
+// The stale or old line above the chart (data.js ageBanner), as on every data page.
+const AGE = { page: IPMA_PAGE };
 
 async function main() {
   const root = document.getElementById('sea');
@@ -63,7 +59,7 @@ async function main() {
   const current = dates.filter(d => d >= today);
   const past = dates.length - current.length;
   if (!current.length) {
-    put(root, ageLine(L.read_at), h('p', { class: 'status', role: 'status' },
+    put(root, ageBanner(src.latest, AGE), h('p', { class: 'status', role: 'status' },
       `Every day in the file is before today (${fmtDay(today)}, Lisbon date), so there is no current sea forecast to draw. See `, h('a', { href: IPMA_PAGE }, 'IPMA'), '.'), provenance(src));
     return;
   }
@@ -124,7 +120,7 @@ async function main() {
 
   const flagged = coasts.filter(c => (String(c.id).startsWith('232') && c.area !== 'MPS') || (String(c.id).startsWith('348') && c.area !== 'AOC'));
   put(root, 
-    ageLine(L.read_at),
+    ageBanner(src.latest, AGE),
     h('figure', { class: 'chart' },
       h('div', { class: 'sea-grid', style: `--days:${current.length}` }, cells),
       h('figcaption', {},

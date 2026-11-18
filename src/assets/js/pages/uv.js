@@ -3,7 +3,7 @@
 // splits and shows both; nothing is averaged or dropped. Places without a name are shown by id.
 // ES module. Code Apache-2.0.
 // Written by developer.ipma-data@AgentiCCells.dinis (instance B), 2026-11-18, round 1.
-import { loadSource, provenance, runStrip, loading, failure, staleness, fmtDay, h } from '../data.js';
+import { loadSource, ageBanner, provenance, runStrip, loading, failure, fmtDay, h } from '../data.js';
 import { UV_BANDS, uvBand } from '../codes.js';
 
 const ID = 'ipma-uv';
@@ -20,12 +20,8 @@ const fin = v => v !== null && v !== undefined && Number.isFinite(Number(v));
 const regionOf = p => p.name ? (({ 1: 'mainland', 2: 'madeira', 3: 'azores' })[String(p.id)[0]] || null) : null;
 const bandIdx = v => { const b = uvBand(v); return b ? UV_BANDS.indexOf(b) + 1 : 0; };
 
-function ageLine(readAt) {
-  const st = staleness(readAt);
-  if (st.level === 'fresh') return null;
-  if (st.level === 'unknown') return h('p', { class: 'cb-age', role: 'note' }, h('strong', {}, 'The read time is unknown. '), 'These figures may not be current: see ipma.pt.');
-  return h('p', { class: `cb-age cb-age-${st.level}`, role: 'note' }, h('strong', {}, `These figures were ${st.text}. `), 'See IPMA for the latest: ', h('a', { href: IPMA_PAGE }, 'ipma.pt'), '.');
-}
+// The stale or old line above the chart (data.js ageBanner), as on every data page.
+const AGE = { page: IPMA_PAGE };
 
 function valueCell(v) {
   if (!fin(v)) return h('span', { class: 'uv-v' }, 'no value');
@@ -51,7 +47,7 @@ async function main() {
   const dates = allDates.filter(d => d >= today);
   const past = allDates.length - dates.length;
   if (!dates.length) {
-    put(root, ageLine(L.read_at), h('p', { class: 'status', role: 'status' },
+    put(root, ageBanner(src.latest, AGE), h('p', { class: 'status', role: 'status' },
       `Every day in the file is before today (${fmtDay(today)}, Lisbon date), so there is no current UV forecast to draw. See `, h('a', { href: IPMA_PAGE }, 'IPMA'), '.'), provenance(src));
     return;
   }
@@ -95,7 +91,7 @@ async function main() {
     }))) : null;
 
   put(root, 
-    ageLine(L.read_at),
+    ageBanner(src.latest, AGE),
     h('figure', { class: 'chart' },
       h('div', { class: 'cb-scroll', tabindex: '0', role: 'region', 'aria-label': 'UV index by place and day' },
         h('table', { class: 'uv-grid' }, h('caption', { class: 'cb-vh' }, "IPMA's UV index forecast by place and day, with the WHO band of each value."), head, body)),

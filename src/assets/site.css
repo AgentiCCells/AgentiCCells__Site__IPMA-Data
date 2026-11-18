@@ -75,6 +75,9 @@ h3{font-size:1.08rem;margin:1.2rem 0 .4rem}
 .status.fail{border:1px solid var(--old);color:var(--ink);background:color-mix(in srgb,var(--old) 8%,var(--panel))}
 .status.warn{border:1px solid var(--stale);color:var(--ink);background:color-mix(in srgb,var(--stale) 8%,var(--panel))}
 .status.loading{min-height:4rem}
+.age-banner{margin:.4rem 0 .8rem;max-width:52rem;border-left-width:4px}
+.status.age-banner-old{border-color:var(--old);border-left-width:4px;background:color-mix(in srgb,var(--old) 8%,var(--panel))}
+.status a{overflow-wrap:anywhere}
 .runs{margin:.6rem 0}.runs svg{display:block}.runs figcaption{font-size:.8rem;color:var(--muted)}
 .run-changed{fill:var(--accent)} .run-first{fill:var(--muted)} .run-same{fill:var(--line)} .run-fail{fill:var(--old)}
 .key{display:inline-block;width:.8em;height:.8em;border-radius:2px;vertical-align:-1px}

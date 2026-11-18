@@ -3,7 +3,7 @@
 // data.promptugal.news; nothing is guessed. Code Apache-2.0.
 // Written by developer.ipma-data@AgentiCCells.dinis (instance A), 2026-11-18, round 1.
 
-import { loadSource, provenance, loading, failure, staleness, fmtUTC, fmtDay, ageMinutes, h } from '../data.js';
+import { loadSource, ageBanner, provenance, loading, failure, staleness, fmtUTC, fmtDay, ageMinutes, h } from '../data.js';
 import { WEATHER_TYPES, WIND_CLASS } from '../codes.js';
 import { warningsBlock, warningTable, currentWarnings, lisbonNow } from '../map.js';
 
@@ -35,13 +35,15 @@ async function forecast() {
   const src = await loadSource('ipma-city-forecasts', { onSlow: slow });
   if (!src.latest.ok) { failure(el, "IPMA's forecasts", src.latest, IPMA_FC); return; }
   const D = src.latest.data;
+  // The stale or old line above the chart (data.js ageBanner), as on every data page.
+  const age = ageBanner(src.latest, { page: IPMA_FC });
   const today = lisbonNow().slice(0, 10);
   const places = PLACES.map(n => [n, (D.cities || []).find(c => c.name === n)]);
   // Days before today's Lisbon date are dropped; the rest are shown as IPMA gives them.
   const dayList = c => (c?.days || []).filter(d => typeof d.date === 'string' && d.date >= today);
   const vals = places.flatMap(([, c]) => dayList(c).flatMap(d => [d.t_min_c, d.t_max_c])).filter(isNum);
   if (!vals.length) {
-    el.replaceChildren(h('p', { class: 'status' }, "IPMA's forecast file holds no temperatures for today or later for these places. Nothing is shown in their place."), provenance(src));
+    el.replaceChildren(...[age, h('p', { class: 'status' }, "IPMA's forecast file holds no temperatures for today or later for these places. Nothing is shown in their place."), provenance(src)].filter(Boolean));
     return;
   }
   const lo = Math.floor(Math.min(...vals) / 5) * 5, hi = Math.max(lo + 5, Math.ceil(Math.max(...vals) / 5) * 5);
@@ -63,11 +65,11 @@ async function forecast() {
   }));
   const upd = places.map(([, c]) => c?.updated).filter(Boolean).sort().pop();
   const updAge = upd ? ageMinutes(upd + (/Z$/.test(upd) ? '' : 'Z')) : null;
-  el.replaceChildren(body,
-    h('p', { class: 'note' }, `Bars: minimum to maximum temperature on one scale for all four places, ${lo} to ${hi} °C. Rain: IPMA's chance of rain for the day. Weather and wind as IPMA's code tables name them.`,
+  el.replaceChildren(...[age, body,
+    h('p', { class: 'note' }, `Bars: minimum to maximum temperature on one scale for all four places, ${lo} to ${hi} °C; temperatures rounded to the nearest degree. Rain: IPMA's chance of rain for the day. Weather and wind as IPMA's code tables name them.`,
       upd ? ` IPMA last updated these forecasts at ${upd.slice(11, 16)} UTC on ${fmtDay(upd.slice(0, 10))}.` : '',
       updAge !== null && updAge > 14 * 60 ? h('strong', {}, ' That is more than 14 hours ago; IPMA normally updates twice a day.') : ''),
-    provenance(src));
+    provenance(src)].filter(Boolean));
 }
 
 // ---------- every source, as last read ----------
