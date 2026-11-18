@@ -1,0 +1,96 @@
+/* chart-room.css: the Chart room design (/d/chart-room/), loaded after site.css. Every rule is
+   scoped under body.d-chart-room. A nautical chart table: chart paper, water panels, navy ink,
+   contour hairlines; system sans, labels in small caps with letter-spacing, figures in the
+   monospace stack. Palette and type: team/rounds/1/design/PROPOSAL.md, section 4.2. The data
+   colours and hatches (warning levels, --wave, map edge) are site.css's light values, unchanged:
+   the page sets data-theme="light" on <html> because its surfaces are light by design.
+   Status words (fresh, stale, old) are darkened one step so they keep 4.5:1 on chart paper and water.
+   Code Apache-2.0. Written by developer.ipma-data@AgentiCCells.dinis (instance C), 2026-11-18, round 2. */
+body.d-chart-room{
+  --bg:#f3f0e4; --panel:#f3f0e4; --ink:#13324b; --muted:#3d5568; --line:#9db4c0; --accent:#13324b; --accent-ink:#f3f0e4;
+  --cr-water:#dbe7ec; --cr-contour:#9db4c0;
+  --fresh:#24663f; --stale:#8a4f00; --old:#a3221b;
+  background:var(--bg); color:var(--ink);
+}
+body.d-chart-room main{max-width:78rem}
+body.d-chart-room a{color:var(--ink);text-decoration-color:var(--cr-contour);text-decoration-thickness:2px;text-underline-offset:3px}
+body.d-chart-room a:hover{text-decoration-color:var(--ink)}
+body.d-chart-room .site-head,body.d-chart-room .site-foot{background:var(--bg)}
+body.d-chart-room h1{font-weight:700;letter-spacing:-.005em}
+body.d-chart-room h2{font-variant:small-caps;letter-spacing:.08em;font-size:1.3rem;font-weight:700;border-bottom:1px solid var(--cr-contour);padding-bottom:.25rem}
+body.d-chart-room .lede{color:var(--ink);max-width:52rem}
+body.d-chart-room .note,body.d-chart-room caption,body.d-chart-room .prov,body.d-chart-room .chart figcaption{color:var(--muted)}
+
+body.d-chart-room .design-bar p{margin:0 0 1rem;font-size:.88rem;color:var(--muted)}
+body.d-chart-room .cr-kicker{margin:0;font-variant:small-caps;letter-spacing:.16em;font-size:1rem;font-weight:600;color:var(--muted)}
+
+/* Panels: chart paper with contour hairlines; the sea section sits on water */
+body.d-chart-room .panel{background:var(--bg);border:1px solid var(--cr-contour);border-radius:2px}
+body.d-chart-room .status{border-radius:2px;background:var(--bg)}
+body.d-chart-room .cr-water{background:var(--cr-water);border:1px solid var(--cr-contour);padding:.2rem 1rem 1rem;margin:1.2rem 0;--panel:var(--cr-water)}
+body.d-chart-room .cr-water .status{background:var(--cr-water)}
+body.d-chart-room .cr-water h2{margin-top:.8rem}
+body.d-chart-room .ctl button{border-radius:2px;background:var(--bg);border-color:var(--ink);font-variant:small-caps;letter-spacing:.06em}
+body.d-chart-room .ctl button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+body.d-chart-room th{color:var(--ink);font-variant:small-caps;letter-spacing:.05em}
+body.d-chart-room td,body.d-chart-room th{border-bottom-color:var(--cr-contour)}
+body.d-chart-room .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+body.d-chart-room .cr-fig{font-family:var(--mono);font-variant-numeric:tabular-nums}
+body.d-chart-room .cr-vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* The sea chart */
+body.d-chart-room .cr-grid{display:grid;gap:0}
+body.d-chart-room .cr-row{display:grid;grid-template-columns:minmax(0,1fr);border-top:1px solid var(--cr-contour);padding:.45rem 0}
+body.d-chart-room .cr-headrow{display:none}
+body.d-chart-room .cr-place{display:flex;flex-wrap:wrap;gap:0 .6rem;align-items:baseline;margin-bottom:.2rem}
+body.d-chart-room .cr-name{font-weight:700}
+body.d-chart-room .cr-area{font-size:.8rem;color:var(--muted);font-variant:small-caps;letter-spacing:.05em}
+body.d-chart-room .cr-cell{display:grid;grid-template-columns:5.6rem minmax(0,1fr);gap:.1rem .6rem;padding:.25rem 0 .25rem .5rem;border-left:3px solid transparent;min-width:0}
+body.d-chart-room .cr-cell.cr-warned{border-left-color:var(--ink)}
+body.d-chart-room .cr-day{grid-row:1 / span 3;font-size:.82rem;font-weight:600;font-variant:small-caps;letter-spacing:.04em}
+body.d-chart-room .cr-track{position:relative;height:18px;background-color:var(--bg);border:1px solid var(--cr-contour);
+  background-image:repeating-linear-gradient(to right,var(--cr-contour) 0 1px,transparent 1px calc(100% / var(--steps)))}
+body.d-chart-room .cr-bar{position:absolute;display:block;border-radius:3px}
+body.d-chart-room .cr-bar.total{top:2px;height:8px;background:var(--wave)}
+body.d-chart-room .cr-bar.swell{top:11px;height:4px;background:var(--ink)}
+body.d-chart-room .cr-figs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 .6rem;font-size:.78rem;line-height:1.35}
+body.d-chart-room .cr-figs b{font-weight:600;font-variant:small-caps;letter-spacing:.04em;color:var(--muted)}
+body.d-chart-room .cr-warn{font-size:.8rem;font-weight:600}
+body.d-chart-room .cr-warn .sw{width:1.2rem;height:.85rem}
+body.d-chart-room .cr-legend{list-style:none;margin:.6rem 0 .3rem;padding:0;display:flex;flex-wrap:wrap;gap:.3rem 1.2rem;font-size:.85rem;color:var(--ink)}
+body.d-chart-room .cr-legend li{display:flex;align-items:center;gap:.4rem}
+body.d-chart-room .cr-key{display:inline-block;width:1.6rem;border-radius:3px}
+body.d-chart-room .cr-key.total{height:8px;background:var(--wave)}
+body.d-chart-room .cr-key.swell{height:4px;background:var(--ink)}
+body.d-chart-room .cr-dayh{display:block;font-weight:700;font-variant:small-caps;letter-spacing:.05em}
+body.d-chart-room .cr-axis{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.75rem;color:var(--muted)}
+body.d-chart-room .cr-scroll{overflow-x:auto;max-width:100%}
+body.d-chart-room .cr-more{margin:.6rem 0}
+body.d-chart-room .cr-more summary{color:var(--ink);font-weight:600}
+body.d-chart-room .cr-table,body.d-chart-room .cr-ftable{font-size:.84rem;min-width:40rem}
+body.d-chart-room .cr-ftable td{white-space:nowrap}
+body.d-chart-room .cr-sub{font-size:.8rem;color:var(--muted)}
+
+/* Wind */
+body.d-chart-room .cr-wtable{font-size:.88rem}
+body.d-chart-room .cr-wtable th,body.d-chart-room .cr-wtable td{padding:.25rem .35rem}
+body.d-chart-room .cr-wbar{width:35%;vertical-align:middle}
+body.d-chart-room .cr-wbar i{display:block;height:8px;background:var(--ink);border-radius:0 3px 3px 0;min-width:2px}
+
+body.d-chart-room .cr-pair{display:grid;gap:0 2rem}
+body.d-chart-room .cr-pair>*{min-width:0}
+/* The map's detail panel goes under the map in this layout, so the wind can sit beside it. */
+body.d-chart-room .cr-map .grid.two{grid-template-columns:minmax(0,1fr)}
+body.d-chart-room .cr-map .mapbox{max-width:none}
+
+@media (min-width:760px){
+  body.d-chart-room .cr-row{grid-template-columns:11rem repeat(var(--days,3),minmax(0,1fr));gap:0 .8rem;align-items:start}
+  body.d-chart-room .cr-headrow{display:grid;border-top:0;font-size:.85rem;padding-bottom:.2rem}
+  body.d-chart-room .cr-place{flex-direction:column;margin:0}
+  body.d-chart-room .cr-cell{grid-template-columns:minmax(0,1fr);padding:.15rem 0 .15rem .5rem}
+  body.d-chart-room .cr-headrow .cr-cell{padding-left:.5rem;border-left-color:transparent}
+  body.d-chart-room .cr-day{display:none}
+}
+@media (min-width:1000px){
+  body.d-chart-room .cr-pair{grid-template-columns:minmax(0,3fr) minmax(0,2fr)}
+}

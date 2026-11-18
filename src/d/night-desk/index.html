@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en-GB" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Night desk design | IPMA data, drawn</title>
+<meta name="description" content="A dark board of IPMA's data for Portugal: a tile per source with its status light, read time and age, the warnings map, and what changed at the collector's last read, from reads.json and MeteoAlarm's changes field, read live from data.promptugal.news. Not a warning service.">
+<meta name="share-image" content="/assets/share/d-night-desk.png">
+<meta name="color-scheme" content="dark">
+<!--HEAD-->
+<link rel="stylesheet" href="/d/night-desk/night-desk.css">
+</head>
+<body class="d-night-desk" data-sources="ipma-warnings ipma-city-forecasts ipma-observations ipma-fire-risk ipma-sea ipma-uv meteoalarm-pt">
+<!--HEADER-->
+<main id="main">
+<nav class="design-bar" aria-label="Designs and main pages">
+<p><strong>Night desk</strong>, one of five designs of this site. <a href="/d/">All designs</a> <span aria-hidden="true">·</span> The main design: <a href="/">Now</a>, <a href="/warnings/">Warnings</a>, <a href="/forecasts/">Forecasts</a>, <a href="/how-it-works/">How it works</a></p>
+</nav>
+
+<header class="nd-head">
+<p class="nd-kicker">Night desk</p>
+<h1>Every IPMA source, as last read</h1>
+<p class="lede">One tile per file: when PrompTugal.news's collector last read it from IPMA (and MeteoAlarm), how old that is, and what the last run found. Then the warnings map and what changed. Every figure is IPMA's, read live in your browser from data.promptugal.news; check <a href="https://www.ipma.pt">ipma.pt</a> before acting on anything.</p>
+</header>
+<noscript><p class="status fail">This page draws IPMA's data with JavaScript in your browser. Without it nothing can be shown here; see <a href="https://www.ipma.pt">ipma.pt</a>.</p></noscript>
+
+<section aria-labelledby="tiles-h">
+<h2 id="tiles-h">Sources</h2>
+<div id="tiles" class="nd-tiles"><p class="status loading">Reading every source from data.promptugal.news...</p></div>
+<p class="note" id="tiles-terms">IPMA's terms are read from each source card.</p>
+</section>
+
+<section aria-labelledby="w-h">
+<h2 id="w-h">Warnings by area</h2>
+<div id="warnings-block"><p class="status loading">Reading IPMA's warnings from data.promptugal.news...</p></div>
+</section>
+
+<div class="nd-pair">
+<section aria-labelledby="ch-h">
+<h2 id="ch-h">What changed at the last read</h2>
+<div id="changes"><p class="status loading">Reading the collector's logs from data.promptugal.news...</p></div>
+</section>
+<section aria-labelledby="fc-h">
+<h2 id="fc-h">Forecast for five places</h2>
+<div id="forecast"><p class="status loading">Reading IPMA's forecasts from data.promptugal.news...</p></div>
+</section>
+</div>
+
+<section aria-labelledby="w-table-h">
+<h2 id="w-table-h" tabindex="-1">The warnings as a list</h2>
+<div id="warnings-table"><p class="status loading">Reading IPMA's warnings from data.promptugal.news...</p></div>
+</section>
+
+<section aria-labelledby="also-h">
+<h2 id="also-h">Elsewhere on this site</h2>
+<p>Each source drawn in full: <a href="/warnings/">Warnings</a>, <a href="/forecasts/">Forecasts</a>, <a href="/observations/">Stations</a>, <a href="/fire-risk/">Fire risk</a>, <a href="/sea/">Sea</a>, <a href="/uv/">UV</a>. How the files are collected: <a href="/how-it-works/">How it works</a>. Other ways of drawing the same files: <a href="/d/">All designs</a>.</p>
+</section>
+</main>
+<!--FOOTER-->
+<script type="module" src="/d/night-desk/night-desk.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en-GB" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Broadsheet design | IPMA data, drawn</title>
+<meta name="description" content="IPMA's weather for Portugal set as a newspaper weather page: a headline written only from IPMA's warnings file, the warnings map, and a dense five-day forecast table for every place, read live from data.promptugal.news. Not a warning service.">
+<meta name="share-image" content="/assets/share/d-broadsheet.png">
+<!--HEAD-->
+<link rel="stylesheet" href="/d/broadsheet/broadsheet.css">
+</head>
+<body class="d-broadsheet" data-sources="ipma-warnings ipma-city-forecasts ipma-fire-risk">
+<!--HEADER-->
+<main id="main">
+<nav class="design-bar" aria-label="Designs and main pages">
+<p><strong>Broadsheet</strong>, one of five designs of this site. <a href="/d/">All designs</a> <span aria-hidden="true">·</span> The main design: <a href="/">Now</a>, <a href="/warnings/">Warnings</a>, <a href="/forecasts/">Forecasts</a>, <a href="/sea/">Sea</a>, <a href="/observations/">Stations</a></p>
+</nav>
+
+<header class="bs-mast">
+<p class="bs-kicker">The weather page</p>
+<h1>Portugal's weather, from IPMA's files</h1>
+<p class="bs-dateline" id="bs-date">Portugal date. Every figure below is IPMA's, read live from data.promptugal.news.</p>
+</header>
+<noscript><p class="status fail">This page draws IPMA's data with JavaScript in your browser. Without it nothing can be shown here; see <a href="https://www.ipma.pt">ipma.pt</a>.</p></noscript>
+
+<section class="bs-lead" aria-labelledby="bs-head">
+<h2 id="bs-head" class="bs-headline">Reading IPMA's warnings</h2>
+<div id="bs-deck"><p class="status loading">Reading IPMA's warnings from data.promptugal.news...</p></div>
+</section>
+
+<section class="bs-front" aria-labelledby="w-h">
+<h2 id="w-h" class="bs-section">Warnings by area</h2>
+<div id="warnings-block"><p class="status loading">Reading IPMA's warnings from data.promptugal.news...</p></div>
+</section>
+
+<div class="bs-cols">
+<section aria-labelledby="w-table-h">
+<h2 id="w-table-h" class="bs-section" tabindex="-1">The warnings, area by area</h2>
+<div id="warnings-table"><p class="status loading">Reading IPMA's warnings from data.promptugal.news...</p></div>
+</section>
+<section aria-labelledby="fig-h">
+<h2 id="fig-h" class="bs-section">Today in figures</h2>
+<div id="figures"><p class="status loading">Reading IPMA's forecasts from data.promptugal.news...</p></div>
+</section>
+</div>
+
+<section aria-labelledby="fc-h">
+<h2 id="fc-h" class="bs-section">The five-day forecast, place by place</h2>
+<div id="forecast"><p class="status loading">Reading IPMA's forecasts from data.promptugal.news...</p></div>
+</section>
+
+<section class="bs-also" aria-labelledby="also-h">
+<h2 id="also-h" class="bs-section">Elsewhere on this site</h2>
+<p>The sea, stations, fire risk and UV are drawn in the main design: <a href="/sea/">Sea</a>, <a href="/observations/">Stations</a>, <a href="/fire-risk/">Fire risk</a>, <a href="/uv/">UV</a>. Other ways of drawing the same files: <a href="/d/">All designs</a>.</p>
+</section>
+</main>
+<!--FOOTER-->
+<script type="module" src="/d/broadsheet/broadsheet.js"></script>
+</body>
+</html>

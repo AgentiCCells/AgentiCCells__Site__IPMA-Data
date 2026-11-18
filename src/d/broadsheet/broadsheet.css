@@ -1,0 +1,91 @@
+/* broadsheet.css: the Broadsheet design (/d/broadsheet/), loaded after site.css. Every rule is
+   scoped under body.d-broadsheet. A newspaper weather page: newsprint, ink, one accent for
+   headings only, a serif stack for headings and the system sans for data, rules between columns.
+   Palette and type: team/rounds/1/design/PROPOSAL.md, section 4.1. The data colours and hatches
+   (warning levels, map edge) are site.css's light values, unchanged: the page sets
+   data-theme="light" on <html> because its surfaces are light by design.
+   Status words (fresh, stale, old) are darkened one step so they keep 4.5:1 on newsprint.
+   Code Apache-2.0. Written by developer.ipma-data@AgentiCCells.dinis (instance C), 2026-11-18, round 2. */
+body.d-broadsheet{
+  --bg:#f4f1ea; --panel:#f4f1ea; --ink:#161616; --muted:#4a4a4a; --line:#c9c3b6; --accent:#161616; --accent-ink:#f4f1ea;
+  --bs-head:#8a1c1c; --bs-rule:#161616;
+  --fresh:#24663f; --stale:#8a4f00; --old:#a3221b;
+  --serif:Charter,"Iowan Old Style",Georgia,serif;
+  background:var(--bg); color:var(--ink);
+}
+body.d-broadsheet main{max-width:80rem}
+body.d-broadsheet a{color:var(--ink);text-decoration-thickness:1px;text-underline-offset:2px}
+body.d-broadsheet .site-head,body.d-broadsheet .site-foot{background:var(--bg)}
+body.d-broadsheet h1,body.d-broadsheet h2,body.d-broadsheet h3{font-family:var(--serif);color:var(--bs-head);font-weight:700}
+
+/* Design bar */
+body.d-broadsheet .design-bar p{margin:0 0 1rem;font-size:.88rem;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:.5rem}
+
+/* Masthead */
+body.d-broadsheet .bs-mast{text-align:center;border-top:4px double var(--bs-rule);border-bottom:1px solid var(--bs-rule);padding:.6rem 0 .5rem;margin-bottom:1rem}
+body.d-broadsheet .bs-kicker{margin:0;font-family:var(--serif);font-size:.85rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink)}
+body.d-broadsheet .bs-mast h1{margin:.1rem 0;font-size:clamp(1.8rem,5.4vw,3.2rem);line-height:1.08;letter-spacing:-.01em}
+body.d-broadsheet .bs-dateline{margin:.3rem 0 0;font-size:.85rem;color:var(--muted)}
+
+/* The lead: the headline written from the data */
+body.d-broadsheet .bs-lead{border-bottom:1px solid var(--bs-rule);padding-bottom:1rem;margin-bottom:.5rem}
+body.d-broadsheet .bs-headline{font-size:clamp(1.55rem,4.2vw,2.6rem);line-height:1.12;margin:.4rem 0 .6rem;max-width:62rem}
+body.d-broadsheet .bs-standfirst{font-family:var(--serif);font-size:1.15rem;line-height:1.45;margin:.2rem 0 .4rem;max-width:56rem}
+body.d-broadsheet .bs-deck{font-size:1rem;margin:.2rem 0 .4rem;max-width:56rem}
+body.d-broadsheet .bs-credit{font-size:.8rem;color:var(--muted);margin:.4rem 0 0;font-style:italic}
+
+/* Section heads: a rule above, small serif caps */
+body.d-broadsheet .bs-section{font-size:1.2rem;border-top:2px solid var(--bs-rule);padding-top:.35rem;margin:1.6rem 0 .7rem;letter-spacing:.01em}
+
+/* Panels lose their cards: newsprint, hairline rules, square corners */
+body.d-broadsheet .panel{background:transparent;border:0;border-radius:0;padding:0}
+body.d-broadsheet .grid.two{gap:0}
+body.d-broadsheet .bs-front .grid.two>.panel:first-child{padding-right:0}
+body.d-broadsheet .detail{border-top:1px solid var(--line);padding-top:.6rem;margin-top:.8rem}
+body.d-broadsheet .mapbox{max-width:none}
+body.d-broadsheet .ctl button{border-radius:0;background:transparent}
+body.d-broadsheet .ctl button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+body.d-broadsheet .status{border-radius:0;background:transparent}
+body.d-broadsheet .prov{border-left-color:var(--line)}
+body.d-broadsheet .prov-stale{border-left-color:var(--stale)} body.d-broadsheet .prov-old{border-left-color:var(--old)}
+body.d-broadsheet table{font-family:var(--font)}
+body.d-broadsheet th{color:var(--ink)}
+
+/* Two columns with a rule between them (wide screens) */
+body.d-broadsheet .bs-cols{display:grid;gap:0 2rem}
+body.d-broadsheet .bs-cols>*{min-width:0}
+
+/* Today in figures */
+body.d-broadsheet .bs-figs{margin:0;display:grid;gap:.1rem}
+body.d-broadsheet .bs-fig{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.2rem 1rem;border-bottom:1px solid var(--line);padding:.4rem 0;align-items:baseline}
+body.d-broadsheet .bs-fig dt{font-size:.9rem;color:var(--muted)}
+body.d-broadsheet .bs-fig dd{margin:0;text-align:right}
+body.d-broadsheet .bs-num{font-family:var(--serif);font-size:1.45rem;font-weight:700;font-variant-numeric:tabular-nums lining-nums}
+body.d-broadsheet .bs-who{display:block;font-size:.85rem;color:var(--muted)}
+
+/* The dense forecast table */
+body.d-broadsheet .bs-scroll{overflow-x:auto;max-width:100%;border-top:1px solid var(--bs-rule);border-bottom:1px solid var(--bs-rule)}
+body.d-broadsheet .bs-scroll:focus-visible{outline-offset:-3px}
+body.d-broadsheet .bs-dense{font-size:.84rem;font-variant-numeric:tabular-nums;min-width:56rem}
+body.d-broadsheet .bs-dense caption{padding:.4rem 0}
+body.d-broadsheet .bs-dense th,body.d-broadsheet .bs-dense td{padding:.18rem .4rem;border-bottom:1px solid var(--line);white-space:nowrap}
+body.d-broadsheet .bs-dense thead th{font-weight:700;border-bottom:1px solid var(--bs-rule);vertical-align:bottom}
+body.d-broadsheet .bs-dense .bs-day{text-align:center;font-family:var(--serif)}
+body.d-broadsheet .bs-dense .bs-daystart{border-left:1px solid var(--line)}
+body.d-broadsheet .bs-dense tbody th[scope="row"]{font-weight:600;position:sticky;left:0;background:var(--bg);z-index:1}
+body.d-broadsheet .bs-dense .bs-wx{white-space:normal;min-width:9rem;color:var(--ink)}
+body.d-broadsheet .bs-dense .bs-region th{font-family:var(--serif);color:var(--bs-head);padding-top:.6rem;border-bottom:1px solid var(--bs-rule);position:sticky;left:0;background:var(--bg)}
+body.d-broadsheet .bs-dense td.none{color:var(--muted);font-style:italic}
+
+body.d-broadsheet .bs-also p{max-width:56rem}
+
+@media (min-width:900px){
+  body.d-broadsheet .bs-cols{grid-template-columns:minmax(0,3fr) minmax(0,2fr)}
+  body.d-broadsheet .bs-cols>*+*{border-left:1px solid var(--bs-rule);padding-left:2rem}
+  body.d-broadsheet .bs-front .grid.two{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
+  body.d-broadsheet .bs-front .grid.two>.panel:first-child{padding-right:2rem}
+  body.d-broadsheet .bs-front .detail{border-top:0;border-left:1px solid var(--bs-rule);padding:0 0 0 2rem;margin-top:0}
+}
+@media print{
+  body.d-broadsheet .ctl,body.d-broadsheet .skiplink,body.d-broadsheet .design-bar{display:none}
+}

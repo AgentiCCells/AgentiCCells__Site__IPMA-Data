@@ -1,0 +1,66 @@
+/* night-desk.css: the Night desk design (/d/night-desk/), loaded after site.css. Every rule is
+   scoped under body.d-night-desk. A dark operations board: #0d1117 page, #161b22 tiles, text
+   #e6edf3, muted #8b949e (6.15:1 on the page, 5.62:1 on tiles); system sans, every figure in the
+   monospace stack. Palette and type: team/rounds/1/design/PROPOSAL.md, section 4.3. Dark by
+   design: the page sets data-theme="dark" on <html>, so the data colours and hatches are
+   site.css's dark values, unchanged, whatever the reader's own setting.
+   Code Apache-2.0. Written by developer.ipma-data@AgentiCCells.dinis (instance C), 2026-11-18, round 2. */
+body.d-night-desk{
+  --bg:#0d1117; --panel:#161b22; --ink:#e6edf3; --muted:#8b949e; --line:#30363d; --accent:#5fb3d3; --accent-ink:#0d1117;
+  background:var(--bg); color:var(--ink); color-scheme:dark;
+}
+body.d-night-desk main{max-width:80rem}
+body.d-night-desk .site-head,body.d-night-desk .site-foot{background:var(--panel);border-color:var(--line)}
+body.d-night-desk h1{font-weight:700;letter-spacing:-.01em}
+body.d-night-desk h2{font-size:1rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-weight:700;border-bottom:1px solid var(--line);padding-bottom:.3rem}
+body.d-night-desk .lede{color:var(--ink);opacity:1;max-width:52rem}
+body.d-night-desk .design-bar p{margin:0 0 1rem;font-size:.88rem;color:var(--muted)}
+body.d-night-desk .nd-kicker{margin:0;font-family:var(--mono);font-size:.85rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+body.d-night-desk .panel{background:var(--panel);border-color:var(--line);border-radius:6px}
+body.d-night-desk .status{background:var(--panel);border-radius:6px}
+body.d-night-desk .ctl button{background:var(--bg);border-color:var(--line);border-radius:6px}
+body.d-night-desk .ctl button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+body.d-night-desk td,body.d-night-desk th{border-bottom-color:var(--line)}
+body.d-night-desk .nd-mono,body.d-night-desk .num,body.d-night-desk .prov .age{font-family:var(--mono);font-variant-numeric:tabular-nums}
+body.d-night-desk .nd-small{font-size:.82rem;color:var(--muted)}
+
+/* Tiles */
+body.d-night-desk .nd-tiles{display:grid;gap:.75rem;grid-template-columns:minmax(0,1fr)}
+body.d-night-desk .nd-tile{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:.75rem .9rem;min-width:0;display:flex;flex-direction:column;gap:.35rem}
+body.d-night-desk .nd-tile-stale{border-color:var(--stale)}
+body.d-night-desk .nd-tile-old,body.d-night-desk .nd-tile-fail{border-color:var(--old)}
+body.d-night-desk .nd-tile-head{display:flex;align-items:center;gap:.5rem}
+body.d-night-desk .nd-tile h3{margin:0;font-size:1rem;flex:1;min-width:0}
+body.d-night-desk .nd-tile h3 a{color:var(--ink);text-decoration:none}
+body.d-night-desk .nd-tile h3 a:hover{text-decoration:underline}
+body.d-night-desk .nd-light{width:.8rem;height:.8rem;border-radius:50%;flex:none;background:var(--muted)}
+body.d-night-desk .nd-fresh{background:var(--fresh);box-shadow:0 0 0 3px color-mix(in srgb,var(--fresh) 25%,transparent)}
+body.d-night-desk .nd-stale{background:var(--stale);box-shadow:0 0 0 3px color-mix(in srgb,var(--stale) 25%,transparent)}
+body.d-night-desk .nd-old,body.d-night-desk .nd-fail{background:var(--old);box-shadow:0 0 0 3px color-mix(in srgb,var(--old) 25%,transparent)}
+body.d-night-desk .nd-word{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+body.d-night-desk .nd-w-fresh{color:var(--fresh)} body.d-night-desk .nd-w-stale{color:var(--stale)} body.d-night-desk .nd-w-old,body.d-night-desk .nd-w-fail{color:var(--old)}
+body.d-night-desk .nd-kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.3rem;margin:0}
+body.d-night-desk .nd-kv dt{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+body.d-night-desk .nd-kv dd{margin:0;font-size:.95rem}
+body.d-night-desk .nd-line{margin:0;font-size:.9rem}
+
+/* What changed */
+body.d-night-desk .nd-changes{margin:0;padding:0 0 0 1.1rem;font-size:.92rem}
+body.d-night-desk .nd-changes>li{padding:.25rem 0}
+body.d-night-desk .nd-changes ul{padding-left:1.1rem;margin:.2rem 0}
+body.d-night-desk .nd-ch-fail strong{color:var(--old)}
+
+/* Forecast */
+body.d-night-desk .nd-scroll{overflow-x:auto;max-width:100%}
+body.d-night-desk .nd-ftable{font-size:.88rem;min-width:36rem}
+body.d-night-desk .nd-ftable td{white-space:nowrap}
+body.d-night-desk .nd-t{font-size:.95rem}
+
+body.d-night-desk .nd-pair{display:grid;gap:0 1.5rem}
+body.d-night-desk .nd-pair>*{min-width:0}
+
+@media (min-width:600px){body.d-night-desk .nd-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1000px){
+  body.d-night-desk .nd-tiles{grid-template-columns:repeat(4,minmax(0,1fr))}
+  body.d-night-desk .nd-pair{grid-template-columns:minmax(0,2fr) minmax(0,3fr)}
+}

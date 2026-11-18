@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en-GB" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chart room design | IPMA data, drawn</title>
+<meta name="description" content="The sea first: IPMA's three-day wave forecast for 12 coastal places with each day's rough-sea warning marked, the warnings map with rough sea picked out, and the strongest winds at IPMA's stations, read live from data.promptugal.news. Not a warning service.">
+<meta name="share-image" content="/assets/share/d-chart-room.png">
+<!--HEAD-->
+<link rel="stylesheet" href="/d/chart-room/chart-room.css">
+</head>
+<body class="d-chart-room" data-sources="ipma-sea ipma-warnings ipma-observations ipma-city-forecasts ipma-fire-risk">
+<!--HEADER-->
+<main id="main">
+<nav class="design-bar" aria-label="Designs and main pages">
+<p><strong>Chart room</strong>, one of five designs of this site. <a href="/d/">All designs</a> <span aria-hidden="true">·</span> The main design: <a href="/">Now</a>, <a href="/warnings/">Warnings</a>, <a href="/sea/">Sea</a>, <a href="/observations/">Stations</a>, <a href="/forecasts/">Forecasts</a></p>
+</nav>
+
+<header class="cr-head">
+<p class="cr-kicker">Chart room</p>
+<h1>The coast first: sea, rough-sea warnings and wind</h1>
+<p class="lede">IPMA's sea forecast for the coastal places leads, with each day's rough-sea warning beside it; then the warnings map with rough sea picked out, and the wind at IPMA's stations. Every figure is IPMA's, read live in your browser from data.promptugal.news. Check <a href="https://www.ipma.pt">ipma.pt</a> before going to sea.</p>
+</header>
+<noscript><p class="status fail">This page draws IPMA's data with JavaScript in your browser. Without it nothing can be shown here; see <a href="https://www.ipma.pt">ipma.pt</a>.</p></noscript>
+
+<section class="cr-water" aria-labelledby="sea-h">
+<h2 id="sea-h">Sea state at the coastal places</h2>
+<div id="sea"><p class="status loading">Reading IPMA's sea forecast from data.promptugal.news...</p></div>
+</section>
+
+<div class="cr-pair">
+<section class="cr-map" aria-labelledby="w-h">
+<h2 id="w-h">Warnings, rough sea picked out</h2>
+<div id="w-filter"></div>
+<div id="warnings-block"><p class="status loading">Reading IPMA's warnings from data.promptugal.news...</p></div>
+</section>
+<section class="cr-windbox" aria-labelledby="wind-h">
+<h2 id="wind-h">Wind at IPMA's stations</h2>
+<div id="wind"><p class="status loading">Reading IPMA's station readings from data.promptugal.news...</p></div>
+</section>
+</div>
+
+<section aria-labelledby="w-table-h">
+<h2 id="w-table-h" tabindex="-1">The warnings as a list</h2>
+<div id="warnings-table"><p class="status loading">Reading IPMA's warnings from data.promptugal.news...</p></div>
+</section>
+
+<section aria-labelledby="fc-h">
+<h2 id="fc-h">Forecast for places on the coast</h2>
+<div id="forecast"><p class="status loading">Reading IPMA's forecasts from data.promptugal.news...</p></div>
+</section>
+
+<section aria-labelledby="also-h">
+<h2 id="also-h">Elsewhere on this site</h2>
+<p>Every station and measure: <a href="/observations/">Stations</a>. The sea page of the main design: <a href="/sea/">Sea</a>. Fire risk and UV: <a href="/fire-risk/">Fire risk</a>, <a href="/uv/">UV</a>. Other ways of drawing the same files: <a href="/d/">All designs</a>.</p>
+</section>
+</main>
+<!--FOOTER-->
+<script type="module" src="/d/chart-room/chart-room.js"></script>
+</body>
+</html>
