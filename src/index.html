@@ -3,64 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>IPMA data, drawn: Portugal now</title>
-<meta name="description" content="Portugal's public weather data from IPMA, drawn live from data.promptugal.news: current warnings on a map, the next days' forecast, and when each was read. Not a warning service.">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="IPMA data, drawn">
-<meta property="og:title" content="IPMA data, drawn: Portugal now">
-<meta property="og:description" content="IPMA warnings and forecasts for Portugal, drawn live in your browser from data.promptugal.news. Not a warning service: follow IPMA and ANEPC.">
-<meta property="og:url" content="https://ipma-data.agenticcells.site/">
-<meta name="twitter:card" content="summary">
-<link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
-<link rel="stylesheet" href="/assets/site.css">
-<script src="/assets/ipma.js" defer></script>
+<title>IPMA data, drawn</title>
+<meta name="description" content="Portugal's public weather data from IPMA, drawn live from data.promptugal.news, with the Storm Charles archive. Not a warning service: follow IPMA.">
+<!--HEAD-->
 </head>
-<body>
-<p class="notice"><strong>Not a warning service.</strong> For warnings and safety, follow IPMA (<a href="https://www.ipma.pt">ipma.pt</a>) and ANEPC.</p>
-<header class="site"><div class="wrap">
-<a class="brand" href="/">IPMA data, drawn</a>
-<nav class="main" aria-label="Main">
-<a href="/" aria-current="page">Portugal now</a>
-<a href="/warnings/">Warnings</a>
-<a href="/forecasts/">Forecasts</a>
-<a href="/observations/">Observations</a>
-<a href="/fire-risk/">Fire risk</a>
-<a href="/sea/">Sea</a>
-<a href="/uv/">UV</a>
-<a href="/storm-charles/">Storm Charles</a>
-<a href="/how-it-works/">How it works</a>
-<a href="/use-with-ai/">Use with AI</a>
-</nav>
-</div></header>
-<main class="wrap">
-<h1>Portugal now, from IPMA</h1>
-<p class="lede">IPMA's public weather data for Portugal, read live in your browser from data.promptugal.news and drawn here. Every figure is IPMA's, shown with the time PrompTugal.news last read it. This site is a demonstration by AgentiCCells; it is not IPMA and it is not official.</p>
-
-<h2>Warnings</h2>
-<div data-ipma="warnings" data-home>
-<p class="status loading">This part needs JavaScript: it reads the warnings from data.promptugal.news. Without it, see <a href="https://www.ipma.pt">ipma.pt</a>.</p>
-</div>
-<p><a href="/warnings/">All warnings, with times and text</a></p>
-
-<h2>The next days</h2>
-<div data-ipma="forecasts" data-home>
-<p class="status loading">This part needs JavaScript: it reads the forecasts from data.promptugal.news.</p>
-</div>
-<p><a href="/forecasts/">Forecasts for every place</a></p>
-
-<h2>More from IPMA</h2>
-<div class="cards">
-<div class="card"><h3>Observations</h3><p>The latest hourly reading from each surface station, on a map.</p><a class="more" href="/observations/">Station observations</a></div>
-<div class="card"><h3>Fire risk</h3><p>The RCM fire risk class for each mainland municipality, today and the next two days.</p><a class="more" href="/fire-risk/">Fire risk</a></div>
-<div class="card"><h3>Sea</h3><p>Waves, period, direction and sea temperature along the coast.</p><a class="more" href="/sea/">Sea state</a></div>
-<div class="card"><h3>UV</h3><p>The UV index forecast by place and day.</p><a class="more" href="/uv/">UV index</a></div>
-<div class="card"><h3>Storm Charles</h3><p>An archived event: PrompTugal.news's account of the storm, its alerts and timeline.</p><a class="more" href="/storm-charles/">Storm Charles</a></div>
-<div class="card"><h3>How it works</h3><p>From IPMA to your browser, in four steps.</p><a class="more" href="/how-it-works/">How it works</a></div>
-</div>
+<body data-sources="ipma-warnings ipma-city-forecasts">
+<!--HEADER-->
+<main id="main">
+<h1>IPMA data, drawn</h1>
+<p class="lede">Portugal's public weather data from IPMA, drawn live from data.promptugal.news, with the Storm Charles archive.</p>
 </main>
-<footer class="site"><div class="wrap">
-<p><strong>Not a warning service.</strong> For warnings and safety, follow IPMA (<a href="https://www.ipma.pt">ipma.pt</a>) and ANEPC. Weather data: IPMA, via <a href="https://data.promptugal.news">data.promptugal.news</a>. This site is not IPMA's and is not official.</p>
-<p>Version __VERSION__ · Made by the <a href="https://github.com/AgentiCCells/AgentiCCells__Site__Factory">AgentiCCells site factory</a> · Code Apache-2.0, text CC BY 4.0 · No ads, no tracking.</p>
-</div></footer>
+<!--FOOTER-->
 </body>
 </html>
