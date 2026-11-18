@@ -54,6 +54,8 @@ jobs:
           node scripts/role-scope.mjs "${last:-$BEFORE}" "$AFTER"
       - name: Every Agent Behaviour Policy is well formed
         run: node scripts/abp-check.mjs
+      - name: Tests
+        run: node --test tests/*.test.mjs
       - run: node scripts/build.mjs
         env:
           SITE_VERSION: ${{ steps.version.outputs.version }}

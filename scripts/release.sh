@@ -13,6 +13,7 @@ node scripts/leak-scan.mjs
 node scripts/check-commits.mjs origin/dev HEAD
 node scripts/role-scope.mjs origin/dev HEAD
 node scripts/abp-check.mjs
+node --test tests/*.test.mjs
 for i in 1 2 3 4 5; do
   git fetch -q origin dev
   git rebase -q origin/dev
