@@ -3,20 +3,17 @@
    lining tabular figures in tables. Always light, like paper, and readable in greyscale: every
    level is a word beside its hatched swatch. Prints on one A4 sheet.
    Palette from team/rounds/1/design/PROPOSAL.md, section 4: cream #faf6ec, ink #222, ochre
-   #9a6a12 for rules. Level colours and hatches are the site's own (light values), unchanged.
+   #9a6a12 for rules. Level colours, hatches and status colours come from site.css (light values, via data-theme="light" on <html>).
    Code Apache-2.0. Written by developer.ipma-data@AgentiCCells.dinis (instance D), 2026-11-18, round 2. */
 body.d-almanac{
   --bg:#faf6ec; --panel:#fffdf7; --ink:#222222; --muted:#5e5644; --line:#d9ccae; --accent:#6e4c0d; --accent-ink:#ffffff;
   --rule:#9a6a12; --paper2:#e9e1cc;
-  --w-green:#a8d5b5; --w-yellow:#f5c518; --w-orange:#d9621a; --w-red:#a51f2a; --w-none:#c9cfd4;
-  --map-edge:#6f7880; --hatch-dark:rgba(29,35,41,.5); --hatch-light:rgba(255,255,255,.6);
-  --land:#e9e1cc; --fresh:#2e7d4f; --stale:#a35d00; --old:#b3261e;
+  --land:#e9e1cc;
   --serif:Charter,"Iowan Old Style","Palatino Linotype",Georgia,serif;
   color-scheme:light;
   background:var(--bg); color:var(--ink);
   font-family:var(--serif); font-variant-numeric:oldstyle-nums proportional-nums;
 }
-:root body.d-almanac .disclaimer{background:#fff4d6;color:#3b2f00;border-color:#ecd79a}
 .d-almanac .site-head{background:var(--panel);border-bottom:2px solid var(--rule)}
 .d-almanac .brand,.d-almanac .nav{font-family:var(--serif)}
 .d-almanac main{max-width:70rem}

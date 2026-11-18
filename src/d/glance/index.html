@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-GB">
+<html lang="en-GB" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -8,33 +8,37 @@
 <meta name="share-image" content="/assets/share/d-glance.png">
 <!--HEAD-->
 <link rel="stylesheet" href="/d/glance/glance.css">
+<noscript><style>.d-glance .js-only{display:none}</style></noscript>
 </head>
 <body class="d-glance" data-sources="ipma-warnings ipma-city-forecasts ipma-fire-risk ipma-observations ipma-sea ipma-uv meteoalarm-pt">
 <!--HEADER-->
 <main id="main">
-<p class="gl-kicker"><a href="/d/">Designs</a> · Glance, one of six designs of the same data</p>
+<p class="gl-kicker"><a href="/d/">Designs</a> · Glance, one of six designs: the main design and five others</p>
 <h1>Portugal at a glance</h1>
-<noscript><p class="status fail">This page writes its sentences from IPMA's data with JavaScript in your browser. Without it nothing can be shown here; see <a href="https://www.ipma.pt">ipma.pt</a>.</p></noscript>
-<div class="gl-pick">
+<noscript><p class="status fail">This page needs JavaScript to read IPMA's data live; see <a href="https://www.ipma.pt">ipma.pt</a>.</p></noscript>
+<div class="gl-pick js-only">
 <label for="gl-place">Your place</label>
 <select id="gl-place" disabled><option>Reading places...</option></select>
 </div>
-<div id="gl-mine" class="gl-mine" aria-live="polite"><p class="muted">Reading IPMA's warnings and forecasts from data.promptugal.news...</p></div>
+<div id="gl-mine" class="gl-mine js-only" aria-live="polite"><p class="muted">Reading IPMA's warnings and forecasts from data.promptugal.news...</p></div>
 
 <section aria-labelledby="gl-list-h">
 <h2 id="gl-list-h">Five places</h2>
-<div id="gl-list"><p class="status loading">Reading IPMA's forecasts from data.promptugal.news...</p></div>
+<noscript><p class="status fail">This page needs JavaScript to read IPMA's data live; see <a href="https://www.ipma.pt">ipma.pt</a>.</p></noscript>
+<div id="gl-list"><p class="status loading js-only">Reading IPMA's forecasts from data.promptugal.news...</p></div>
 </section>
 
 <section aria-labelledby="gl-map-h">
 <h2 id="gl-map-h">Warnings now</h2>
-<div id="gl-map"><p class="status loading">Reading IPMA's warnings from data.promptugal.news...</p></div>
+<noscript><p class="status fail">This page needs JavaScript to read IPMA's data live; see <a href="https://www.ipma.pt">ipma.pt</a>.</p></noscript>
+<div id="gl-map"><p class="status loading js-only">Reading IPMA's warnings from data.promptugal.news...</p></div>
 </section>
 
 <section aria-labelledby="gl-ages-h" class="gl-foot">
 <h2 id="gl-ages-h">When each file was read</h2>
 <p class="note">When PrompTugal.news's collector last read each file from IPMA (and MeteoAlarm). Fresh: in the last 3 hours. Stale: 3 to 24 hours. Old: more than 24 hours.</p>
-<ul id="gl-ages" class="gl-ages"><li>Reading from data.promptugal.news...</li></ul>
+<noscript><p class="status fail">This page needs JavaScript to read IPMA's data live; see <a href="https://www.ipma.pt">ipma.pt</a>.</p></noscript>
+<ul id="gl-ages" class="gl-ages"><li class="js-only">Reading from data.promptugal.news...</li></ul>
 </section>
 <p class="gl-back"><a href="/d/">Back to the six designs</a> · <a href="/">The main design</a></p>
 </main>

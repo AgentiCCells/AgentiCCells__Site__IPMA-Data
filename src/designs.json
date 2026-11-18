@@ -1,5 +1,5 @@
 {
-  "about": "The six designs of IPMA data, drawn: the main design and the five from the round 1 design proposal (team/rounds/1/design/PROPOSAL.md, section 4). Every design reads the same live files from data.promptugal.news; only the way they are drawn differs. palette: five colours, page first; they are the proposal's colours, and where the proposal names fewer than five (Broadsheet 3, Chart room 4, Night desk 4, Almanac 3, Glance 3) the rest were added by the developer to match. fonts: the stack for text; figures: the stack for numbers. Not a warning service. For warnings and safety, follow IPMA (ipma.pt) and ANEPC.",
+  "about": "Six designs: the main design and five others, the five from the round 1 design proposal (team/rounds/1/design/PROPOSAL.md, section 4). Every design reads the same live files from data.promptugal.news; only the way they are drawn differs. palette: five colours, page first; they are the proposal's colours, and where the proposal names fewer than five (Broadsheet 3, Chart room 4, Night desk 4, Almanac 3, Glance 3) the rest were added by the developer to match. fonts: the stack for text; figures: the stack for numbers. Not a warning service. For warnings and safety, follow IPMA (ipma.pt) and ANEPC.",
   "designs": [
     {
       "slug": "main",

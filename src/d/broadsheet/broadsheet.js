@@ -62,6 +62,28 @@ export function headline(active, now = lisbonNow()) {
   deck.push(n === 1
     ? `The ${top} spell ends ${when(T.end, now)} (Portugal time, as IPMA gives it).`
     : `${andList(T.areas.map(areaName))}. The last of these ${top} spells ends ${when(T.end, now)} (Portugal time, as IPMA gives it).`);
+  // Lower-level spells of the same type that follow straight on (each starting where the last
+  // ended) after the top-level spells in these areas: said, so the end above is not read as the
+  // end of the warning.
+  const after = [];
+  for (const a of T.areas) {
+    const sp = rows.filter(w => w.area === a && typeOf(w) === T.t);
+    const seen = new Set();
+    for (const top0 of sp.filter(w => w.level === top)) {
+      for (let c = top0, nx; (nx = sp.find(w => !seen.has(w) && w !== top0 && w.start === c.end)); c = nx) {
+        seen.add(nx);
+        if (nx.level !== top) after.push({ a, w: nx });
+      }
+    }
+  }
+  if (after.length) {
+    const lvls = LV.filter(l => after.some(x => x.w.level === l));
+    const k = new Set(after.map(x => x.a)).size;
+    const last = after.map(x => x.w.end).sort().pop();
+    deck.push(n === 1
+      ? `A ${andList(lvls)} warning for ${T.t} follows straight on, until ${when(last, now)}.`
+      : `In ${k} of these areas a ${andList(lvls)} warning for ${T.t} follows straight on; the last of these ends ${when(last, now)}.`);
+  }
   const types = [...new Set(rows.map(typeOf))].map(t => {
     const ws = rows.filter(w => typeOf(w) === t);
     const lv = ws.reduce((m, w) => (LV.indexOf(w.level) > LV.indexOf(m) ? w.level : m), 'yellow');
@@ -87,8 +109,11 @@ async function warnings() {
   }
   const D = W.latest.data;
   const { head, deck } = headline(D.active);
+  // The age line goes above the headline when the file is stale or old: age before the claim.
+  const age = ageBanner(W.latest, { subject: 'These warnings', page: IPMA_WARN });
+  if (age) headEl.before(age);
   headEl.textContent = head;
-  put(deckEl, ageBanner(W.latest, { subject: 'These warnings', page: IPMA_WARN }),
+  put(deckEl,
     deck.map((t, i) => h('p', { class: i === 0 ? 'bs-standfirst' : 'bs-deck' }, t)),
     h('p', { class: 'bs-credit' }, `Written by this page from IPMA's warnings file, read ${D.read_at ? fmtUTC(D.read_at) : 'at an unknown time'}. The source box follows the map.`));
   warningsBlock(block, W, F, { tableId: 'w-table-h' });

@@ -56,11 +56,12 @@ body.d-night-desk .nd-ftable{font-size:.88rem;min-width:36rem}
 body.d-night-desk .nd-ftable td{white-space:nowrap}
 body.d-night-desk .nd-t{font-size:.95rem}
 
-body.d-night-desk .nd-pair{display:grid;gap:0 1.5rem}
+/* "What changed" and the forecast stack one above the other at every width, so the forecast
+   table has the full row and is not cut off inside its tile (round 2 design review). */
+body.d-night-desk .nd-pair{display:grid;grid-template-columns:minmax(0,1fr);gap:0 1.5rem}
 body.d-night-desk .nd-pair>*{min-width:0}
 
 @media (min-width:600px){body.d-night-desk .nd-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (min-width:1000px){
   body.d-night-desk .nd-tiles{grid-template-columns:repeat(4,minmax(0,1fr))}
-  body.d-night-desk .nd-pair{grid-template-columns:minmax(0,2fr) minmax(0,3fr)}
 }

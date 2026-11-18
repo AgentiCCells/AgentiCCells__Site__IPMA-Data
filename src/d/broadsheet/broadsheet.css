@@ -15,6 +15,7 @@ body.d-broadsheet{
 }
 body.d-broadsheet main{max-width:80rem}
 body.d-broadsheet a{color:var(--ink);text-decoration-thickness:1px;text-underline-offset:2px}
+body.d-broadsheet a.skip{color:var(--accent-ink)}
 body.d-broadsheet .site-head,body.d-broadsheet .site-foot{background:var(--bg)}
 body.d-broadsheet h1,body.d-broadsheet h2,body.d-broadsheet h3{font-family:var(--serif);color:var(--bs-head);font-weight:700}
 

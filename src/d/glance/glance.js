@@ -24,8 +24,10 @@ const REGIONS = [['1', 'Mainland, north to south'], ['2', 'Madeira'], ['3', 'Azo
 const when = (t, today) => typeof t !== 'string' || t.length < 16 ? 'an unknown time' : t.slice(0, 10) === today ? t.slice(11, 16) : `${fmtDay(t.slice(0, 10)).split(' ')[0]} ${t.slice(11, 16)}`;
 const word = l => h('span', { class: 'gl-lvl' }, swatch(l), levelWord(l).toLowerCase());
 
-// The warnings part of a place's sentence: per type, the spell in force now (and the one straight
-// after it, if any), or the next one to start. At most two types; the rest are counted.
+// The warnings part of a place's sentence: per type, the spell in force now and every spell that
+// follows straight on from it (each starting where the last ended), so the last "until" is the
+// true end of the chain in IPMA's file; or the next spell to start, with the same chain after it.
+// At most two types; the rest are counted.
 function warnPart(W, area) {
   if (!W?.latest?.ok) return ['Warnings could not be read.'];
   const now = lisbonNow(), today = now.slice(0, 10);
@@ -37,12 +39,12 @@ function warnPart(W, area) {
     const sp = rows.filter(w => (w.type || w.type_pt) === type).sort((a, b) => a.start.localeCompare(b.start));
     const cur = sp.find(w => w.start <= now);
     const lead = i ? '; ' : '';
-    if (cur) {
-      const next = sp.find(w => w.start === cur.end);
-      out.push(lead, word(cur.level), ` for ${type} until ${when(cur.end, today)}`);
-      if (next) out.push(', then ', word(next.level), ` until ${when(next.end, today)}`);
-    } else {
-      out.push(lead, word(sp[0].level), ` for ${type} from ${when(sp[0].start, today)}`);
+    const first = cur || sp[0];
+    out.push(lead, word(first.level), ` for ${type} `, cur ? '' : `from ${when(first.start, today)} `, `until ${when(first.end, today)}`);
+    const seen = new Set([first]);
+    for (let s = first, n; (n = sp.find(w => !seen.has(w) && w.start === s.end)); s = n) {
+      seen.add(n);
+      out.push(', then ', word(n.level), ` until ${when(n.end, today)}`);
     }
   });
   out.push('.');
@@ -90,7 +92,10 @@ async function places(W) {
   sel.disabled = false;
   const show = c => {
     sel.value = String(c.id);
-    put(mine, sentence(c, W, 'p'));
+    // With a stale or old file, its age line comes before the sentence, never after it.
+    put(mine, ageBanner(F.latest, { subject: 'These forecasts', page: IPMA_FC }),
+      W.latest.ok ? ageBanner(W.latest, { subject: 'These warnings', page: IPMA_WARN }) : null,
+      sentence(c, W, 'p'));
   };
   show(readPlace(cities));
   sel.addEventListener('change', () => {

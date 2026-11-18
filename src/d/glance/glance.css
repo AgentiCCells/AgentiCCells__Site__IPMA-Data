@@ -1,16 +1,13 @@
 /* glance.css: the Glance design (/d/glance/), scoped under body.d-glance. Phone first: one
    column, 18 px system sans, white page, ink #111, one accent #0b5c7a (palette from
-   team/rounds/1/design/PROPOSAL.md, section 4). Level colours and hatches are the site's own
-   light values, unchanged. Code Apache-2.0.
+   team/rounds/1/design/PROPOSAL.md, section 4). Level colours, hatches and status
+   colours come from site.css (light values, via data-theme="light" on <html>). Code Apache-2.0.
    Written by developer.ipma-data@AgentiCCells.dinis (instance D), 2026-11-18, round 2. */
 body.d-glance{
   --bg:#ffffff; --panel:#f2f4f5; --ink:#111111; --muted:#4f5a63; --line:#dde2e6; --accent:#0b5c7a; --accent-ink:#ffffff;
-  --w-green:#a8d5b5; --w-yellow:#f5c518; --w-orange:#d9621a; --w-red:#a51f2a; --w-none:#c9cfd4;
-  --map-edge:#6f7880; --hatch-dark:rgba(29,35,41,.5); --hatch-light:rgba(255,255,255,.6);
-  --land:#eef0f1; --fresh:#2e7d4f; --stale:#a35d00; --old:#b3261e;
+  --land:#eef0f1;
   color-scheme:light; background:var(--bg); color:var(--ink); font-size:18px;
 }
-:root body.d-glance .disclaimer{background:#fff4d6;color:#3b2f00;border-color:#ecd79a}
 .d-glance .site-head{background:#fff}
 .d-glance main{max-width:36rem;padding-top:1rem}
 .d-glance .gl-kicker{margin:0;font-size:.85rem;color:var(--muted)}
@@ -23,7 +20,8 @@ body.d-glance{
 .d-glance .gl-mine p{margin:0}
 .d-glance .gl-list{list-style:none;margin:0;padding:0}
 .d-glance .gl-s{padding:.65rem 0;border-top:1px solid var(--line);line-height:1.5}
-.d-glance .gl-list .gl-s:first-child{border-top:0}
+.d-glance .gl-list .gl-s:first-child,.d-glance .gl-mine .gl-s{border-top:0}
+.d-glance .gl-mine .age-banner{margin:0 0 .5rem;font-size:.95rem}
 .d-glance .gl-name{font-weight:700}
 .d-glance .gl-area{color:var(--muted);font-size:.85rem}
 .d-glance .gl-lvl{display:inline-flex;align-items:center;gap:.3rem;font-weight:600;white-space:nowrap}

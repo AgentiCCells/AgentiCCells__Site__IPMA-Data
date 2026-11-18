@@ -113,7 +113,7 @@ function whatChanged(el, results) {
     else if (R.first) items.push(h('li', {}, h('strong', {}, `${S.name}: `), 'the run of ', h('span', { class: 'nd-mono' }, dayHm(R.last.at)), ' was the first read, so there is nothing to compare.'));
     else same.push([S.name, R]);
   }
-  if (same.length) items.push(h('li', {}, h('strong', {}, 'Unchanged at the last run: '), same.map(([n, R], i) => [i ? ', ' : '', n, ' (', h('span', { class: 'nd-mono' }, hm(R.last.at)), ')']), '. The same bytes as the run before.'));
+  if (same.length) items.push(h('li', {}, h('strong', {}, 'Unchanged at the last run: '), same.flatMap(([n, R], i) => [i ? ', ' : '', n, ' (', h('span', { class: 'nd-mono' }, hm(R.last.at)), ')']), '. The same bytes as the run before.'));
   if (noLog.length) items.push(h('li', {}, h('strong', {}, 'No collector log: '), noLog.join('; '), '.'));
 
   // MeteoAlarm's own changes field: messages that appeared in or left the feed since the last read.

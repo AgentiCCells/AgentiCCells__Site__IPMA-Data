@@ -20,7 +20,7 @@ const fin = v => v !== null && v !== undefined && Number.isFinite(Number(v));
 const put = (el, ...kids) => el.replaceChildren(...kids.flat(Infinity).filter(k => k !== null && k !== undefined && k !== false && k !== ''));
 const today = () => lisbonNow().slice(0, 10);
 const shortDay = ymd => fmtDay(ymd).replace(/ \w+$/, ''); // "Wed 18"
-const range = (a, b, unit = '') => !fin(a) && !fin(b) ? null : !fin(a) ? `max ${b}${unit}` : !fin(b) ? `min ${a}${unit}` : Number(a) === Number(b) ? `${a}${unit}` : `${a}–${b}${unit}`;
+const range = (a, b, unit = '') => !fin(a) && !fin(b) ? null : !fin(a) ? `max ${b}${unit}` : !fin(b) ? `min ${a}${unit}` : Number(a) === Number(b) ? `${a}${unit}` : `${a} to ${b}${unit}`;
 const regionOf = id => ({ 1: 0, 2: 1, 3: 2 })[String(id)[0]] ?? 3;
 
 // The date line under the title: today in Portugal, not a figure from any file.
@@ -81,7 +81,7 @@ async function forecasts() {
   const rows = PLACES.map(n => [n, cities.find(c => c.name === n)]);
   put(el, ageBanner(src.latest, { page: IPMA_FC }),
     h('table', { class: 'alm-t alm-fc' },
-      h('caption', {}, 'Lowest to highest temperature (°C) and chance of rain, by day, as IPMA gives them. All 35 places are on the Forecasts page.'),
+      h('caption', {}, 'Lowest to highest temperature (°C, rounded to the nearest degree) and chance of rain, by day, from IPMA\'s file. All 35 places, in tenths, are on the Forecasts page.'),
       h('thead', {}, h('tr', {}, h('th', { scope: 'col' }, 'Place'), dates.map(d => h('th', { scope: 'col' }, shortDay(d))))),
       h('tbody', {}, rows.map(([n, c]) => h('tr', {}, h('th', { scope: 'row' }, n), dates.map(dt => {
         const d = c?.days?.find(x => x.date === dt);
