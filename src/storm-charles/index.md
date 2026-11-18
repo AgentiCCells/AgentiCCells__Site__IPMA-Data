@@ -35,7 +35,7 @@ The level in force for each hazard across Wednesday, using only the times PrompT
 | Sea | orange | 12:34 | 21:00 | 13:15 (periods from 12:34); re-read 18:37 |
 | Sea | yellow | 21:00 | Thu 03:00 | 16:15 |
 
-Before 08:15 IPMA had a red wind warning for 12:00 to 21:00; it was lowered to orange before it began. Source: IPMA's warnings file (https://api.ipma.pt/open-data/forecast/warnings/warnings_www.json) as read and reported by PrompTugal.news. This table is built from the page's text, not from IPMA's files: this site holds no IPMA data from the storm.
+Before 08:15 IPMA had a red wind warning for 12:00 to 21:00; it was lowered to orange before it began. Source: IPMA's warnings file (https://api.ipma.pt/open-data/forecast/warnings/warnings_www.json) as read and reported by PrompTugal.news. This table is built from the page's text, not from IPMA's files: this site holds no IPMA data from the storm. The levels are as reported on PrompTugal.news's page. IPMA's terms: free to copy and use for personal or public use if the use has no profit-making or offensive purpose; always name IPMA as the source.
 
 ### How IPMA's Lisbon warnings changed
 
@@ -85,7 +85,7 @@ Newest first, as PrompTugal.news lists it, in our words. Times UTC. Items marked
 
 ## What the IPMA data on this site can and cannot show
 
-- **It shows now, not then.** The other pages of this site read each source's `latest.json` from data.promptugal.news: IPMA's files as they were at the last hourly read. They do not hold the storm's files.
+- **It shows now, not then.** The other pages of this site read each source's `latest.json` from data.promptugal.news: IPMA's files as they were at the collector's last read. The collectors are scheduled hourly, but their run log shows irregular runs with gaps of several hours, so each page shows the read time and marks a stale file. They do not hold the storm's files.
 - **The history is of runs, not values.** Each source's `reads.json` logs the collector's runs: the address read, the HTTP status, the size, the start of a checksum and whether the bytes changed. It does not keep the warnings or readings themselves, so it cannot replay the storm.
 - **The collectors started after the storm.** The IPMA warnings card gives its start as 17 November 2026 (https://data.promptugal.news/api/v1/ipma-warnings/card.json, read 18 November at 10:55 UTC), five days after Storm Charles. The dated copies in its vault begin then too.
 - **The storm's own files are kept elsewhere.** data.promptugal.news lists a Storm Charles archive: the data files behind storm-charles.promptugal.news, for Lisbon and Madeira, 10 to 12 November 2026 (https://data.promptugal.news/sources/storm-charles-archive/index.md, listed in https://data.promptugal.news/llms.txt, read 18 November at 10:55 UTC). This site does not draw them yet.

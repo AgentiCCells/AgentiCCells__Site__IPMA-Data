@@ -39,3 +39,20 @@ Only from times stated on PrompTugal.news's page. Each segment is labelled with 
 - How data.promptugal.news is hosted: the card says "the Pages workflow ... deploys the site"; I wrote only that the same workflow builds and deploys it.
 - The loader thresholds (4 s, 15 s, 3 h, 24 h) are the developer's current values and may change; the page says "at the time of writing".
 - The Faro example prompt assumes Faro is in ipma-city-forecasts; the card's summary says every district capital is, and Faro is one, but I did not check the file's records.
+
+## Round 1 review fixes (writer, 18 November 2026, about 11:50 UTC)
+
+- **M1, Storm Charles chart labels.** Level labels are now 19 px weight 700 in the viewBox (about 17 px on screen at the chart's 680 px minimum width, so not counted as large text) and every label reaches 4.5:1 at any size. Colours: black #000 on orange and yellow, white on red in light mode and black on red in dark mode, `--ink` on the "no warning" green. Ratios (WCAG 2, computed from the `src/assets/site.css` tokens with a short node script):
+
+  | Label | Light | Dark |
+  |---|---|---|
+  | orange: #000 on `--w-orange` (#d9621a / #ec8030) | 5.71:1 | 7.70:1 |
+  | yellow: #000 on `--w-yellow` (#f5c518 / #f4cc1c) | 12.88:1 | 13.50:1 |
+  | red: #fff on #a51f2a (light), #000 on #de3c5c (dark) | 7.42:1 | 4.91:1 |
+  | no warning: `--ink` (#1d2329 / #e8ecef) on `--w-green` (#a8d5b5 / #22382f) | 9.70:1 | 10.55:1 |
+  | not stated: `--ink` on the hatch (`--panel` and `--line`), worst stripe | 10.74:1 | 10.18:1 |
+
+  "yellow" at 19 px bold is about 58 units wide and fits its 71-unit bar (estimate from typical sans-serif glyph widths, not measured in a browser).
+- **M2.** "Hourly" claims replaced on How it works (html and md) and Storm Charles (html and md): the cards' schedule says hourly at 17 minutes past each hour; the run log shows irregular runs with gaps of several hours (up to 7 h 15 min on 17 and 18 November, from team/rounds/1/data/NOTES.md); pages show the read time and mark stale files.
+- **M3.** The chart caption and the Markdown table note now add IPMA's terms and say the levels are as reported on PrompTugal.news's page.
+- **S4.** "one small script" is now "a few small scripts" (html and md), with the verbs made plural.

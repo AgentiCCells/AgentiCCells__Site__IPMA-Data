@@ -13,8 +13,11 @@
 .lanes .lv-red{fill:var(--w-red)} .lanes .lv-orange{fill:var(--w-orange)} .lanes .lv-yellow{fill:var(--w-yellow)} .lanes .lv-green{fill:var(--w-green)}
 .lanes .unk{fill:url(#unstated);stroke:var(--line)}
 .lanes text{fill:var(--ink);font-family:var(--font)}
-.lanes .on-dark{fill:#fff}
-.lanes .on-light{fill:#1d2329}
+.lanes .on-light{fill:#000}
+.lanes .on-red{fill:#fff}
+.lanes .on-green{fill:var(--ink)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .lanes .on-red{fill:#000}}
+:root[data-theme="dark"] .lanes .on-red{fill:#000}
 .lanes .src{fill:var(--muted);font-size:12px}
 .lanes .axis{stroke:var(--line)}
 .timeline{list-style:none;padding:0;margin:0}
@@ -51,24 +54,24 @@
 <pattern id="unstated" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="var(--panel)"/><line x1="0" y1="0" x2="0" y2="8" stroke="var(--line)" stroke-width="3"/></pattern>
 </defs>
 <g font-size="14" font-weight="700">
-<text x="8" y="63">Rain</text>
-<text x="8" y="133">Wind</text>
-<text x="8" y="203">Sea</text>
+<text x="8" y="64">Rain</text>
+<text x="8" y="134">Wind</text>
+<text x="8" y="204">Sea</text>
 </g>
 <!-- x = 100 + hours after Wed 11 Nov 00:00 UTC x 640/27 -->
-<g font-size="13" font-weight="600">
-<rect class="lv-orange" x="100" y="40" width="213.3" height="36"/><text class="on-light" x="108" y="63">orange</text>
-<rect class="lv-red" x="313.3" y="40" width="142.3" height="36"/><text class="on-dark" x="321" y="63">red</text>
-<rect class="lv-yellow" x="455.6" y="40" width="71.1" height="36"/><text class="on-light" x="461" y="63">yellow</text>
-<rect class="lv-green" x="526.7" y="40" width="213.3" height="36"/><text class="on-dark" x="534" y="63">no warning</text>
+<g font-size="19" font-weight="700">
+<rect class="lv-orange" x="100" y="40" width="213.3" height="36"/><text class="on-light" x="108" y="64">orange</text>
+<rect class="lv-red" x="313.3" y="40" width="142.3" height="36"/><text class="on-red" x="321" y="64">red</text>
+<rect class="lv-yellow" x="455.6" y="40" width="71.1" height="36"/><text class="on-light" x="461" y="64">yellow</text>
+<rect class="lv-green" x="526.7" y="40" width="213.3" height="36"/><text class="on-green" x="534" y="64">no warning</text>
 
-<rect class="unk" x="100" y="110" width="213.3" height="36"/><text x="108" y="133">not stated</text>
-<rect class="lv-orange" x="313.3" y="110" width="164.4" height="36"/><text class="on-light" x="321" y="133">orange</text>
-<rect class="lv-green" x="477.7" y="110" width="262.3" height="36"/><text class="on-dark" x="485" y="133">no warning</text>
+<rect class="unk" x="100" y="110" width="213.3" height="36"/><text x="108" y="134">not stated</text>
+<rect class="lv-orange" x="313.3" y="110" width="164.4" height="36"/><text class="on-light" x="321" y="134">orange</text>
+<rect class="lv-green" x="477.7" y="110" width="262.3" height="36"/><text class="on-green" x="485" y="134">no warning</text>
 
-<rect class="unk" x="100" y="180" width="297.9" height="36"/><text x="108" y="203">not stated</text>
-<rect class="lv-orange" x="397.9" y="180" width="199.9" height="36"/><text class="on-light" x="405" y="203">orange</text>
-<rect class="lv-yellow" x="597.8" y="180" width="142.2" height="36"/><text class="on-light" x="604" y="203">yellow</text>
+<rect class="unk" x="100" y="180" width="297.9" height="36"/><text x="108" y="204">not stated</text>
+<rect class="lv-orange" x="397.9" y="180" width="199.9" height="36"/><text class="on-light" x="405" y="204">orange</text>
+<rect class="lv-yellow" x="597.8" y="180" width="142.2" height="36"/><text class="on-light" x="604" y="204">yellow</text>
 </g>
 <g class="src">
 <text x="100" y="92">data seen 10 Nov 23:41</text>
@@ -90,7 +93,7 @@
 <text class="src" x="8" y="264">Wed 11 Nov</text>
 </svg>
 </div>
-<figcaption>Source: IPMA's warnings file (<a href="https://api.ipma.pt/open-data/forecast/warnings/warnings_www.json">warnings_www.json</a>) as read and reported by PrompTugal.news; times UTC. "Data 13:15" means the version of IPMA's file modified at 13:15. Before 08:15 IPMA had a red wind warning for 12:00 to 21:00; it was lowered to orange before it began, so it is not drawn. This chart is drawn from the page's text, not from IPMA's files: this site holds no IPMA data from the storm.</figcaption>
+<figcaption>Source: IPMA's warnings file (<a href="https://api.ipma.pt/open-data/forecast/warnings/warnings_www.json">warnings_www.json</a>) as read and reported by PrompTugal.news; times UTC. "Data 13:15" means the version of IPMA's file modified at 13:15. Before 08:15 IPMA had a red wind warning for 12:00 to 21:00; it was lowered to orange before it began, so it is not drawn. This chart is drawn from the page's text, not from IPMA's files: this site holds no IPMA data from the storm. The levels are as reported on PrompTugal.news's page. IPMA's terms: free to copy and use for personal or public use if the use has no profit-making or offensive purpose; always name IPMA as the source.</figcaption>
 </figure>
 
 <h3>How IPMA's Lisbon warnings changed</h3>
@@ -147,7 +150,7 @@
 
 <h2>What the IPMA data on this site can and cannot show</h2>
 <ul>
-<li><strong>It shows now, not then.</strong> The other pages of this site read each source's <code>latest.json</code> from data.promptugal.news: IPMA's files as they were at the last hourly read. They do not hold the storm's files.</li>
+<li><strong>It shows now, not then.</strong> The other pages of this site read each source's <code>latest.json</code> from data.promptugal.news: IPMA's files as they were at the collector's last read. The collectors are scheduled hourly, but their run log shows irregular runs with gaps of several hours, so each page shows the read time and marks a stale file. They do not hold the storm's files.</li>
 <li><strong>The history is of runs, not values.</strong> Each source's <code>reads.json</code> logs the collector's runs: the address read, the HTTP status, the size, the start of a checksum and whether the bytes changed. It does not keep the warnings or readings themselves, so it cannot replay the storm.</li>
 <li><strong>The collectors started after the storm.</strong> The IPMA warnings card gives its start as 17 November 2026 (<a href="https://data.promptugal.news/api/v1/ipma-warnings/card.json">card.json</a>, read 18 November at 10:55 UTC), five days after Storm Charles. The dated copies in its vault begin then too.</li>
 <li><strong>The storm's own files are kept elsewhere.</strong> data.promptugal.news lists a Storm Charles archive: the data files behind storm-charles.promptugal.news, for Lisbon and Madeira, 10 to 12 November 2026 (<a href="https://data.promptugal.news/sources/storm-charles-archive/index.md">archive page</a>, listed in <a href="https://data.promptugal.news/llms.txt">llms.txt</a>, read 18 November at 10:55 UTC). This site does not draw them yet.</li>

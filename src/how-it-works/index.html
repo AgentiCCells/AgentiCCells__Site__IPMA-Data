@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>How it works | IPMA data, drawn</title>
-<meta name="description" content="How IPMA's open data reaches this page: IPMA's API, PrompTugal.news's hourly collectors, the static files on data.promptugal.news, and your browser, which draws them. Not IPMA's site, not official.">
+<meta name="description" content="How IPMA's open data reaches this page: IPMA's API, PrompTugal.news's collectors, the static files on data.promptugal.news, and your browser, which draws them. Not IPMA's site, not official.">
 <!--HEAD-->
 <style>
 .flow{display:block;width:100%;max-width:380px;margin:0 auto}
@@ -28,7 +28,7 @@ code{font-family:var(--mono);font-size:.88em;overflow-wrap:anywhere}
 <figure class="chart panel">
 <svg class="flow" viewBox="0 0 340 680" role="img" aria-labelledby="flow-title flow-desc">
 <title id="flow-title">From IPMA to your browser, in four steps</title>
-<desc id="flow-desc">Step 1: IPMA publishes open data at api.ipma.pt. Step 2: PrompTugal.news's collectors, code with no model, run by a GitHub Actions workflow every hour at 17 minutes past, read it and write latest.json, reads.json, card.json and a copy in an sgit vault. Step 3: data.promptugal.news serves those files as static JSON: GET, no key, CORS open. Step 4: this page, in your browser, fetches the files and draws them in SVG with the read time and IPMA's terms, and says when a file is missing, stale or slow.</desc>
+<desc id="flow-desc">Step 1: IPMA publishes open data at api.ipma.pt. Step 2: PrompTugal.news's collectors, code with no model, run by a GitHub Actions workflow scheduled hourly at 17 minutes past (in practice the runs are irregular), read it and write latest.json, reads.json, card.json and a copy in an sgit vault. Step 3: data.promptugal.news serves those files as static JSON: GET, no key, CORS open. Step 4: this page, in your browser, fetches the files and draws them in SVG with the read time and IPMA's terms, and says when a file is missing, stale or slow.</desc>
 <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
 <rect x="4" y="10" width="332" height="120" rx="10"/>
 <text x="18" y="40" font-size="18" font-weight="700">1. IPMA</text>
@@ -39,7 +39,7 @@ code{font-family:var(--mono);font-size:.88em;overflow-wrap:anywhere}
 <rect x="4" y="166" width="332" height="150" rx="10"/>
 <text x="18" y="196" font-size="18" font-weight="700">2. PrompTugal.news collectors</text>
 <text class="m" x="18" y="222" font-size="16">code, no model, run by GitHub</text>
-<text class="m" x="18" y="244" font-size="16">Actions hourly at 17 past;</text>
+<text class="m" x="18" y="244" font-size="16">Actions, scheduled hourly;</text>
 <text class="m" x="18" y="266" font-size="16">write latest.json, reads.json,</text>
 <text class="m" x="18" y="288" font-size="16">card.json and an sgit vault copy</text>
 <line class="arrow" x1="170" y1="318" x2="170" y2="350" marker-end="url(#ah)"/>
@@ -63,7 +63,7 @@ code{font-family:var(--mono);font-size:.88em;overflow-wrap:anywhere}
 <h2 style="margin-top:0">The steps</h2>
 <ol class="steps">
 <li><strong>IPMA publishes.</strong> IPMA (Instituto Português do Mar e da Atmosfera) puts its warnings, forecasts, station observations, fire risk, sea forecasts and UV index on its open data service at <a href="https://api.ipma.pt/">api.ipma.pt</a>, for example the warnings file <code>https://api.ipma.pt/open-data/forecast/warnings/warnings_www.json</code>. IPMA is the source of every weather figure on this site. Its terms: free to copy and use for personal or public use if the use has no profit-making or offensive purpose; always name IPMA as the source.</li>
-<li><strong>PrompTugal.news's collectors read it.</strong> Each source has a collector, a Node script such as <code>sources/ipma-warnings/collect.mjs</code> in <a href="https://github.com/PrompTugal/PrompTugal__News__Data">PrompTugal/PrompTugal__News__Data</a>. A GitHub Actions workflow runs the collectors on a schedule at 17 minutes past each hour, and also on every push to that repository's dev branch, so runs can come at other times too. Each run writes, per source:
+<li><strong>PrompTugal.news's collectors read it.</strong> Each source has a collector, a Node script such as <code>sources/ipma-warnings/collect.mjs</code> in <a href="https://github.com/PrompTugal/PrompTugal__News__Data">PrompTugal/PrompTugal__News__Data</a>. A GitHub Actions workflow runs the collectors on a schedule at 17 minutes past each hour, and also on every push to that repository's dev branch, so runs can come at other times too. In practice the runs are irregular: on 17 and 18 November the run log (<code>reads.json</code>) showed gaps of several hours between runs, up to 7 hours 15 minutes. Each run writes, per source:
 <ul>
 <li><code>latest.json</code>: the records from the last read, with their provenance (the IPMA address, the read time, the collector and the terms);</li>
 <li><code>reads.json</code>: a log of the runs, newest first: the address, the HTTP status, the size, the first 16 characters of a checksum and whether the bytes changed. It logs runs, not values;</li>
@@ -72,14 +72,14 @@ code{font-family:var(--mono);font-size:.88em;overflow-wrap:anywhere}
 </ul>
 If a read fails, the last good file stays and <code>reads.json</code> shows the failure. No model is called: the card gives the model cost of a run as 0 US dollars, the runner as GitHub Actions on a public repository at no charge, and about 3 minutes a run for all sources together (measured on 17 November 2026). The collectors and cards were written by PrompTugal.news's data agents from 17 November 2026; their about page says no person has reviewed the values yet.</li>
 <li><strong>data.promptugal.news serves the files.</strong> The same workflow builds and deploys the data site: plain JSON files at <code>https://data.promptugal.news/api/v1/&lt;source&gt;/</code>, for example <a href="https://data.promptugal.news/api/v1/ipma-warnings/latest.json">ipma-warnings/latest.json</a>. Every file is a GET with no key, and any website may read it from a browser (CORS open). The <a href="https://data.promptugal.news/api/v1/index.json">catalogue</a> lists every source and the <a href="https://data.promptugal.news/api/v1/README.md">contract</a> says the v1 addresses and fields stay for the life of v1.</li>
-<li><strong>Your browser draws it.</strong> This site is static HTML, CSS and one small script, served from ipma-data.agenticcells.site. When you open a page, the script fetches that source's <code>latest.json</code> and <code>card.json</code> (and <code>reads.json</code> where a page shows the runs), draws the records in SVG, and shows beside each chart IPMA as the source, the read time and the card's terms. At the time of writing it says a file is slow after 4 seconds, gives up after 15, and calls a file stale past 3 hours and old past 24 hours. Those limits are this site's choice, not IPMA's. When a file is missing or a field is not recognised, the page says so rather than guessing.</li>
+<li><strong>Your browser draws it.</strong> This site is static HTML, CSS and a few small scripts, served from ipma-data.agenticcells.site. When you open a page, the scripts fetch that source's <code>latest.json</code> and <code>card.json</code> (and <code>reads.json</code> where a page shows the runs), draw the records in SVG, and show beside each chart IPMA as the source, the read time and the card's terms. At the time of writing they say a file is slow after 4 seconds, gives up after 15, and calls a file stale past 3 hours and old past 24 hours. Those limits are this site's choice, not IPMA's. When a file is missing or a field is not recognised, the page says so rather than guessing.</li>
 </ol>
 </div>
 </div>
 
 <h2>What this means</h2>
 <ul>
-<li>A figure here can be behind IPMA by as long as it takes the next collector run; the runs are hourly. Each chart shows the read time, so you can judge.</li>
+<li>A figure here can be behind IPMA by as long as it takes the next collector run. The source cards say the collectors run hourly, at 17 minutes past each hour, but the run log (reads.json) shows the runs are irregular, with gaps of several hours. Each chart shows the read time and marks a stale file, so you can judge.</li>
 <li>No server of this site stores or changes the data. The pages load no scripts, styles or fonts from other hosts; the build's validator checks this.</li>
 <li>This site is not IPMA's and is not official. It is not a warning service: for warnings and safety, follow IPMA (<a href="https://www.ipma.pt">ipma.pt</a>) and ANEPC.</li>
 </ul>
