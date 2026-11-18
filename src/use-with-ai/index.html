@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Use with AI | IPMA data, drawn</title>
+<meta name="description" content="How to point an AI assistant at IPMA's data through data.promptugal.news and this site's llms.txt, and how this site's link previews work.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="IPMA data, drawn">
+<meta property="og:title" content="Use IPMA data, drawn with AI">
+<meta property="og:description" content="The files and the terms an AI assistant needs to work with IPMA data from data.promptugal.news.">
+<meta property="og:url" content="https://ipma-data.agenticcells.site/use-with-ai/">
+<meta name="twitter:card" content="summary">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<p class="notice"><strong>Not a warning service.</strong> For warnings and safety, follow IPMA (<a href="https://www.ipma.pt">ipma.pt</a>) and ANEPC.</p>
+<header class="site"><div class="wrap">
+<a class="brand" href="/">IPMA data, drawn</a>
+<nav class="main" aria-label="Main">
+<a href="/">Portugal now</a>
+<a href="/warnings/">Warnings</a>
+<a href="/forecasts/">Forecasts</a>
+<a href="/observations/">Observations</a>
+<a href="/fire-risk/">Fire risk</a>
+<a href="/sea/">Sea</a>
+<a href="/uv/">UV</a>
+<a href="/storm-charles/">Storm Charles</a>
+<a href="/how-it-works/">How it works</a>
+<a href="/use-with-ai/" aria-current="page">Use with AI</a>
+</nav>
+</div></header>
+<main class="wrap">
+<h1>Use with AI</h1>
+<p class="lede">The charts on this site are drawn in your browser, so an AI assistant reading the pages sees little data. Point it at the files instead: they are public, need no key, and carry their own provenance.</p>
+
+<h2>Files to give an assistant</h2>
+<ul>
+<li><a href="/llms.txt">llms.txt</a> for this site: what it is, its pages and the files behind them.</li>
+<li><a href="https://data.promptugal.news/llms.txt">data.promptugal.news/llms.txt</a>: the data site's own guide.</li>
+<li>The catalogue, <a href="https://data.promptugal.news/api/v1/index.json">api/v1/index.json</a>, the <a href="https://data.promptugal.news/api/v1/openapi.json">OpenAPI description</a> and the <a href="https://data.promptugal.news/api/v1/README.md">contract</a>.</li>
+<li>For each source (ipma-warnings, ipma-city-forecasts, ipma-observations, ipma-fire-risk, ipma-sea, ipma-uv, meteoalarm-pt): <code>https://data.promptugal.news/api/v1/&lt;source&gt;/latest.json</code>, plus <code>reads.json</code>, <code>card.json</code> and <code>openapi.json</code> in the same folder.</li>
+</ul>
+
+<h2>A prompt you can start from</h2>
+<pre>Read https://data.promptugal.news/llms.txt and
+https://data.promptugal.news/api/v1/ipma-warnings/card.json, then
+https://data.promptugal.news/api/v1/ipma-warnings/latest.json.
+List the areas with a yellow, orange or red warning, with the start
+and end times. Give the time the file was read, name IPMA as the
+source, and say plainly if the file looks stale or a field is missing.
+Do not present the answer as an official warning.</pre>
+<p class="small">This is a suggestion, not a tested recipe: check what the assistant says against <a href="https://www.ipma.pt">ipma.pt</a>.</p>
+
+<h2>Rules that come with the data</h2>
+<ul>
+<li>IPMA's terms, as data.promptugal.news gives them: free to copy and use for personal or public use if the use has no profit-making or offensive purpose; always name IPMA as the source.</li>
+<li>Give the read time with any figure. A copy can be behind IPMA.</li>
+<li>Do not present an answer as a warning. For warnings and safety, people should follow IPMA and ANEPC.</li>
+</ul>
+
+<h2>Link previews</h2>
+<p>Every page carries a title, a description and Open Graph tags, so a link shared in a chat or a post shows the page's name and a one-line summary. Previews are text only for now.</p>
+<div class="placeholder"><p><strong>Placeholder:</strong> no preview image yet. A later round may add one, made and served from this site.</p></div>
+</main>
+<footer class="site"><div class="wrap">
+<p><strong>Not a warning service.</strong> For warnings and safety, follow IPMA (<a href="https://www.ipma.pt">ipma.pt</a>) and ANEPC. Weather data: IPMA, via <a href="https://data.promptugal.news">data.promptugal.news</a>. This site is not IPMA's and is not official.</p>
+<p>Version __VERSION__ · Made by the <a href="https://github.com/AgentiCCells/AgentiCCells__Site__Factory">AgentiCCells site factory</a> · Code Apache-2.0, text CC BY 4.0 · No ads, no tracking.</p>
+</div></footer>
+</body>
+</html>

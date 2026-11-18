@@ -1,0 +1,30 @@
+# IPMA data, drawn
+
+> A demonstration site by AgentiCCells that draws IPMA's public weather data for Portugal, read live in the visitor's browser from https://data.promptugal.news. Not a warning service: for warnings and safety, follow IPMA (https://www.ipma.pt) and ANEPC. This site is not IPMA's and is not official.
+
+The pages hold no data of their own: they fetch JSON from data.promptugal.news when opened. To work with the data, read the files below rather than the pages.
+
+## Pages
+
+- [Portugal now](https://ipma-data.agenticcells.site/): current warnings on a schematic map, and the next days' forecast for a few places.
+- [Warnings](https://ipma-data.agenticcells.site/warnings/): IPMA warnings by area, and MeteoAlarm's CAP feed for Portugal.
+- [Forecasts](https://ipma-data.agenticcells.site/forecasts/): five-day forecasts by place.
+- [Observations](https://ipma-data.agenticcells.site/observations/): latest hourly reading per surface station.
+- [Fire risk](https://ipma-data.agenticcells.site/fire-risk/): RCM class per mainland municipality.
+- [Sea](https://ipma-data.agenticcells.site/sea/): waves, period, direction and sea temperature.
+- [UV](https://ipma-data.agenticcells.site/uv/): UV index by place and day.
+- [Storm Charles](https://ipma-data.agenticcells.site/storm-charles/): archived event, pointing to PrompTugal.news's account.
+- [How it works](https://ipma-data.agenticcells.site/how-it-works/): the data flow.
+
+## Data
+
+- [Data site guide](https://data.promptugal.news/llms.txt)
+- [Catalogue](https://data.promptugal.news/api/v1/index.json)
+- [OpenAPI](https://data.promptugal.news/api/v1/openapi.json)
+- Per source, under https://data.promptugal.news/api/v1/<source>/: latest.json, reads.json, card.json, openapi.json. Sources: ipma-warnings, ipma-city-forecasts, ipma-observations, ipma-fire-risk, ipma-sea, ipma-uv, meteoalarm-pt.
+
+## Terms
+
+IPMA's terms, as data.promptugal.news gives them: free to copy and use for personal or public use if the use has no profit-making or offensive purpose; always name IPMA as the source. Give the read time with every figure. This site's own text is CC BY 4.0 and its code Apache-2.0.
+
+Version __VERSION__

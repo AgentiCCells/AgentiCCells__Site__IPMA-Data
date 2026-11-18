@@ -1,7 +1,7 @@
 {
   "schema": "hub.json (draft)",
   "name": "IPMA data, drawn",
-  "what_it_does": "Portugal's public weather data from IPMA, drawn live from data.promptugal.news, with the Storm Charles archive. Not a warning service: follow IPMA.",
+  "what_it_does": "Draws IPMA's warnings, forecasts, observations, fire risk, sea and UV data for Portugal, read live in the browser from data.promptugal.news, with the Storm Charles archive; not a warning service.",
   "owner": "AgentiCCells",
   "team": "factory@AgentiCCells.dinis, instructed by Dinis Cruz",
   "licence": { "code": "Apache-2.0", "text": "CC BY 4.0" },

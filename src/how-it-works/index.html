@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How it works | IPMA data, drawn</title>
+<meta name="description" content="How IPMA's data reaches this page: IPMA publishes it, PrompTugal.news's collectors read it, data.promptugal.news serves it, and your browser draws it. No server of ours holds the data.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="IPMA data, drawn">
+<meta property="og:title" content="How IPMA data, drawn works">
+<meta property="og:description" content="From IPMA to your browser in four steps, drawn as a diagram.">
+<meta property="og:url" content="https://ipma-data.agenticcells.site/how-it-works/">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<p class="notice"><strong>Not a warning service.</strong> For warnings and safety, follow IPMA (<a href="https://www.ipma.pt">ipma.pt</a>) and ANEPC.</p>
+<header class="site"><div class="wrap">
+<a class="brand" href="/">IPMA data, drawn</a>
+<nav class="main" aria-label="Main">
+<a href="/">Portugal now</a>
+<a href="/warnings/">Warnings</a>
+<a href="/forecasts/">Forecasts</a>
+<a href="/observations/">Observations</a>
+<a href="/fire-risk/">Fire risk</a>
+<a href="/sea/">Sea</a>
+<a href="/uv/">UV</a>
+<a href="/storm-charles/">Storm Charles</a>
+<a href="/how-it-works/" aria-current="page">How it works</a>
+<a href="/use-with-ai/">Use with AI</a>
+</nav>
+</div></header>
+<main class="wrap">
+<h1>How it works</h1>
+<p class="lede">The data takes four steps to reach you. Only the last one happens here, and it happens in your browser.</p>
+
+<figure>
+<svg viewBox="0 0 900 230" role="img" aria-labelledby="flow-title flow-desc">
+<title id="flow-title">Data flow</title>
+<desc id="flow-desc">IPMA publishes data; PrompTugal.news's collectors read it on a schedule; data.promptugal.news serves the copies as public JSON files; this page, in your browser, reads those files and draws them.</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#898781"/></marker>
+</defs>
+<g font-size="15">
+<rect class="panel-box" x="10" y="40" width="190" height="120" rx="8"/>
+<text x="105" y="72" text-anchor="middle" font-weight="700">1. IPMA</text>
+<text x="105" y="98" text-anchor="middle" font-size="13" class="muted-text">Portugal's weather</text>
+<text x="105" y="116" text-anchor="middle" font-size="13" class="muted-text">and sea institute</text>
+<text x="105" y="134" text-anchor="middle" font-size="13" class="muted-text">publishes open data</text>
+
+<rect class="panel-box" x="240" y="40" width="190" height="120" rx="8"/>
+<text x="335" y="72" text-anchor="middle" font-weight="700">2. Collectors</text>
+<text x="335" y="98" text-anchor="middle" font-size="13" class="muted-text">PrompTugal.news reads</text>
+<text x="335" y="116" text-anchor="middle" font-size="13" class="muted-text">each source and keeps</text>
+<text x="335" y="134" text-anchor="middle" font-size="13" class="muted-text">a record of each read</text>
+
+<rect class="panel-box" x="470" y="40" width="190" height="120" rx="8"/>
+<text x="565" y="72" text-anchor="middle" font-weight="700">3. Data API</text>
+<text x="565" y="98" text-anchor="middle" font-size="13" class="muted-text">data.promptugal.news</text>
+<text x="565" y="116" text-anchor="middle" font-size="13" class="muted-text">serves JSON files:</text>
+<text x="565" y="134" text-anchor="middle" font-size="13" class="muted-text">GET, no key, CORS open</text>
+
+<rect class="panel-box" x="700" y="40" width="190" height="120" rx="8" style="stroke:var(--accent);stroke-width:2"/>
+<text x="795" y="72" text-anchor="middle" font-weight="700">4. Your browser</text>
+<text x="795" y="98" text-anchor="middle" font-size="13" class="muted-text">this page fetches</text>
+<text x="795" y="116" text-anchor="middle" font-size="13" class="muted-text">the files and draws</text>
+<text x="795" y="134" text-anchor="middle" font-size="13" class="muted-text">them, with read times</text>
+</g>
+<g stroke="#898781" stroke-width="2" fill="none">
+<line x1="202" y1="100" x2="236" y2="100" marker-end="url(#arrow)"/>
+<line x1="432" y1="100" x2="466" y2="100" marker-end="url(#arrow)"/>
+<line x1="662" y1="100" x2="696" y2="100" marker-end="url(#arrow)"/>
+</g>
+<text x="450" y="200" text-anchor="middle" font-size="13" class="muted-text">ipma-data.agenticcells.site serves only the page and its code; it never holds a copy of the data.</text>
+</svg>
+<figcaption>From IPMA to your screen. Steps 1 to 3 are run by IPMA and PrompTugal.news; step 4 runs in your browser.</figcaption>
+</figure>
+
+<h2>The steps</h2>
+<ol>
+<li><strong>IPMA</strong> (Instituto Português do Mar e da Atmosfera) publishes warnings, forecasts, observations, fire risk, sea and UV data on its open data service. IPMA is the source of every weather figure on this site.</li>
+<li><strong>PrompTugal.news's collectors</strong> read each IPMA source on a schedule and keep the latest copy, plus a list of past reads (reads.json) and a source card (card.json) with provenance and terms.</li>
+<li><strong>data.promptugal.news</strong> serves those files at <code>https://data.promptugal.news/api/v1/&lt;source&gt;/</code>. Every file is a plain GET with no key, and any website may read it from a browser. The catalogue is at <a href="https://data.promptugal.news/api/v1/index.json">api/v1/index.json</a>.</li>
+<li><strong>This page</strong> is static HTML, CSS and a small script, all served from ipma-data.agenticcells.site. When you open a page, the script fetches latest.json, card.json and reads.json for that source, finds the records and draws them. It shows the time PrompTugal.news read each file, and says so when a file is missing, unreadable or older than expected.</li>
+</ol>
+
+<h2>What this means</h2>
+<ul>
+<li>The figures can be behind IPMA by as long as it takes the collectors to read the next copy. Each page shows that read time.</li>
+<li>No server of ours stores or changes the data. Nothing about you is collected: no cookies, no analytics, no fonts or scripts from other hosts.</li>
+<li>When a file cannot be read or a field cannot be recognised, the page says so and shows the records as a plain table instead of guessing.</li>
+<li>The thresholds for calling a file stale are this site's choice, not IPMA's: 3 hours for warnings and observations, 24 hours for forecasts and sea, 36 hours for fire risk and UV.</li>
+</ul>
+
+<h2>Who made it</h2>
+<p>AgentiCCells, a team of AI agents instructed by Dinis Cruz, made this site as a demonstration of what its cells can do with public data. The source is open: code Apache-2.0, text CC BY 4.0. IPMA's data stays under IPMA's terms: free for personal or public use with no profit-making or offensive purpose, always naming IPMA as the source.</p>
+</main>
+<footer class="site"><div class="wrap">
+<p><strong>Not a warning service.</strong> For warnings and safety, follow IPMA (<a href="https://www.ipma.pt">ipma.pt</a>) and ANEPC. Weather data: IPMA, via <a href="https://data.promptugal.news">data.promptugal.news</a>. This site is not IPMA's and is not official.</p>
+<p>Version __VERSION__ · Made by the <a href="https://github.com/AgentiCCells/AgentiCCells__Site__Factory">AgentiCCells site factory</a> · Code Apache-2.0, text CC BY 4.0 · No ads, no tracking.</p>
+</div></footer>
+</body>
+</html>
