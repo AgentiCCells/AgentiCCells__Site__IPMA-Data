@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Page charts (mock-up)</title>
+<!-- Design mock-up, round 1, by designer.ipma-data@AgentiCCells.dinis. Code Apache-2.0.
+     Self-contained: no third-party assets, no geometry and no IPMA data in this file.
+     Reads data.promptugal.news live in the browser. One section per page of the site:
+     the warnings timeline, the observations map, the fire risk map, the sea ranges, the UV grid.
+     ?only=timeline|obs|fire|sea|uv shows one section; ?theme=dark|light forces a theme. -->
+<style>
+:root{
+  --bg:#f7f5f0; --panel:#ffffff; --ink:#1d2329; --muted:#5b6670; --line:#d9d4ca; --accent:#0b5c7a;
+  --map-edge:#6f7880; --land:#e9e4d8;
+  --w-green:#a8d5b5; --w-yellow:#f5c518; --w-orange:#d9621a; --w-red:#a51f2a;
+  --hatch-dark:rgba(29,35,41,.5); --hatch-light:rgba(255,255,255,.6);
+  --rcm-1:#d6eecf; --rcm-2:#f4c62a; --rcm-3:#e8862c; --rcm-4:#c43f26; --rcm-5:#7a1a2c;
+  --t-1:#f29a5e; --t-2:#e57c3c; --t-3:#cf6127; --t-4:#b04a1a; --t-5:#863512; --t-6:#5a2209;
+  --wave:#2f6f9f; --fresh:#2e7d4f; --stale:#a35d00; --old:#b3261e;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12161a; --panel:#1a2026; --ink:#e8ecef; --muted:#9aa6b0; --line:#2e3740; --accent:#5fb3d3;
+  --map-edge:#8b96a0; --land:#262d33;
+  --w-green:#22382f; --w-yellow:#f4cc1c; --w-orange:#ec8030; --w-red:#de3c5c;
+  --hatch-dark:rgba(18,22,26,.55); --hatch-light:rgba(18,22,26,.55);
+  --rcm-1:#1f3428; --rcm-2:#5c5418; --rcm-3:#b4621c; --rcm-4:#ff8070; --rcm-5:#ffd8d2;
+  --t-1:#8a3c14; --t-2:#ad4f1c; --t-3:#d0672a; --t-4:#e8834a; --t-5:#f4a877; --t-6:#fbcfaa;
+  --wave:#7fb2e5; --fresh:#6cc48f; --stale:#e0a24a; --old:#ff8a80; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#12161a; --panel:#1a2026; --ink:#e8ecef; --muted:#9aa6b0; --line:#2e3740; --accent:#5fb3d3;
+  --map-edge:#8b96a0; --land:#262d33;
+  --w-green:#22382f; --w-yellow:#f4cc1c; --w-orange:#ec8030; --w-red:#de3c5c;
+  --hatch-dark:rgba(18,22,26,.55); --hatch-light:rgba(18,22,26,.55);
+  --rcm-1:#1f3428; --rcm-2:#5c5418; --rcm-3:#b4621c; --rcm-4:#ff8070; --rcm-5:#ffd8d2;
+  --t-1:#8a3c14; --t-2:#ad4f1c; --t-3:#d0672a; --t-4:#e8834a; --t-5:#f4a877; --t-6:#fbcfaa;
+  --wave:#7fb2e5; --fresh:#6cc48f; --stale:#e0a24a; --old:#ff8a80; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--font)}
+main{max-width:72rem;margin:0 auto;padding:1rem 16px 3rem}
+h2{font-size:1.25rem;margin:1.8rem 0 .4rem}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1rem}
+.muted{color:var(--muted)} .note{font-size:.8rem;color:var(--muted);margin:.4rem 0 0}
+.ctl{display:flex;flex-wrap:wrap;gap:.3rem;margin:0 0 .6rem}
+.ctl button{font:inherit;font-size:.85rem;padding:.25rem .65rem;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.ctl button[aria-pressed="true"]{background:var(--ink);color:var(--panel);border-color:var(--ink)}
+svg{display:block;width:100%;height:auto}
+.mapbox{max-width:560px}
+svg text{fill:var(--muted);font-family:var(--font)}
+svg text.ink{fill:var(--ink)}
+svg text.lab{fill:var(--ink);paint-order:stroke;stroke:var(--bg);stroke-linejoin:round}
+.legend{display:flex;flex-wrap:wrap;gap:.3rem 1rem;font-size:.85rem;margin:.5rem 0 0;padding:0;list-style:none}
+.legend li{display:flex;align-items:center;gap:.35rem}
+.sw{width:1.2rem;height:1rem;border-radius:3px;border:1px solid var(--map-edge);display:inline-block}
+.two{display:grid;gap:1rem}
+@media (min-width:900px){.two{grid-template-columns:minmax(0,3fr) minmax(0,2fr)}}
+.bars{list-style:none;margin:0;padding:0;font-size:.9rem}
+.bars li{display:grid;grid-template-columns:7.5rem 1fr 3rem;gap:.5rem;align-items:center;padding:.2rem 0}
+.bars .b{height:12px;border-radius:0 4px 4px 0;background:var(--ink);opacity:.8;min-width:2px}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.prov{font-size:.8rem;color:var(--muted);border-left:3px solid var(--line);padding:.2rem 0 .2rem .7rem;margin:.8rem 0 0}
+.prov p{margin:.1rem 0}
+.age-fresh{color:var(--fresh)} .age-stale{color:var(--stale);font-weight:600} .age-old{color:var(--old);font-weight:700}
+.uv{border-collapse:separate;border-spacing:2px;width:100%;font-size:.85rem}
+.uv th{font-weight:600;color:var(--muted);text-align:left;padding:.2rem .3rem}
+.uv td{padding:0;height:2rem;text-align:center;font-variant-numeric:tabular-nums;border-radius:4px}
+.uv td .split{display:flex;height:100%}
+.uv td .split span{flex:1;display:flex;align-items:center;justify-content:center;border-radius:4px}
+.uv td .split span+span{margin-left:2px}
+</style>
+</head>
+<body>
+<main>
+<h1 style="font-size:1.6rem;margin:.4rem 0">Charts for each page (mock-up)</h1>
+<p class="muted">Each section belongs to one page of the site. All drawn from data.promptugal.news in the browser.</p>
+
+<section id="s-timeline"><h2>Warnings: the timeline</h2><div class="panel" id="timeline"></div></section>
+<section id="s-obs"><h2>Observations: stations by temperature</h2><div class="panel" id="obs"></div></section>
+<section id="s-fire"><h2>Fire risk: municipalities by class</h2><div class="panel" id="fire"></div></section>
+<section id="s-sea"><h2>Sea: wave height ranges</h2><div class="panel" id="sea"></div></section>
+<section id="s-uv"><h2>UV index by place and day</h2><div class="panel" id="uv"></div></section>
+</main>
+<script type="module">
+const API='https://data.promptugal.news/api/v1';
+const qs=new URLSearchParams(location.search);
+if(qs.get('theme'))document.documentElement.dataset.theme=qs.get('theme');
+if(qs.get('only'))document.querySelectorAll('main>section').forEach(x=>{if(x.id!=='s-'+qs.get('only'))x.remove()});
+const SVGNS='http://www.w3.org/2000/svg';
+const h=(t,a={},...k)=>{const e=document.createElement(t);for(const[n,v]of Object.entries(a))if(v!=null)e.setAttribute(n,v);e.append(...k.flat().filter(x=>x!=null));return e};
+const s=(t,a={},...k)=>{const e=document.createElementNS(SVGNS,t);for(const[n,v]of Object.entries(a))if(v!=null)e.setAttribute(n,v);e.append(...k.flat().filter(x=>x!=null));return e};
+const get=async id=>{try{const r=await fetch(`${API}/${id}/latest.json`);if(!r.ok)return{ok:false,error:'HTTP '+r.status};return{ok:true,data:await r.json()}}catch(e){return{ok:false,error:e.message}}};
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const fday=ymd=>{const d=new Date(ymd+'T12:00:00Z');return `${DOW[d.getUTCDay()]} ${d.getUTCDate()} ${MON[d.getUTCMonth()]}`};
+const fUTC=iso=>{const d=new Date(iso);return `${d.getUTCDate()} ${MON[d.getUTCMonth()]}, ${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')} UTC`};
+const age=iso=>{const m=Math.round((Date.now()-Date.parse(iso))/60000);const txt=m<90?`${m} min ago`:m<2880?`${Math.round(m/60)} h ago`:`${Math.round(m/1440)} days ago`;return{lvl:m>1440?'old':m>180?'stale':'fresh',txt}};
+const prov=src=>{const st=age(src.read_at);return h('div',{class:'prov'},h('p',{},h('strong',{},'Source: '),'IPMA, collected by PrompTugal.news, read from data.promptugal.news.'),h('p',{},h('strong',{},'Read: '),fUTC(src.read_at),' ',h('span',{class:'age-'+st.lvl},`(${st.txt})`)),h('p',{},h('strong',{},'Terms: '),src.provenance?.terms||'see the source card'))};
+const lisbonNow=()=>{const p=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Lisbon',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(new Date()).map(x=>[x.type,x.value]));return `${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}:${p.second}`};
+const DIST2AREA={'01':'AVR','02':'BJA','03':'BRG','04':'BGC','05':'CBO','06':'CBR','07':'EVR','08':'FAR','09':'GDA','10':'LRA','11':'LSB','12':'PTG','13':'PTO','14':'STM','15':'STB','16':'VCT','17':'VRL','18':'VIS'};
+const NAME={AVR:'Aveiro',BJA:'Beja',BRG:'Braga',BGC:'Bragança',CBO:'Castelo Branco',CBR:'Coimbra',EVR:'Évora',FAR:'Faro',GDA:'Guarda',LRA:'Leiria',LSB:'Lisboa',PTG:'Portalegre',PTO:'Porto',STM:'Santarém',STB:'Setúbal',VCT:'Viana do Castelo',VRL:'Vila Real',VIS:'Viseu',MCN:'Madeira, north coast',MCS:'Madeira, south coast',MRM:'Madeira, mountains',MPS:'Porto Santo',AOC:'Azores, western group',ACE:'Azores, central group',AOR:'Azores, eastern group'};
+const ORDER=['VCT','BRG','VRL','BGC','PTO','AVR','VIS','GDA','CBR','CBO','LRA','STM','PTG','LSB','STB','EVR','BJA','FAR','AOC','ACE','AOR','MPS','MCN','MRM','MCS'];
+function defs(){const d=s('defs');const pat=(id,ang,gap,w,col)=>{const p=s('pattern',{id,patternUnits:'userSpaceOnUse',width:gap,height:gap,patternTransform:`rotate(${ang})`});p.append(s('line',{x1:0,y1:0,x2:0,y2:gap,style:`stroke:${col}`,'stroke-width':w}));return p};
+  d.append(pat('hy',45,7,1.3,'var(--hatch-dark)'),pat('ho1',45,6,1.3,'var(--hatch-dark)'),pat('ho2',-45,6,1.3,'var(--hatch-dark)'),pat('hr1',45,4.2,1.5,'var(--hatch-light)'),pat('hr2',-45,4.2,1.5,'var(--hatch-light)'));return d}
+const HATCH={green:[],yellow:['hy'],orange:['ho1','ho2'],red:['hr1','hr2']};
+const sw=(fill,hatch=[])=>{const v=s('svg',{class:'sw',viewBox:'0 0 22 16','aria-hidden':'true'});v.append(defs(),s('rect',{width:22,height:16,style:`fill:${fill}`}),...hatch.map(p=>s('rect',{width:22,height:16,style:`fill:url(#${p})`})));return v};
+const fit=(svg,vbw)=>{new ResizeObserver(()=>{const k=svg.getBoundingClientRect().width/vbw;if(!k)return;svg.querySelectorAll('text[data-px]').forEach(t=>{t.setAttribute('font-size',t.dataset.px/k);t.style.strokeWidth=3/k})}).observe(svg)};
+
+// ---------- the hex base, from IPMA's municipality points (same recipe as home.html) ----------
+const LAT0=39.6,LON0=-8.0,KX=111.32*Math.cos(LAT0*Math.PI/180),KY=110.57;
+const proj=(lat,lon)=>[(lon-LON0)*KX,(LAT0-lat)*KY];
+const S=4.5,DX=S*Math.sqrt(3),DY=S*1.5;
+const NB=r=>r&1?[[0,1],[1,1],[1,0],[0,-1],[-1,0],[-1,1]]:[[0,1],[1,0],[1,-1],[0,-1],[-1,-1],[-1,0]];
+let GRID=null;
+function hexGrid(munis){if(GRID)return GRID;
+  const pts=munis.map(m=>{const[x,y]=proj(m.lat,m.lon);return{x,y,a:DIST2AREA[m.dico.slice(0,2)],m}}).filter(p=>p.a);
+  for(const p of pts){const d=pts.filter(q=>q!==p).map(q=>Math.hypot(p.x-q.x,p.y-q.y)).sort((a,b)=>a-b);p.r=Math.max(12,Math.min(24,0.9*d[1]))}
+  const xs=pts.map(p=>p.x),ys=pts.map(p=>p.y);const X0=Math.min(...xs)-30,Y0=Math.min(...ys)-30,C=Math.ceil((Math.max(...xs)+30-X0)/DX),R=Math.ceil((Math.max(...ys)+30-Y0)/DY);
+  const at=(r,c)=>[X0+c*DX+(r&1?DX/2:0),Y0+r*DY];const near=(x,y)=>{let b=null,bd=1e9;for(const p of pts){const d=Math.hypot(p.x-x,p.y-y);if(d<bd){bd=d;b=p}}return[b,bd]};
+  const cell=new Map(),K=(r,c)=>r*10000+c;
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){const[x,y]=at(r,c);const[b,bd]=near(x,y);if(bd<=b.r)cell.set(K(r,c),b)}
+  for(let it=0;it<6;it++){const add=[];for(let r=0;r<R;r++)for(let c=0;c<C;c++){if(cell.has(K(r,c)))continue;let n=0;for(const[a,b]of NB(r))if(cell.has(K(r+a,c+b)))n++;if(n>=4){const[x,y]=at(r,c);add.push([K(r,c),near(x,y)[0]])}}for(const[k,p]of add)cell.set(k,p)}
+  GRID={cell,at,K,box:[Math.min(...xs)-20,Math.min(...ys)-20,Math.max(...xs)+20,Math.max(...ys)+20]};return GRID}
+function hexPaths(G,key){const V=(x,y,i)=>{const a=Math.PI/180*(60*i-30);return[x+S*Math.cos(a),y+S*Math.sin(a)]};const f=n=>n.toFixed(1);
+  const areas={},coast=[],border=[],border2=[];
+  for(const[k,p]of G.cell){const r=Math.floor(k/10000),c=k%10000;const[x,y]=G.at(r,c);const vs=[0,1,2,3,4,5].map(i=>V(x,y,i));const a=String(key(p));
+    (areas[a]??={d:'',sx:0,sy:0,n:0});const A=areas[a];A.d+='M'+vs.map(v=>f(v[0])+','+f(v[1])).join('L')+'Z';A.sx+=x;A.sy+=y;A.n++;
+    NB(r).forEach(([dr,dc],e)=>{const nk=G.K(r+dr,c+dc);const v1=vs[e],v2=vs[(e+1)%6];const seg=`M${f(v1[0])},${f(v1[1])}L${f(v2[0])},${f(v2[1])}`;const q=G.cell.get(nk);
+      if(!q)coast.push(seg);else if(nk>k){if(String(key(q))!==a)border.push(seg);if(q.a!==p.a)border2.push(seg)}})}
+  for(const A of Object.values(areas)){A.lx=A.sx/A.n;A.ly=A.sy/A.n}
+  return{areas,coast:coast.join(''),border:border.join(''),border2:border2.join(''),box:G.box}}
+const hexBase=munis=>hexPaths(hexGrid(munis),p=>p.a);
+const hexBaseBy=(munis,f)=>hexPaths(hexGrid(munis),p=>f(p.m));
+
+
+// ---------- warnings timeline ----------
+function timeline(W0){
+  const el=document.getElementById('timeline');if(!el)return;
+  const now=lisbonNow();
+  const rows=[];for(const a of ORDER)for(const type of [...new Set(W0.active.filter(w=>w.area===a).map(w=>w.type))])rows.push({a,type,items:W0.active.filter(w=>w.area===a&&w.type===type)});
+  if(!rows.length){el.replaceChildren(h('p',{},'No yellow, orange or red warning in IPMA\'s file: every area is green.'),prov(W0));return}
+  const T=t=>Date.parse(t+'Z');const t0=Math.min(T(now),...W0.active.map(w=>T(w.start))),t1=Math.max(...W0.active.map(w=>T(w.end)));
+  const W=Math.max(320,el.clientWidth-32),nar=W<560,lab=nar?0:190,rh=nar?34:22,top=30;const x=t=>lab+(T(t)-t0)/(t1-t0)*(W-lab-8);
+  const svg=s('svg',{viewBox:`0 0 ${W} ${top+rows.length*rh+8}`,role:'img','aria-label':`Timeline of ${W0.active.length} warnings in ${new Set(rows.map(r=>r.a)).size} areas, from now to ${fday(new Date(t1).toISOString().slice(0,10))}. The same warnings are listed in the table on this page.`});svg.append(defs());
+  // day ticks at midnight, 6-hour hairlines
+  for(let t=Math.ceil(t0/216e5)*216e5;t<=t1;t+=216e5){const iso=new Date(t).toISOString().slice(0,19);const X=x(iso);const mid=iso.slice(11,13)==='00';
+    svg.append(s('line',{x1:X,x2:X,y1:top-6,y2:top+rows.length*rh,style:`stroke:var(--line)`,'stroke-width':mid?1:.5}));
+    if(mid)svg.append(s('text',{x:X+3,y:12,'font-size':12,class:'ink'},fday(iso.slice(0,10))));else if(!nar)svg.append(s('text',{x:X+3,y:24,'font-size':10},iso.slice(11,16)))}
+  rows.forEach((r,i)=>{const y=top+i*rh;
+    svg.append(s('text',{x:nar?0:0,y:nar?y+9:y+15,'font-size':nar?11:12,class:'ink'},`${NAME[r.a]}, ${r.type}`));
+    const by=nar?y+13:y+4,bh=nar?14:14;
+    r.items.forEach(w=>{const a=x(w.start),b=x(w.end);const g=s('g');
+      g.append(s('rect',{x:a+1,y:by,width:Math.max(b-a-2,2),height:bh,rx:3,style:`fill:var(--w-${w.level})`}),...HATCH[w.level].map(p=>s('rect',{x:a+1,y:by,width:Math.max(b-a-2,2),height:bh,rx:3,style:`fill:url(#${p})`})),s('title',{},`${NAME[r.a]}: ${w.level} ${w.type}, ${w.start.replace('T',' ').slice(0,16)} to ${w.end.replace('T',' ').slice(0,16)} Portugal time`));svg.append(g)})});
+  const X=x(now);svg.append(s('line',{x1:X,x2:X,y1:top-10,y2:top+rows.length*rh,style:'stroke:var(--ink)','stroke-width':1.5}),s('text',{x:X+3,y:top-1,'font-size':10,class:'ink'},'now'));
+  el.replaceChildren(svg,h('ul',{class:'legend'},['yellow','orange','red'].map(l=>h('li',{},sw(`var(--w-${l})`,HATCH[l]),l[0].toUpperCase()+l.slice(1)))),h('p',{class:'note'},'One row per area and type of warning. Times are Portugal time, as IPMA gives them. The 2px gap between bars marks where one warning ends and the next begins.'),prov(W0));
+}
+
+// ---------- observations ----------
+function observations(O,base){
+  const el=document.getElementById('obs');if(!el)return;
+  const st=O.stations;const rep=st.filter(x=>x.reading&&Number.isFinite(x.reading.temp_c));
+  const tv=rep.map(x=>x.reading.temp_c);const step=[1,2,3,4,5,10].find(k=>Math.ceil(Math.max(...tv)/k)-Math.floor(Math.min(...tv)/k)<=6);const lo=Math.floor(Math.min(...tv)/step)*step,hi=Math.ceil(Math.max(...tv)/step)*step||lo+step;const nb=Math.max(1,(hi-lo)/step);
+  const bin=t=>Math.min(nb-1,Math.floor((t-lo)/step));const steps=[1,2,3,4,5,6].slice(0,nb);
+  const [bx0,by0,bx1,by1]=base.box;const ix=bx0-160;const vb=[ix,by0-10,bx1-ix+6,by1-by0+20];
+  const svg=s('svg',{viewBox:vb.join(' '),role:'img','aria-label':`Map of ${st.length} IPMA stations; ${rep.length} reported a temperature for ${O.hour_utc.slice(11,16)} UTC, from ${Math.min(...tv)} to ${Math.max(...tv)} °C. The sortable table lists every station.`});
+  const land=s('g');for(const A of Object.values(base.areas))land.append(s('path',{d:A.d,style:'fill:var(--land);stroke:var(--land)','stroke-width':.6}));svg.append(land);
+  svg.append(s('path',{d:base.border,style:'stroke:var(--panel);fill:none','stroke-width':1.6}),s('path',{d:base.coast,style:'stroke:var(--map-edge);fill:none','stroke-width':1}));
+  // island frames: each drawn from its own stations' points, at its own scale, in a frame
+  const frame=(x0,y0,w,hh,list,title)=>{svg.append(s('rect',{x:x0,y:y0,width:w,height:hh,rx:4,style:'fill:var(--bg);stroke:var(--map-edge)','stroke-width':.8}),s('text',{x:x0+4,y:y0-4,'data-px':11},title));
+    const la=list.map(p=>p.lat),lo2=list.map(p=>p.lon);const a0=Math.min(...lo2),a1=Math.max(...lo2),b0=Math.min(...la),b1=Math.max(...la);const kx=Math.cos(((b0+b1)/2)*Math.PI/180);
+    const sc=Math.min((w-16)/((a1-a0)*kx||1),(hh-16)/((b1-b0)||1));return p=>[x0+8+(p.lon-a0)*kx*sc,y0+8+(b1-p.lat)*sc]};
+  const az=st.filter(p=>p.lon<-20),md=st.filter(p=>p.lon>=-20&&p.lat<34),ml=st.filter(p=>p.lon>=-20&&p.lat>=34);
+  const pAz=frame(ix+6,by0+30,148,70,az,'Azores (own scale)'),pMd=frame(ix+6,by0+150,100,70,md,'Madeira (own scale)');
+  const dot=(x,y,p)=>{const r=p.reading;const ok=r&&Number.isFinite(r.temp_c);
+    const c=ok?s('circle',{cx:x,cy:y,r:4.2,style:`fill:var(--t-${steps[bin(r.temp_c)]});stroke:var(--map-edge)`,'stroke-width':0.9}):s('circle',{cx:x,cy:y,r:2.2,style:'fill:none;stroke:var(--muted)','stroke-width':.9});
+    c.append(s('title',{},ok?`${p.name}: ${r.temp_c} °C`:`${p.name}: no reading this hour`));return c};
+  const g=s('g');for(const p of ml){const[x,y]=proj(p.lat,p.lon);g.append(dot(x,y,p))}for(const p of az){const[x,y]=pAz(p);g.append(dot(x,y,p))}for(const p of md){const[x,y]=pMd(p);g.append(dot(x,y,p))}
+  // draw reporting dots last so empty rings never cover them
+  [...g.children].sort((a,b)=>(a.getAttribute('r')>3)-(b.getAttribute('r')>3)).forEach(c=>svg.append(c));
+  fit(svg,vb[2]);
+  const leg=h('ul',{class:'legend'},[...Array(nb).keys()].map(i=>h('li',{},h('span',{class:'sw',style:`background:var(--t-${steps[i]});border-radius:50%;width:.9rem;height:.9rem`}),`${lo+i*step} to ${lo+(i+1)*step} °C`)),h('li',{},h('span',{class:'sw',style:'border-radius:50%;width:.6rem;height:.6rem;background:none;border-color:var(--muted)'}),`no reading (${st.length-rep.length} stations)`));
+  el.replaceChildren(h('div',{class:'ctl',role:'group','aria-label':'Measure'},['Temperature','Wind','Rain','Humidity','Pressure'].map((t,i)=>h('button',{type:'button','aria-pressed':String(!i)},t))),h('div',{class:'mapbox'},svg),leg,
+    h('p',{class:'note'},`Hour: ${fUTC(O.hour_utc)}. Bins of ${step} °C over this hour's range. Grey land is drawn from IPMA's municipality points, as on the warnings map.`),prov(O));
+}
+
+// ---------- fire risk ----------
+function fire(F){
+  const el=document.getElementById('fire');if(!el)return;
+  const days=F.municipalities[0].days.map(d=>d.date);let di=0;
+  const base=hexBaseBy(F.municipalities,m=>m.days[di]?.rcm??null);
+  const NAMES=['','Low','Moderate','High','Very high','Maximum'];
+  const draw=()=>{
+    const bb=hexBaseBy(F.municipalities,m=>m.days[di]?.rcm??null);
+    const [bx0,by0,bx1,by1]=bb.box;const vb=[bx0-6,by0-10,bx1-bx0+12,by1-by0+20];
+    const svg=s('svg',{viewBox:vb.join(' '),role:'img','aria-label':`Fire risk on ${fday(days[di])} for ${F.municipalities.length} municipalities. Counts by class are beside the map; every municipality is in the table.`});
+    for(const[k,A]of Object.entries(bb.areas))svg.append(s('path',{d:A.d,style:`fill:${k==='null'?'var(--bg)':`var(--rcm-${k})`};stroke:var(--panel)`,'stroke-width':.5}));
+    svg.append(s('path',{d:base.border2,style:'stroke:var(--panel);fill:none','stroke-width':1.6}),s('path',{d:bb.coast,style:'stroke:var(--map-edge);fill:none','stroke-width':1}));
+    const cnt=[0,0,0,0,0,0];let miss=0;for(const m of F.municipalities){const r=m.days[di]?.rcm;if(r>=1&&r<=5)cnt[r]++;else miss++}
+    const max=Math.max(...cnt);
+    const side=h('div',{},h('h3',{style:'margin:.2rem 0 .5rem;font-size:1rem'},`${fday(days[di])}: municipalities by class`),
+      h('ul',{class:'bars'},[1,2,3,4,5].map(c=>h('li',{},h('span',{},sw(`var(--rcm-${c})`),' ',`${c} ${NAMES[c]}`),h('span',{},h('span',{class:'b',style:`display:block;width:${cnt[c]/max*100}%`})),h('span',{class:'num'},cnt[c])))),
+      miss?h('p',{class:'note'},`${miss} municipalities have no class for this day in the file.`):null,
+      cnt[1]===F.municipalities.length?h('p',{style:'font-size:.95rem'},`All ${cnt[1]} municipalities are in class 1, low, on this day.`):null);
+    el.replaceChildren(h('div',{class:'ctl',role:'group','aria-label':'Day'},days.map((d,i)=>{const b=h('button',{type:'button','aria-pressed':String(i===di)},i===0?`Today, ${fday(d)}`:fday(d));b.onclick=()=>{di=i;draw()};return b})),
+      h('div',{class:'two'},h('div',{class:'mapbox',style:'max-width:420px'},svg),side),h('p',{class:'note'},'Each hexagon takes the class of the nearest municipality point in IPMA\'s file, so edges are approximate. Lines: district borders. Madeira and the Azores are not in this file.'),prov(F));
+  };draw();
+}
+
+// ---------- sea ----------
+function sea(S){
+  const el=document.getElementById('sea');if(!el)return;
+  const cs=S.coasts.slice().sort((a,b)=>(a.lon<-20)-(b.lon<-20)||(a.lat<34&&a.lon>-20)-(b.lat<34&&b.lon>-20)||b.lat-a.lat);
+  const mx=Math.ceil(Math.max(...cs.flatMap(c=>c.days.map(d=>d.waves_max_m??0))));
+  const W=Math.max(320,el.clientWidth-32),nar=W<560,lab=nar?0:170,tc=nar?0:70,rh=nar?40:26,top=22,days=cs[0].days.map(d=>d.date);const cw=(W-lab-tc)/days.length;
+  const svg=s('svg',{viewBox:`0 0 ${W} ${top+cs.length*rh+6}`,role:'img','aria-label':`Significant wave height, lowest to highest, for ${cs.length} coastal places over ${days.length} days, on one scale from 0 to ${mx} m. Sea temperature in the last column. All values are in the table.`});
+  days.forEach((d,i)=>{svg.append(s('text',{x:lab+i*cw+4,y:12,'font-size':12,class:'ink'},fday(d)));
+    for(let m=0;m<=mx;m+=1){const X=lab+i*cw+4+m/mx*(cw-14);svg.append(s('line',{x1:X,x2:X,y1:top-4,y2:top+cs.length*rh,style:'stroke:var(--line)','stroke-width':m?0.5:1}));if(m%2===0)svg.append(s('text',{x:X,y:top+cs.length*rh+0,'font-size':9,'text-anchor':'middle'},''))}});
+  if(!nar)svg.append(s('text',{x:W-tc+6,y:12,'font-size':12,class:'ink'},'Sea °C'));
+  cs.forEach((c,ri)=>{const y=top+ri*rh;svg.append(s('text',{x:0,y:nar?y+10:y+15,'font-size':nar?11:12,class:'ink'},c.name.replace(/, [Cc]osta$/,'')));
+    c.days.forEach((d,i)=>{const X=m=>lab+i*cw+4+m/mx*(cw-14);const yb=nar?y+15:y+7;
+      if(d.waves_min_m==null||d.waves_max_m==null){svg.append(s('text',{x:X(0),y:yb+9,'font-size':10},'no value'));return}
+      svg.append(s('rect',{x:X(d.waves_min_m),y:yb,width:Math.max(X(d.waves_max_m)-X(d.waves_min_m),3),height:9,rx:4,style:'fill:var(--wave)'},s('title',{},`${c.name}, ${fday(d.date)}: ${d.waves_min_m} to ${d.waves_max_m} m, from ${d.wave_dir}`)));
+      if(nar&&i===0)svg.append(s('text',{x:W,y:y+10,'font-size':11,'text-anchor':'end'},`sea ${d.sea_temp_min_c===d.sea_temp_max_c?d.sea_temp_min_c:d.sea_temp_min_c+' to '+d.sea_temp_max_c} °C today`))});
+    if(!nar){const d=c.days[0];svg.append(s('text',{x:W-tc+6,y:y+15,'font-size':12,class:'ink'},d.sea_temp_min_c==null?'n/a':`${d.sea_temp_min_c===d.sea_temp_max_c?d.sea_temp_min_c:d.sea_temp_min_c+'-'+d.sea_temp_max_c}`))}});
+  el.replaceChildren(svg,h('p',{class:'note'},`Bars: IPMA's lowest to highest significant wave height for the day; gridlines every 1 m, 0 to ${mx} m, the same scale in every column. Sea temperature is today's; the next days are in the table. Mainland north to south, then Madeira, then the Azores.`),prov(S));
+}
+
+// ---------- UV ----------
+function uv(U,F){
+  const el=document.getElementById('uv');if(!el)return;
+  const band=v=>v<3?0:v<6?1:v<8?2:v<11?3:4;const BN=['Low','Moderate','High','Very high','Extreme'];
+  const FILL=['#d6eecf','#f4c62a','#e8862c','#c43f26','#6a3d9a'],INK=['#1d2329','#1d2329','#1d2329','#ffffff','#ffffff'];
+  const places=U.places.filter(p=>p.id!==0);const days=[...new Set(places.flatMap(p=>p.days.map(d=>d.date)))].sort();
+  const cell=v=>h('span',{style:`background:${FILL[band(v)]};color:${INK[band(v)]}`,title:`${v}: ${BN[band(v)]}`},String(v));
+  const t=h('table',{class:'uv'},h('thead',{},h('tr',{},h('th',{scope:'col'},'Place'),days.map(d=>h('th',{scope:'col'},fday(d).slice(0,6))))),
+    h('tbody',{},places.map(p=>h('tr',{},h('th',{scope:'row',style:'font-weight:400;color:var(--ink)'},p.name||`IPMA id ${p.id} (no name in IPMA's list)`),
+      days.map(d=>{const v=p.days.filter(x=>x.date===d).map(x=>x.index);if(!v.length)return h('td',{style:'color:var(--muted)'},'none');
+        return h('td',{},h('div',{class:'split'},v.map(cell)))})))));
+  el.replaceChildren(h('div',{style:'overflow-x:auto'},t),h('ul',{class:'legend'},BN.map((b,i)=>h('li',{},h('span',{class:'sw',style:`background:${FILL[i]}`}),`${b} (${['0-2','3-5','6-7','8-10','11+'][i]})`))),
+    h('p',{class:'note'},`WHO UV index bands. Where IPMA's file gives two values for one place and day, both are shown side by side; none is dropped or averaged. One entry (id 0) has several values a day and no place; it is listed under the table, not drawn.`),prov(U));
+}
+
+const ids=['ipma-warnings','ipma-fire-risk','ipma-observations','ipma-sea','ipma-uv'];
+const R=Object.fromEntries(await Promise.all(ids.map(async id=>[id,await get(id)])));
+const F=R['ipma-fire-risk'].ok?R['ipma-fire-risk'].data:null;
+const base=F?hexBase(F.municipalities):null;
+if(R['ipma-warnings'].ok)timeline(R['ipma-warnings'].data);
+if(base&&R['ipma-observations'].ok)observations(R['ipma-observations'].data,base);
+if(F)fire(F);
+if(R['ipma-sea'].ok)sea(R['ipma-sea'].data);
+if(R['ipma-uv'].ok)uv(R['ipma-uv'].data,F);
+</script>
+</body>
+</html>
