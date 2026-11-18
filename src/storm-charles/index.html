@@ -3,60 +3,168 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Storm Charles (archived event) | IPMA data, drawn</title>
-<meta name="description" content="An archived event page for Storm Charles: links to PrompTugal.news's account of what happened, the official alerts and a timeline with sources, and shows their page as published.">
-<meta property="og:type" content="article">
-<meta property="og:site_name" content="IPMA data, drawn">
-<meta property="og:title" content="Storm Charles, archived">
-<meta property="og:description" content="PrompTugal.news's account of Storm Charles: what happened, the official alerts and a timeline with sources. Archived; not a warning service.">
-<meta property="og:url" content="https://ipma-data.agenticcells.site/storm-charles/">
-<meta name="twitter:card" content="summary">
-<link rel="stylesheet" href="/assets/site.css">
-<script src="/assets/ipma.js" defer></script>
+<title>Storm Charles, archived | IPMA data, drawn</title>
+<meta name="description" content="An archived event, 9 to 12 November 2026: what happened in Lisbon, IPMA's warnings as they changed, the alert situation and a timeline with sources, summarised from PrompTugal.news. Not current.">
+<!--HEAD-->
+<style>
+.archived{border:2px solid var(--stale);border-radius:var(--radius);padding:.8rem 1rem;background:var(--panel);margin:0 0 1rem}
+.archived p{margin:.2rem 0}
+.lanes{min-width:680px}
+.lanes .lv-red{fill:var(--w-red)} .lanes .lv-orange{fill:var(--w-orange)} .lanes .lv-yellow{fill:var(--w-yellow)} .lanes .lv-green{fill:var(--w-green)}
+.lanes .unk{fill:url(#unstated);stroke:var(--line)}
+.lanes text{fill:var(--ink);font-family:var(--font)}
+.lanes .on-dark{fill:#fff}
+.lanes .on-light{fill:#1d2329}
+.lanes .src{fill:var(--muted);font-size:12px}
+.lanes .axis{stroke:var(--line)}
+.timeline{list-style:none;padding:0;margin:0}
+.timeline li{border-left:3px solid var(--line);padding:.3rem 0 .6rem .9rem;margin:0}
+.timeline li.press{border-left-color:var(--muted)}
+.timeline time{font-weight:700;font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.04em;padding:0 .4rem;border-radius:4px;border:1px solid var(--muted);color:var(--muted);margin-right:.3rem}
+</style>
 </head>
 <body>
-<p class="notice"><strong>Not a warning service.</strong> For warnings and safety, follow IPMA (<a href="https://www.ipma.pt">ipma.pt</a>) and ANEPC.</p>
-<header class="site"><div class="wrap">
-<a class="brand" href="/">IPMA data, drawn</a>
-<nav class="main" aria-label="Main">
-<a href="/">Portugal now</a>
-<a href="/warnings/">Warnings</a>
-<a href="/forecasts/">Forecasts</a>
-<a href="/observations/">Observations</a>
-<a href="/fire-risk/">Fire risk</a>
-<a href="/sea/">Sea</a>
-<a href="/uv/">UV</a>
-<a href="/storm-charles/" aria-current="page">Storm Charles</a>
-<a href="/how-it-works/">How it works</a>
-<a href="/use-with-ai/">Use with AI</a>
-</nav>
-</div></header>
-<main class="wrap">
-<h1>Storm Charles</h1>
-<p class="lede"><strong>Archived event.</strong> This page is about a past storm. It is not current and must not be used to judge today's weather; for that, see <a href="/">Portugal now</a> and, above all, <a href="https://www.ipma.pt">ipma.pt</a>.</p>
+<!--HEADER-->
+<main id="main">
+<div class="archived" role="note">
+<p><strong>Archived event: not current.</strong> Storm Charles affected mainland Portugal from 9 to 12 November 2026. Nothing on this page describes today's weather. For today, see <a href="/">Portugal now</a> and, above all, <a href="https://www.ipma.pt">ipma.pt</a>.</p>
+</div>
 
-<h2>Where the account comes from</h2>
-<p>PrompTugal.news followed Storm Charles and wrote it up. Their page covers what happened, the official alerts and a timeline, with a source for each entry. Their decision graph shows how their newsroom decided what to publish.</p>
+<h1>Storm Charles, archived</h1>
+<p class="lede">A summary, in our own words, of <a href="https://promptugal.news/storm/charles/index.md"><strong>PrompTugal.news's Storm Charles page</strong></a>, which follows the storm in Lisbon with a source and a read time for every line. Their text is CC BY 4.0. All times are UTC, which is Lisbon time in November.</p>
+<p class="prov">Summarised from PrompTugal.news, <a href="https://promptugal.news/storm/charles/index.md">promptugal.news/storm/charles/</a> (site version v0.1.1793), read 18 November 2026 at 10:55 UTC. Its weather desk last re-read IPMA's warnings on 11 November at 18:37 UTC. This site has not re-checked the original sources.</p>
+
+<h2>What happened</h2>
+<p>IPMA named the low-pressure system CHARLES in a communiqué on 9 November (13:17 UTC) and said orange warnings would follow. On 10 November IPMA issued red warnings for the Lisbon district for Wednesday 11 November, first for wind and then for rain, and the government declared an alert situation (situação de alerta) for all of mainland Portugal for that day. Web Summit said its Day 2 on Wednesday would not take place, on the government's formal advice, and on Wednesday said it would return for its final day on Thursday 12 November.</p>
+<p>On Wednesday the storm turned out weaker than first forecast: IPMA's communiqué no. 3 (12:16 UTC) said the depression had split into two low-pressure centres, so the wind should be weaker than forecast the day before. IPMA lowered Lisbon's wind warning from red to orange early on Wednesday and later shortened and lowered the other warnings. By 18:00 UTC only the sea warning remained. At its 12:00 situation update, ANEPC counted 538 incidents, none significant, with Greater Lisbon, the Setúbal peninsula and the Algarve most affected.</p>
+
+<h2>The alerts</h2>
+<h3>IPMA's warnings for the Lisbon district, Wednesday 11 November</h3>
+<p>The chart shows which level was in force for each hazard across Wednesday, using only the times PrompTugal.news's page states. Under each step is the time of the IPMA data it comes from. Hatched parts are times the page does not state, so nothing is drawn there.</p>
+<figure class="chart panel">
+<div class="table-wrap">
+<svg class="lanes" viewBox="0 0 760 270" role="img" aria-labelledby="lanes-title lanes-desc">
+<title id="lanes-title">IPMA warning levels for the Lisbon district on 11 November 2026, by hazard</title>
+<desc id="lanes-desc">Rain: orange from 00:00 to 09:00, red from 09:00 to 15:00, yellow from 15:00 to 18:00, then no warning. Wind: not stated before 09:00, orange from 09:00 until IPMA's data of 16:15 no longer listed it (its periods start at 15:56), then no warning. Sea: not stated before 12:34, orange from 12:34 to 21:00, then yellow until 03:00 on Thursday 12 November. Times UTC, from PrompTugal.news's Storm Charles page.</desc>
+<defs>
+<pattern id="unstated" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="var(--panel)"/><line x1="0" y1="0" x2="0" y2="8" stroke="var(--line)" stroke-width="3"/></pattern>
+</defs>
+<g font-size="14" font-weight="700">
+<text x="8" y="63">Rain</text>
+<text x="8" y="133">Wind</text>
+<text x="8" y="203">Sea</text>
+</g>
+<!-- x = 100 + hours after Wed 11 Nov 00:00 UTC x 640/27 -->
+<g font-size="13" font-weight="600">
+<rect class="lv-orange" x="100" y="40" width="213.3" height="36"/><text class="on-light" x="108" y="63">orange</text>
+<rect class="lv-red" x="313.3" y="40" width="142.3" height="36"/><text class="on-dark" x="321" y="63">red</text>
+<rect class="lv-yellow" x="455.6" y="40" width="71.1" height="36"/><text class="on-light" x="461" y="63">yellow</text>
+<rect class="lv-green" x="526.7" y="40" width="213.3" height="36"/><text class="on-dark" x="534" y="63">no warning</text>
+
+<rect class="unk" x="100" y="110" width="213.3" height="36"/><text x="108" y="133">not stated</text>
+<rect class="lv-orange" x="313.3" y="110" width="164.4" height="36"/><text class="on-light" x="321" y="133">orange</text>
+<rect class="lv-green" x="477.7" y="110" width="262.3" height="36"/><text class="on-dark" x="485" y="133">no warning</text>
+
+<rect class="unk" x="100" y="180" width="297.9" height="36"/><text x="108" y="203">not stated</text>
+<rect class="lv-orange" x="397.9" y="180" width="199.9" height="36"/><text class="on-light" x="405" y="203">orange</text>
+<rect class="lv-yellow" x="597.8" y="180" width="142.2" height="36"/><text class="on-light" x="604" y="203">yellow</text>
+</g>
+<g class="src">
+<text x="100" y="92">data seen 10 Nov 23:41</text>
+<text x="315" y="92">23:41; kept 08:15</text>
+<text x="457" y="92">data 13:15</text>
+<text x="529" y="92">ended 18:00, read 18:37</text>
+<text x="315" y="162">data 08:15</text>
+<text x="480" y="162">data 16:15 (from 15:56)</text>
+<text x="400" y="232">data 13:15 (from 12:34)</text>
+<text x="600" y="232">data 16:15</text>
+</g>
+<g class="axis" stroke-width="1">
+<line x1="100" y1="246" x2="740" y2="246"/>
+<line x1="100" y1="242" x2="100" y2="250"/><line x1="171.1" y1="242" x2="171.1" y2="250"/><line x1="242.2" y1="242" x2="242.2" y2="250"/><line x1="313.3" y1="242" x2="313.3" y2="250"/><line x1="384.4" y1="242" x2="384.4" y2="250"/><line x1="455.6" y1="242" x2="455.6" y2="250"/><line x1="526.7" y1="242" x2="526.7" y2="250"/><line x1="597.8" y1="242" x2="597.8" y2="250"/><line x1="668.9" y1="242" x2="668.9" y2="250"/><line x1="740" y1="242" x2="740" y2="250"/>
+</g>
+<g class="src" text-anchor="middle">
+<text x="100" y="264">00:00</text><text x="171.1" y="264">03:00</text><text x="242.2" y="264">06:00</text><text x="313.3" y="264">09:00</text><text x="384.4" y="264">12:00</text><text x="455.6" y="264">15:00</text><text x="526.7" y="264">18:00</text><text x="597.8" y="264">21:00</text><text x="668.9" y="264">Thu 00:00</text><text x="725" y="264">03:00</text>
+</g>
+<text class="src" x="8" y="264">Wed 11 Nov</text>
+</svg>
+</div>
+<figcaption>Source: IPMA's warnings file (<a href="https://api.ipma.pt/open-data/forecast/warnings/warnings_www.json">warnings_www.json</a>) as read and reported by PrompTugal.news; times UTC. "Data 13:15" means the version of IPMA's file modified at 13:15. Before 08:15 IPMA had a red wind warning for 12:00 to 21:00; it was lowered to orange before it began, so it is not drawn. This chart is drawn from the page's text, not from IPMA's files: this site holds no IPMA data from the storm.</figcaption>
+</figure>
+
+<h3>How IPMA's Lisbon warnings changed</h3>
+<div class="table-wrap">
+<table>
+<caption style="text-align:left;color:var(--muted)">Each version of IPMA's data for Lisbon that PrompTugal.news's timeline records, oldest first. Source for every row: <a href="https://api.ipma.pt/open-data/forecast/warnings/warnings_www.json">IPMA warnings_www.json</a>, via PrompTugal.news.</caption>
+<thead><tr><th scope="col">IPMA data (UTC)</th><th scope="col">Rain</th><th scope="col">Wind</th><th scope="col">Sea</th><th scope="col">PrompTugal.news read it</th></tr></thead>
+<tbody>
+<tr><td>10 Nov 17:42</td><td><span class="pill lvl-red">red</span> Wed 12:00 to 18:00</td><td><span class="pill lvl-red">red</span> unchanged</td><td>not stated</td><td>not stated</td></tr>
+<tr><td>10 Nov, seen by 23:41</td><td><span class="pill lvl-orange">orange</span> 00:00 to 09:00, then <span class="pill lvl-red">red</span> from 09:00</td><td><span class="pill lvl-red">red</span> 12:00 to 21:00</td><td>not stated</td><td>by 23:41</td></tr>
+<tr><td>11 Nov 08:15</td><td><span class="pill lvl-red">red</span> 09:00 to 18:00</td><td><span class="pill lvl-orange">orange</span> 09:00 to 21:00, gusts up to 120 km/h</td><td>not stated</td><td>08:41</td></tr>
+<tr><td>11 Nov 13:15 (periods from 12:34)</td><td><span class="pill lvl-red">red</span> to 15:00, then <span class="pill lvl-yellow">yellow</span> to 18:00</td><td><span class="pill lvl-orange">orange</span> to 18:00, gusts up to 90 km/h (110 km/h in the most exposed places)</td><td><span class="pill lvl-orange">orange</span> to 21:00</td><td>14:12</td></tr>
+<tr><td>11 Nov 15:15 (periods from 15:06)</td><td><span class="pill lvl-yellow">yellow</span> to 18:00</td><td><span class="pill lvl-orange">orange</span> to 18:00</td><td><span class="pill lvl-orange">orange</span> to 21:00</td><td>15:37</td></tr>
+<tr><td>11 Nov 16:15 (periods from 15:56)</td><td><span class="pill lvl-yellow">yellow</span> to 18:00</td><td>no longer listed</td><td><span class="pill lvl-orange">orange</span> to 21:00, then <span class="pill lvl-yellow">yellow</span> to Thu 03:00</td><td>16:37</td></tr>
+<tr><td>11 Nov 18:15</td><td>ended at 18:00 as scheduled</td><td>none</td><td><span class="pill lvl-orange">orange</span> to 21:00, then <span class="pill lvl-yellow">yellow</span> to Thu 03:00; waves from the south-west of 5 to 7 m, up to 13 m maximum</td><td>18:37</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>The government, ANEPC and the Maritime Authority</h3>
 <ul>
-<li><a href="https://promptugal.news/storm/charles/index.md">PrompTugal.news: Storm Charles</a> (what happened, the official alerts, the timeline with sources)</li>
-<li><a href="https://promptugal.news/newsroom/decision-graph/index.md">PrompTugal.news: decision graph</a></li>
-<li>The IPMA data behind it: <a href="/warnings/">warnings</a>, <a href="/observations/">observations</a> and <a href="/sea/">sea</a> on this site. They show what IPMA's files say now, not what they said during the storm.</li>
+<li><strong>The government</strong> declared an alert situation for all of mainland Portugal from 00:00 to 23:59 on Wednesday 11 November: schools and non-essential public services closed, outdoor events suspended, no access to parks and wooded areas at risk of falling trees, nor to the shoreline, rivers and flood-prone areas. At ANEPC's briefing on Wednesday (published 16:49 UTC) the Minister of Internal Administration said it would not be kept on Thursday, though repairs might be needed and some services might stay limited. (Read by PrompTugal.news 11 Nov 18:37 UTC; <a href="https://portugal.gov.pt/gc25/comunicacao/noticias/governo-declara-situacao-de-alerta-em-todo-o-territorio-continental-1">source</a>.)</li>
+<li><strong>The Minister of Internal Administration</strong> asked people to stay at home where possible and avoid unnecessary travel: an appeal, not an order. (Read 10 Nov 17:01 UTC; <a href="https://portugal.gov.pt/gc25/comunicacao/noticias/mau-tempo-governo-declara-situacao-alerta-">source</a>.)</li>
+<li><strong>ANEPC</strong> (civil protection) raised its special readiness state and sent a public SMS warning about Wednesday. Its 12:00 situation update counted 538 incidents, none significant; 2,222 operatives and 688 vehicles deployed; 23 municipal and 2 district emergency plans active. (Read 11 Nov 18:37 UTC; <a href="https://prociv.gov.pt/pt/noticias/">source</a>.)</li>
+<li><strong>The Maritime Authority and the Navy</strong> forecast a considerable worsening of the weather and the sea from 06:00 on Wednesday to midday on Thursday. This is their forecast for the sea and the coast, not IPMA's land warning. (Read 10 Nov 16:58 UTC, not re-checked by PrompTugal.news; <a href="https://www.amn.pt/Media/Paginas/DetalheNoticia.aspx?nid=7101">source</a>.)</li>
 </ul>
 
-<h2>Summary</h2>
-<div class="placeholder">
-<p><strong>Placeholder: summary not yet written.</strong> This version was written without reading PrompTugal.news's Storm Charles page, so it does not summarise it here: any dates, alert levels or effects written now would be guesses. A later round should write a short summary from that page, citing it and the sources it names for each fact.</p>
-</div>
+<h2>Timeline</h2>
+<p>Newest first, as PrompTugal.news lists it, in our words. Times UTC. Items marked PRESS come from newspapers, not from an authority.</p>
+<ol class="timeline" reversed>
+<li><time datetime="2026-11-11T18:00Z">11 Nov 18:00</time> IPMA's rain warning for Lisbon ends as scheduled; only the sea warning remains (orange to 21:00, yellow to Thursday 03:00). File modified 18:15, read 18:37. <a href="https://api.ipma.pt/open-data/forecast/warnings/warnings_www.json">source</a></li>
+<li><time datetime="2026-11-11T16:49Z">11 Nov 16:49</time> At ANEPC's briefing, the Minister of Internal Administration says the alert situation holds until 23:59 on Wednesday and is not planned for Thursday. <a href="https://portugal.gov.pt/pt/gc25/comunicacao/noticias/mau-tempo-a-proatividade-da-nos-tranquilidade-1">source</a></li>
+<li><time datetime="2026-11-11T15:56Z">11 Nov 15:56</time> IPMA's data for Lisbon no longer lists a wind warning; rain yellow to 18:00, sea orange to 21:00 then yellow to Thursday 03:00. File modified 16:15, read 16:37. <a href="https://api.ipma.pt/open-data/forecast/warnings/warnings_www.json">source</a></li>
+<li><time datetime="2026-11-11T15:06Z">11 Nov 15:06</time> The red rain warning for Lisbon is gone: rain yellow to 18:00, wind orange to 18:00, sea orange to 21:00. File modified 15:15, read 15:37. <a href="https://api.ipma.pt/open-data/forecast/warnings/warnings_www.json">source</a></li>
+<li><time datetime="2026-11-11T12:34Z">11 Nov 12:34</time> IPMA shortens Lisbon's warnings: rain red to 15:00 then yellow to 18:00; wind orange to 18:00; sea stays orange to 21:00. File modified 13:15, read 14:12. <a href="https://api.ipma.pt/open-data/forecast/warnings/warnings_www.json">source</a></li>
+<li><time datetime="2026-11-11T12:16Z">11 Nov 12:16</time> IPMA communiqué no. 3: the depression has split into two centres, so it should deepen less and the wind be weaker than forecast; heavy rain continues; warnings adjusted. Read 12:39. <a href="https://www.ipma.pt/pt/otempo/comunicados/">source</a></li>
+<li><time datetime="2026-11-11T11:44Z">11 Nov 11:44</time> Web Summit announces it is back on Thursday for its final day. <a href="https://websummit.com/blog/web-summit/important-event-update-2026/">source</a></li>
+<li><time datetime="2026-11-11T08:15Z">11 Nov 08:15</time> IPMA lowers Lisbon's wind warning from red to orange (09:00 to 21:00, gusts up to 120 km/h); red rain (09:00 to 18:00) stays. Read 08:41. <a href="https://api.ipma.pt/open-data/forecast/warnings/warnings_www.json">source</a></li>
+<li><time datetime="2026-11-10T23:41Z">10 Nov 23:41</time> IPMA moves the start of Lisbon's red rain warning to 09:00 on Wednesday (orange from 00:00 to 09:00); red wind (12:00 to 21:00) unchanged. Seen by about 23:41. <a href="https://api.ipma.pt/open-data/forecast/warnings/warnings_www.json">source</a></li>
+<li><time datetime="2026-11-10T22:28Z">10 Nov 22:28</time> Transtejo/Soflusa interrupts the Porto Brandão to Trafaria to Algés ferry link for Wednesday, after the Algés seafront was closed. <a href="https://ttsl.pt/avisos/porto-brandao-trafaria-alges-11-nov/">source</a></li>
+<li><time datetime="2026-11-10T20:00Z">10 Nov 20:00</time> Web Summit's statement is on its blog: the government formally advised that Day 2 should not take place. <a href="https://websummit.com/blog/web-summit/important-event-update-2026/">source</a></li>
+<li><time datetime="2026-11-10T19:36Z">10 Nov 19:36</time> Metro de Lisboa keeps five stations open overnight on 10 to 11 and 11 to 12 November for homeless people. <a href="https://www.metrolisboa.pt/2026/11/10/metro-abre-estacoes-para-pessoas-em-situacao-de-sem-abrigo-2/">source</a></li>
+<li><time datetime="2026-11-10T18:37Z">10 Nov 18:37</time> Carris's homepage says service is disrupted and it is monitoring the situation. <a href="https://www.carris.pt">source</a></li>
+<li><time datetime="2026-11-10T17:42Z">10 Nov 17:42</time> IPMA raises Lisbon's rain warning to red for Wednesday 12:00 to 18:00; red wind unchanged. <a href="https://api.ipma.pt/open-data/forecast/warnings/warnings_www.json">source</a></li>
+<li class="press"><time datetime="2026-11-10T17:35Z">10 Nov 17:35</time> <span class="tag">PRESS</span> The Prime Minister says the government recommended suspending the summit; the decision was the organisers' (24 Notícias). <a href="https://promptugal.news/storm/charles/">source: the press link on PrompTugal.news's page</a> (its address names a person, so it is not repeated here)</li>
+<li><time datetime="2026-11-10T17:07Z">10 Nov 17:07</time> IPMA communiqué no. 2: worse weather from early Wednesday; red and orange warnings issued; track and strength highly uncertain. <a href="https://www.ipma.pt/pt/otempo/comunicados/">source</a></li>
+<li class="press"><time datetime="2026-11-10T13:47Z">10 Nov 13:47</time> <span class="tag">PRESS</span> The Lisbon mayor says Web Summit looks unable to run on Wednesday, and that the decision is for the Ministry of Internal Administration (DN). <a href="https://dn.pt/sociedade/proteo-civil-alerta-para-chuva-forte-e-rajadas-at-120-kmh-governo-pede-que-se-evitem-sadas-de-casa">source (press)</a></li>
+<li><time datetime="2026-11-10T13:24Z">10 Nov 13:24</time> Transtejo/Soflusa suspends car transport on Trafaria to Porto Brandão to Belém for rough seas; restored at 18:06. <a href="https://ttsl.pt/avisos/trafaria-porto-brandao-belem-10-nov-2/">source</a></li>
+<li><time datetime="2026-11-10T12:15Z">10 Nov 12:15</time> The Maritime Authority and the Navy warn of a considerable worsening at sea from Wednesday 06:00 to Thursday midday (not re-checked by PrompTugal.news). <a href="https://www.amn.pt/Media/Paginas/DetalheNoticia.aspx?nid=7101">source</a></li>
+<li><time datetime="2026-11-10T12:10Z">10 Nov 12:10</time> The government declares the alert situation for all of mainland Portugal on Wednesday (the page's date). <a href="https://portugal.gov.pt/gc25/comunicacao/noticias/governo-declara-situacao-de-alerta-em-todo-o-territorio-continental-1">source</a></li>
+<li><time datetime="2026-11-09T20:30Z">9 Nov 20:30</time> ANEPC's Aviso 21 on CHARLES: gusts to 120 km/h; avoid unnecessary travel (not re-checked by PrompTugal.news). <a href="https://prociv.gov.pt/pt/avisos-a-populacao/aviso-21-depressao-charles-agravamento-da-situacao-meteorologica-chuva-e-vento-forte-medidas-preventivas/">source</a></li>
+<li><time datetime="2026-11-09T13:17Z">9 Nov 13:17</time> IPMA communiqué no. 1 names the low CHARLES and says orange warnings will follow, an upgrade not ruled out. <a href="https://www.ipma.pt/pt/otempo/comunicados/">source</a></li>
+</ol>
 
-<h2>PrompTugal.news's page, as published</h2>
-<p class="small">Your browser reads the page below straight from promptugal.news. It is their text, not this site's. If it does not appear, use the link above.</p>
-<div data-ipma="storm">
-<p class="status loading">This part needs JavaScript. Without it, read the page on <a href="https://promptugal.news/storm/charles/index.md">PrompTugal.news</a>.</p>
-</div>
+<h2>What the IPMA data on this site can and cannot show</h2>
+<ul>
+<li><strong>It shows now, not then.</strong> The other pages of this site read each source's <code>latest.json</code> from data.promptugal.news: IPMA's files as they were at the last hourly read. They do not hold the storm's files.</li>
+<li><strong>The history is of runs, not values.</strong> Each source's <code>reads.json</code> logs the collector's runs: the address read, the HTTP status, the size, the start of a checksum and whether the bytes changed. It does not keep the warnings or readings themselves, so it cannot replay the storm.</li>
+<li><strong>The collectors started after the storm.</strong> The IPMA warnings card gives its start as 17 November 2026 (<a href="https://data.promptugal.news/api/v1/ipma-warnings/card.json">card.json</a>, read 18 November at 10:55 UTC), five days after Storm Charles. The dated copies in its vault begin then too.</li>
+<li><strong>The storm's own files are kept elsewhere.</strong> data.promptugal.news lists a Storm Charles archive: the data files behind storm-charles.promptugal.news, for Lisbon and Madeira, 10 to 12 November 2026 (<a href="https://data.promptugal.news/sources/storm-charles-archive/index.md">archive page</a>, listed in <a href="https://data.promptugal.news/llms.txt">llms.txt</a>, read 18 November at 10:55 UTC). This site does not draw them yet.</li>
+</ul>
+
+<h2>How PrompTugal.news decided</h2>
+<p>PrompTugal.news's newsroom also shows a <a href="https://promptugal.news/newsroom/decision-graph/index.md">decision graph</a> for Storm Charles and Web Summit, as a layout preview: each box is a decision-maker; a filled box has happened (announced and read at source), a dashed box is expected (the desk's analysis, never a fact), a hollow dashed box is not announced and a grey box is a source the desk could not read. It is not their public page. (Read 18 November 2026 at 10:55 UTC.)</p>
+
+<h2>Sources</h2>
+<ul>
+<li>PrompTugal.news, <a href="https://promptugal.news/storm/charles/index.md">Storm Charles</a> (<a href="https://promptugal.news/storm/charles/index.html">HTML</a>), v0.1.1793, read 18 Nov 2026 10:55 UTC. Text CC BY 4.0. Every fact above comes from this page; the links in the timeline are the sources it cites.</li>
+<li>PrompTugal.news, <a href="https://promptugal.news/newsroom/decision-graph/index.md">The decision graph (Storm Charles)</a>, v0.1.1793, read 18 Nov 2026 10:55 UTC. Text CC BY 4.0.</li>
+<li>IPMA, <a href="https://api.ipma.pt/open-data/forecast/warnings/warnings_www.json">warnings file</a> and <a href="https://www.ipma.pt/pt/otempo/comunicados/">communiqués</a>, as read by PrompTugal.news on 9 to 11 November 2026.</li>
+<li>data.promptugal.news, <a href="https://data.promptugal.news/api/v1/ipma-warnings/card.json">ipma-warnings card</a> and <a href="https://data.promptugal.news/llms.txt">llms.txt</a>, read 18 Nov 2026 10:55 UTC.</li>
+</ul>
+<p class="prov">This page's text: CC BY 4.0, adapted from PrompTugal.news (CC BY 4.0). People appear by role, as on the source page. This site is not IPMA's and is not official.</p>
 </main>
-<footer class="site"><div class="wrap">
-<p><strong>Not a warning service.</strong> For warnings and safety, follow IPMA (<a href="https://www.ipma.pt">ipma.pt</a>) and ANEPC. Weather data: IPMA, via <a href="https://data.promptugal.news">data.promptugal.news</a>. This site is not IPMA's and is not official.</p>
-<p>Version __VERSION__ · Made by the <a href="https://github.com/AgentiCCells/AgentiCCells__Site__Factory">AgentiCCells site factory</a> · Code Apache-2.0, text CC BY 4.0 · No ads, no tracking.</p>
-</div></footer>
+<!--FOOTER-->
 </body>
 </html>
