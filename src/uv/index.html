@@ -3,44 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>UV index | IPMA data, drawn</title>
-<meta name="description" content="IPMA's UV index forecast by place and day across Portugal, drawn live from data.promptugal.news with the WHO categories and the read time.">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="IPMA data, drawn">
-<meta property="og:title" content="IPMA UV index, drawn">
-<meta property="og:description" content="UV index by place and day from IPMA, read live from data.promptugal.news. Not a warning service.">
-<meta property="og:url" content="https://ipma-data.agenticcells.site/uv/">
-<meta name="twitter:card" content="summary">
-<link rel="stylesheet" href="/assets/site.css">
-<script src="/assets/ipma.js" defer></script>
+<title>UV | IPMA data, drawn</title>
+<meta name="description" content="IPMA's UV index forecast by place and day for mainland Portugal, Madeira and the Azores, coloured by the WHO bands with the value written in every cell, drawn live from data.promptugal.news.">
+<!--HEAD-->
+<link rel="stylesheet" href="/assets/charts.css">
+<script type="module" src="/assets/js/pages/uv.js"></script>
 </head>
-<body>
-<p class="notice"><strong>Not a warning service.</strong> For warnings and safety, follow IPMA (<a href="https://www.ipma.pt">ipma.pt</a>) and ANEPC.</p>
-<header class="site"><div class="wrap">
-<a class="brand" href="/">IPMA data, drawn</a>
-<nav class="main" aria-label="Main">
-<a href="/">Portugal now</a>
-<a href="/warnings/">Warnings</a>
-<a href="/forecasts/">Forecasts</a>
-<a href="/observations/">Observations</a>
-<a href="/fire-risk/">Fire risk</a>
-<a href="/sea/">Sea</a>
-<a href="/uv/" aria-current="page">UV</a>
-<a href="/storm-charles/">Storm Charles</a>
-<a href="/how-it-works/">How it works</a>
-<a href="/use-with-ai/">Use with AI</a>
-</nav>
-</div></header>
-<main class="wrap">
-<h1>UV index</h1>
-<p class="lede">IPMA's forecast of the maximum UV index by place and day. The colours follow the World Health Organization's UV index categories: low, moderate, high, very high and extreme.</p>
-<div data-ipma="uv">
-<p class="status loading">This page needs JavaScript: it reads the UV index from data.promptugal.news.</p>
+<body data-sources="ipma-uv">
+<!--HEADER-->
+<main id="main">
+<h1>UV index by place and day</h1>
+<p class="lede">IPMA's forecast of the UV index, the strength of the sun's ultraviolet radiation, for each place and day. Each cell shows IPMA's value and is coloured by the World Health Organization's band for it.</p>
+<div id="uv" class="cb-chart">
+<noscript><p class="status fail">This page needs JavaScript: it reads IPMA's UV forecast from data.promptugal.news in your browser. The file is at <a href="https://data.promptugal.news/api/v1/ipma-uv/latest.json">data.promptugal.news</a>, and IPMA's own page at <a href="https://www.ipma.pt/en/otempo/prev.uv/">ipma.pt</a>.</p></noscript>
 </div>
+<h2>When the collector read IPMA</h2>
+<p class="cb-note">The UV forecast is read from IPMA by PrompTugal.news's collector. Each mark is one of its runs; a run that found new bytes from IPMA is marked as new data.</p>
+<div id="uv-runs"></div>
 </main>
-<footer class="site"><div class="wrap">
-<p><strong>Not a warning service.</strong> For warnings and safety, follow IPMA (<a href="https://www.ipma.pt">ipma.pt</a>) and ANEPC. Weather data: IPMA, via <a href="https://data.promptugal.news">data.promptugal.news</a>. This site is not IPMA's and is not official.</p>
-<p>Version __VERSION__ · Made by the <a href="https://github.com/AgentiCCells/AgentiCCells__Site__Factory">AgentiCCells site factory</a> · Code Apache-2.0, text CC BY 4.0 · No ads, no tracking.</p>
-</div></footer>
+<!--FOOTER-->
 </body>
 </html>

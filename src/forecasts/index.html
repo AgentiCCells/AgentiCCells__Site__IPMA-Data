@@ -4,43 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Forecasts | IPMA data, drawn</title>
-<meta name="description" content="IPMA's five-day forecasts for each district capital and island, and Loulé, Portimão and Sagres: minimum and maximum temperature and chance of rain, drawn live from data.promptugal.news.">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="IPMA data, drawn">
-<meta property="og:title" content="IPMA forecasts, drawn">
-<meta property="og:description" content="Five-day IPMA forecasts by place, drawn live from data.promptugal.news. Not a warning service.">
-<meta property="og:url" content="https://ipma-data.agenticcells.site/forecasts/">
-<meta name="twitter:card" content="summary">
-<link rel="stylesheet" href="/assets/site.css">
-<script src="/assets/ipma.js" defer></script>
+<meta name="description" content="IPMA's five-day forecasts for 35 places in mainland Portugal, Madeira and the Azores: minimum and maximum temperature on one shared scale, chance of rain, weather type and wind, drawn live from data.promptugal.news.">
+<!--HEAD-->
+<link rel="stylesheet" href="/assets/charts.css">
+<script type="module" src="/assets/js/pages/forecasts.js"></script>
 </head>
-<body>
-<p class="notice"><strong>Not a warning service.</strong> For warnings and safety, follow IPMA (<a href="https://www.ipma.pt">ipma.pt</a>) and ANEPC.</p>
-<header class="site"><div class="wrap">
-<a class="brand" href="/">IPMA data, drawn</a>
-<nav class="main" aria-label="Main">
-<a href="/">Portugal now</a>
-<a href="/warnings/">Warnings</a>
-<a href="/forecasts/" aria-current="page">Forecasts</a>
-<a href="/observations/">Observations</a>
-<a href="/fire-risk/">Fire risk</a>
-<a href="/sea/">Sea</a>
-<a href="/uv/">UV</a>
-<a href="/storm-charles/">Storm Charles</a>
-<a href="/how-it-works/">How it works</a>
-<a href="/use-with-ai/">Use with AI</a>
-</nav>
-</div></header>
-<main class="wrap">
+<body data-sources="ipma-city-forecasts">
+<!--HEADER-->
+<main id="main">
 <h1>Forecasts by place</h1>
-<p class="lede">IPMA's daily forecast for each district capital and island, and for a few more places, up to five days ahead: the minimum and maximum temperature and the chance of rain.</p>
-<div data-ipma="forecasts">
-<p class="status loading">This page needs JavaScript: it reads the forecasts from data.promptugal.news.</p>
+<p class="lede">IPMA's daily forecast for 35 places, up to five days ahead: the lowest and highest temperature, the chance of rain, the weather type and the wind. Every place is drawn on the same temperature scale, so you can compare them at a glance.</p>
+<div id="fc" class="cb-chart">
+<noscript><p class="status fail">This page needs JavaScript: it reads IPMA's forecasts from data.promptugal.news in your browser. The file is at <a href="https://data.promptugal.news/api/v1/ipma-city-forecasts/latest.json">data.promptugal.news</a>, and IPMA's own page at <a href="https://www.ipma.pt/en/otempo/prev.localidade.hora/">ipma.pt</a>.</p></noscript>
 </div>
+<h2>When the collector read IPMA</h2>
+<p class="cb-note">The forecasts are read from IPMA by PrompTugal.news's collector. Each mark is one of its runs; a run that found new bytes from IPMA is marked as new data.</p>
+<div id="fc-runs"></div>
 </main>
-<footer class="site"><div class="wrap">
-<p><strong>Not a warning service.</strong> For warnings and safety, follow IPMA (<a href="https://www.ipma.pt">ipma.pt</a>) and ANEPC. Weather data: IPMA, via <a href="https://data.promptugal.news">data.promptugal.news</a>. This site is not IPMA's and is not official.</p>
-<p>Version __VERSION__ · Made by the <a href="https://github.com/AgentiCCells/AgentiCCells__Site__Factory">AgentiCCells site factory</a> · Code Apache-2.0, text CC BY 4.0 · No ads, no tracking.</p>
-</div></footer>
+<!--FOOTER-->
 </body>
 </html>
