@@ -1,0 +1,102 @@
+/* almanac.css: the Almanac design (/d/almanac/), scoped under body.d-almanac. A printed almanac
+   page: cream paper, ink, ochre rules, a serif stack throughout, old-style figures in text and
+   lining tabular figures in tables. Always light, like paper, and readable in greyscale: every
+   level is a word beside its hatched swatch. Prints on one A4 sheet.
+   Palette from team/rounds/1/design/PROPOSAL.md, section 4: cream #faf6ec, ink #222, ochre
+   #9a6a12 for rules. Level colours and hatches are the site's own (light values), unchanged.
+   Code Apache-2.0. Written by developer.ipma-data@AgentiCCells.dinis (instance D), 2026-11-18, round 2. */
+body.d-almanac{
+  --bg:#faf6ec; --panel:#fffdf7; --ink:#222222; --muted:#5e5644; --line:#d9ccae; --accent:#6e4c0d; --accent-ink:#ffffff;
+  --rule:#9a6a12; --paper2:#e9e1cc;
+  --w-green:#a8d5b5; --w-yellow:#f5c518; --w-orange:#d9621a; --w-red:#a51f2a; --w-none:#c9cfd4;
+  --map-edge:#6f7880; --hatch-dark:rgba(29,35,41,.5); --hatch-light:rgba(255,255,255,.6);
+  --land:#e9e1cc; --fresh:#2e7d4f; --stale:#a35d00; --old:#b3261e;
+  --serif:Charter,"Iowan Old Style","Palatino Linotype",Georgia,serif;
+  color-scheme:light;
+  background:var(--bg); color:var(--ink);
+  font-family:var(--serif); font-variant-numeric:oldstyle-nums proportional-nums;
+}
+:root body.d-almanac .disclaimer{background:#fff4d6;color:#3b2f00;border-color:#ecd79a}
+.d-almanac .site-head{background:var(--panel);border-bottom:2px solid var(--rule)}
+.d-almanac .brand,.d-almanac .nav{font-family:var(--serif)}
+.d-almanac main{max-width:70rem}
+.d-almanac .alm-mast{text-align:center;border-bottom:1px solid var(--rule);padding:0 0 .6rem;margin:0 0 1rem;position:relative}
+.d-almanac .alm-mast::before{content:"";display:block;border-top:3px double var(--rule);margin:0 0 .6rem}
+.d-almanac .alm-kicker{margin:0;font-size:.85rem;font-variant:small-caps;letter-spacing:.06em;color:var(--muted)}
+.d-almanac h1{font-weight:700;font-size:clamp(1.6rem,4.5vw,2.5rem);margin:.15rem 0 .25rem;letter-spacing:.01em}
+.d-almanac .alm-date{margin:0;font-style:italic;color:var(--muted);font-size:.95rem}
+.d-almanac h2{font-size:1.05rem;font-variant:small-caps;letter-spacing:.07em;font-weight:700;margin:0 0 .45rem;padding:0 0 .2rem;border-bottom:1px solid var(--rule)}
+.d-almanac .alm-cols{display:grid;gap:1.1rem 1.6rem}
+.d-almanac .alm-cols>section{min-width:0}
+/* Two independent columns (warnings and forecast; map, sea and UV) from 880 px and in print.
+   Narrower, the wrappers dissolve and the map follows the warnings. */
+.d-almanac .alm-a,.d-almanac .alm-b{display:contents}
+.d-almanac .alm-s-warn{order:1}.d-almanac .alm-s-map{order:2}.d-almanac .alm-s-fc{order:3}.d-almanac .alm-s-sea{order:4}.d-almanac .alm-s-uv{order:5}
+@media (min-width:880px){
+  .d-almanac .alm-cols{grid-template-columns:minmax(0,3fr) minmax(0,2fr);align-items:start}
+  .d-almanac .alm-a,.d-almanac .alm-b{display:flex;flex-direction:column;gap:1.1rem;min-width:0}
+}
+
+/* Tables in the almanac idiom: hairline ochre rules, no boxes, lining tabular figures. */
+.d-almanac table.alm-t{font-size:.86rem;font-variant-numeric:lining-nums tabular-nums;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);width:100%}
+.d-almanac table.alm-t caption{font-style:italic;font-size:.8rem;color:var(--muted);font-variant-numeric:oldstyle-nums}
+.d-almanac table.alm-t th,.d-almanac table.alm-t td{padding:.2rem .35rem;border-bottom:1px solid var(--line);vertical-align:top}
+.d-almanac table.alm-t thead th{color:var(--ink);font-weight:700;border-bottom:1px solid var(--rule);font-size:.8rem;white-space:nowrap}
+.d-almanac table.alm-t tbody th{color:var(--ink);font-weight:600;white-space:nowrap}
+.d-almanac table.alm-t td.none{color:var(--muted);font-style:italic}
+.d-almanac .alm-v{display:block;white-space:nowrap}
+.d-almanac .alm-s{display:block;font-size:.76rem;color:var(--muted)}
+.d-almanac .alm-type{display:block;font-size:.76rem;color:var(--muted)}
+.d-almanac .alm-warn .lvl{font-weight:600}
+.d-almanac .alm-legend{display:flex;flex-wrap:wrap;gap:.2rem .9rem;font-size:.8rem;margin:.35rem 0 0}
+.d-almanac .alm-legend span{display:inline-flex;align-items:center;gap:.3rem}
+.d-almanac .alm-mapbox{max-width:300px;margin:0 auto}
+.d-almanac svg.map text{font-family:var(--serif)}
+.d-almanac .prov{font-size:.74rem;border-left:2px solid var(--rule);margin:.45rem 0 0;padding:.1rem 0 .1rem .55rem;line-height:1.4}
+.d-almanac .prov-stale{border-left-color:var(--stale)} .d-almanac .prov-old{border-left-color:var(--old)}
+.d-almanac .note,.d-almanac .map-note{font-size:.76rem}
+.d-almanac .status{font-family:var(--serif)}
+.d-almanac .alm-end{margin:1.4rem 0 0;padding:.5rem 0 0;border-top:3px double var(--rule);font-size:.88rem;text-align:center;color:var(--muted)}
+.d-almanac .site-foot{background:var(--panel);border-top:1px solid var(--rule)}
+@media (max-width:520px){
+  .d-almanac table.alm-t{font-size:.8rem}
+  .d-almanac table.alm-t th,.d-almanac table.alm-t td{padding:.18rem .2rem}
+  .d-almanac table.alm-fc .alm-s,.d-almanac table.alm-uv .alm-s{font-size:.7rem}
+  .d-almanac table.alm-t tbody th{white-space:normal}
+}
+
+/* One A4 sheet: the disclaimer stays; navigation and controls go; small serif type. */
+@media print{
+  @page{size:A4;margin:9mm 10mm}
+  html,body.d-almanac{background:#fff}
+  body.d-almanac{font-size:7.3pt;line-height:1.3;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .d-almanac .site-head .bar,.d-almanac .skip,.d-almanac .skiplink,.d-almanac .alm-end,.d-almanac noscript{display:none}
+  .d-almanac .site-head{border:0;background:none}
+  .d-almanac .disclaimer{font-size:7.5pt;padding:1mm 2mm;border:1px solid #9a6a12!important}
+  .d-almanac main{max-width:none;padding:0}
+  .d-almanac .alm-mast{margin:1.5mm 0 2mm;padding:0 0 1.2mm}
+  .d-almanac .alm-mast::before{margin:0 0 1mm}
+  .d-almanac h1{font-size:15pt;margin:0}
+  .d-almanac .alm-date,.d-almanac .alm-kicker{font-size:7pt}
+  .d-almanac h2{font-size:8.5pt;margin:0 0 1mm}
+  .d-almanac .alm-cols{grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:0 5mm;align-items:start}
+  .d-almanac .alm-a,.d-almanac .alm-b{display:flex;flex-direction:column;gap:2.5mm;min-width:0}
+  .d-almanac .alm-w{display:none}
+  .d-almanac table.alm-t{font-size:7pt}
+  .d-almanac table.alm-t caption,.d-almanac .alm-s,.d-almanac .alm-type,.d-almanac table.alm-t thead th{font-size:6.3pt}
+  .d-almanac table.alm-t th,.d-almanac table.alm-t td{padding:.25mm .8mm}
+  .d-almanac .prov{font-size:5.9pt;line-height:1.25;margin-top:1mm}
+  .d-almanac .note,.d-almanac .map-note,.d-almanac .alm-legend{font-size:6.2pt}
+  .d-almanac .alm-mapbox{max-width:40mm}
+  .d-almanac .sw{width:4.2mm;height:3mm}
+  .d-almanac .status.age-banner{font-size:6.5pt;padding:.8mm 1.5mm;margin:0 0 1mm}
+  .d-almanac .site-foot{background:none;border-top:1px solid #9a6a12;font-size:6pt;margin-top:2mm}
+  .d-almanac .site-foot p{margin:.6mm 0;padding:0;max-width:none}
+  .d-almanac .site-foot p:last-child{display:none}
+  .d-almanac a{color:inherit;text-decoration:none}
+  .d-almanac .alm-s,.d-almanac .alm-type{display:inline;margin-left:1.2mm}
+  .d-almanac .alm-v{display:inline}
+  .d-almanac table.alm-t td{white-space:nowrap}
+  .d-almanac svg.map text{font-size:15px!important}
+  .d-almanac .alm-s-map .map-note{font-size:5.9pt}
+}

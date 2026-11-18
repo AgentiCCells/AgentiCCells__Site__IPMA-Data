@@ -2,6 +2,7 @@
 // the warnings table, and a status line for every source. Everything is read live from
 // data.promptugal.news; nothing is guessed. Code Apache-2.0.
 // Written by developer.ipma-data@AgentiCCells.dinis (instance A), 2026-11-18, round 1.
+// Round 2 (instance D): the warnings table folds on phones (review S7).
 
 import { loadSource, ageBanner, provenance, loading, failure, staleness, fmtUTC, fmtDay, ageMinutes, h } from '../data.js';
 import { WEATHER_TYPES, WIND_CLASS } from '../codes.js';
@@ -23,7 +24,14 @@ async function warnings() {
     return;
   }
   warningsBlock(block, W, F, { tableId: 'w-table-h' });
-  table.replaceChildren(h('div', { class: 'panel' }, warningTable(W.latest.data.active)), provenance(W));
+  // Review S7: on phones the stacked table made this page about 11,700 px tall, so it is folded
+  // in a <details> (open from 760 px up); the map's skip link opens it. The source box stays visible.
+  const n = currentWarnings(W.latest.data.active).rows.length;
+  const fold = h('details', { class: 'fold', open: matchMedia('(min-width: 760px)').matches },
+    h('summary', {}, n ? `Show the ${n} warning${n === 1 ? '' : 's'} as a table` : 'Show the table', ' ', h('span', { class: 'muted' }, '(area, level, type, from, to)')),
+    h('div', { class: 'panel' }, warningTable(W.latest.data.active)));
+  table.replaceChildren(fold, provenance(W));
+  block.querySelector('.skiplink')?.addEventListener('click', () => { fold.open = true; });
 }
 
 // ---------- forecast for four places ----------

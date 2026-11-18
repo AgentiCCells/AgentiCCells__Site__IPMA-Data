@@ -1,0 +1,95 @@
+{
+  "about": "The six designs of IPMA data, drawn: the main design and the five from the round 1 design proposal (team/rounds/1/design/PROPOSAL.md, section 4). Every design reads the same live files from data.promptugal.news; only the way they are drawn differs. palette: five colours, page first; they are the proposal's colours, and where the proposal names fewer than five (Broadsheet 3, Chart room 4, Night desk 4, Almanac 3, Glance 3) the rest were added by the developer to match. fonts: the stack for text; figures: the stack for numbers. Not a warning service. For warnings and safety, follow IPMA (ipma.pt) and ANEPC.",
+  "designs": [
+    {
+      "slug": "main",
+      "name": "The main design",
+      "line": "The whole site: a map, charts and tables on a calm page, in light or dark.",
+      "path": "/",
+      "palette": [
+        "#f7f5f0",
+        "#ffffff",
+        "#1d2329",
+        "#5b6670",
+        "#0b5c7a"
+      ],
+      "fonts": "system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+      "figures": "system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif"
+    },
+    {
+      "slug": "broadsheet",
+      "name": "Broadsheet",
+      "line": "A newspaper weather page: a headline from the data, the map large, dense tables.",
+      "path": "/d/broadsheet/",
+      "palette": [
+        "#f4f1ea",
+        "#161616",
+        "#8a1c1c",
+        "#d8d2c4",
+        "#5a5a5a"
+      ],
+      "fonts": "Charter, \"Iowan Old Style\", Georgia, serif",
+      "figures": "system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif"
+    },
+    {
+      "slug": "chart-room",
+      "name": "Chart room",
+      "line": "Sea first: coastal wave ranges lead, with rough-sea warnings and wind beside them.",
+      "path": "/d/chart-room/",
+      "palette": [
+        "#f3f0e4",
+        "#dbe7ec",
+        "#13324b",
+        "#9db4c0",
+        "#2f6f9f"
+      ],
+      "fonts": "system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+      "figures": "ui-monospace, SFMono-Regular, Menlo, monospace"
+    },
+    {
+      "slug": "night-desk",
+      "name": "Night desk",
+      "line": "A dark operations board: a tile per source with its status light and read age.",
+      "path": "/d/night-desk/",
+      "palette": [
+        "#0d1117",
+        "#161b22",
+        "#e6edf3",
+        "#8b949e",
+        "#5fb3d3"
+      ],
+      "fonts": "system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+      "figures": "ui-monospace, SFMono-Regular, Menlo, monospace"
+    },
+    {
+      "slug": "almanac",
+      "name": "Almanac",
+      "line": "A printed almanac page in tables, readable in greyscale, on one A4 sheet.",
+      "path": "/d/almanac/",
+      "palette": [
+        "#faf6ec",
+        "#222222",
+        "#9a6a12",
+        "#e9e1cc",
+        "#6b6250"
+      ],
+      "fonts": "Charter, \"Iowan Old Style\", Georgia, serif",
+      "figures": "Charter, \"Iowan Old Style\", Georgia, serif"
+    },
+    {
+      "slug": "glance",
+      "name": "Glance",
+      "line": "Phone first: one sentence per place, a small map, every source's age at the foot.",
+      "path": "/d/glance/",
+      "palette": [
+        "#ffffff",
+        "#111111",
+        "#0b5c7a",
+        "#f2f4f5",
+        "#5b6670"
+      ],
+      "fonts": "system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
+      "figures": "system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif"
+    }
+  ]
+}

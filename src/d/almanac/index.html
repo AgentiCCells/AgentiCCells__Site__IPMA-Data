@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Almanac | IPMA data, drawn</title>
+<meta name="description" content="The Almanac design: IPMA's warnings by area and day, a five-day forecast, the sea and the UV index as tables on one printable A4 page, drawn live from data.promptugal.news. Not a warning service.">
+<meta name="share-image" content="/assets/share/d-almanac.png">
+<!--HEAD-->
+<link rel="stylesheet" href="/d/almanac/almanac.css">
+</head>
+<body class="d-almanac" data-sources="ipma-warnings ipma-city-forecasts ipma-sea ipma-uv ipma-fire-risk">
+<!--HEADER-->
+<main id="main">
+<header class="alm-mast">
+<p class="alm-kicker"><a href="/d/">Designs</a> · Almanac, one of six designs of the same data</p>
+<h1>The Portugal weather almanac</h1>
+<p class="alm-date" id="alm-date">From IPMA's files, as last read by PrompTugal.news's collector.</p>
+</header>
+<noscript><p class="status fail">This page draws IPMA's data with JavaScript in your browser. Without it nothing can be shown here; see <a href="https://www.ipma.pt">ipma.pt</a>.</p></noscript>
+<div class="alm-cols">
+<div class="alm-a">
+<section class="alm-s-warn" aria-labelledby="alm-warn-h">
+<h2 id="alm-warn-h">Warnings by area and day</h2>
+<div id="alm-warn"><p class="status loading">Reading IPMA's warnings from data.promptugal.news...</p></div>
+</section>
+<section class="alm-s-fc" aria-labelledby="alm-fc-h">
+<h2 id="alm-fc-h">Forecast, five days</h2>
+<div id="alm-fc"><p class="status loading">Reading IPMA's forecasts from data.promptugal.news...</p></div>
+</section>
+<section class="alm-s-uv" aria-labelledby="alm-uv-h">
+<h2 id="alm-uv-h">UV index</h2>
+<div id="alm-uv"><p class="status loading">Reading IPMA's UV index from data.promptugal.news...</p></div>
+</section>
+</div>
+<div class="alm-b">
+<section class="alm-s-map" aria-labelledby="alm-map-h">
+<h2 id="alm-map-h">The areas now</h2>
+<div id="alm-map"><p class="status loading">Reading IPMA's warnings from data.promptugal.news...</p></div>
+</section>
+<section class="alm-s-sea" aria-labelledby="alm-sea-h">
+<h2 id="alm-sea-h">The sea, three days</h2>
+<div id="alm-sea"><p class="status loading">Reading IPMA's sea forecast from data.promptugal.news...</p></div>
+</section>
+</div>
+</div>
+<p class="alm-end">This page prints on one A4 sheet and reads in greyscale: levels are written as words beside hatched swatches. <a href="/d/">Back to the six designs</a> · <a href="/">The main design</a></p>
+</main>
+<!--FOOTER-->
+<script type="module" src="/d/almanac/almanac.js"></script>
+</body>
+</html>

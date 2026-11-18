@@ -216,6 +216,7 @@ function writePage(path, { title, description, body, crumbs = [], md = '' }) {
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(title)} | ${esc(SITE_NAME)}</title>
 <meta name="description" content="${esc(description)}">
+<meta name="share-image" content="/assets/share/behind-the-scenes.png">
 <!--HEAD-->
 <link rel="stylesheet" href="${BASE}/bts.css">
 </head>

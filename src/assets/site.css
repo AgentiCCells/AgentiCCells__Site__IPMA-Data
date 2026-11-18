@@ -207,3 +207,28 @@ details>summary{cursor:pointer;color:var(--accent)}
   svg.map .hatch line,.hatch-defs line{stroke:CanvasText!important}
   svg.map .area:focus .sel,svg.map .area.on .sel{stroke:Highlight}
 }
+
+/* The designs control in the header (scripts/lib.mjs, designsControl): a <details> list of the
+   six designs. Round 2, developer instance D. */
+.designs-menu{position:relative;margin-left:auto;font-size:.92rem}
+.designs-menu>summary{list-style:none;cursor:pointer;color:var(--ink);padding:.2rem .6rem;border:1px solid var(--map-edge);border-radius:999px;white-space:nowrap;min-height:2rem;display:inline-flex;align-items:center}
+.designs-menu>summary::-webkit-details-marker{display:none}
+.designs-menu>summary::after{content:"";width:.45em;height:.45em;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-2px);margin-left:.5rem}
+.designs-menu[open]>summary::after{transform:rotate(-135deg) translateY(-1px)}
+.designs-menu .dm-now{color:var(--muted)}
+.designs-menu .dm-panel{position:absolute;right:0;top:calc(100% + .35rem);z-index:20;width:min(23rem,calc(100vw - 32px));background:var(--panel);color:var(--ink);border:1px solid var(--map-edge);border-radius:var(--radius);box-shadow:0 6px 24px rgba(0,0,0,.18);padding:.6rem}
+.designs-menu .dm-head{margin:0 0 .3rem;font-size:.8rem;color:var(--muted)}
+.designs-menu ul{list-style:none;margin:0;padding:0}
+.designs-menu li a{display:block;padding:.4rem .5rem;border-radius:6px;text-decoration:none;color:var(--ink)}
+.designs-menu li a:hover{background:var(--bg)}
+.designs-menu li a[aria-current]{background:var(--bg);box-shadow:inset 3px 0 0 var(--accent)}
+.designs-menu li a span:not(.dm-on){display:block;font-size:.82rem;color:var(--muted);line-height:1.35}
+.designs-menu .dm-on{font-size:.8rem;color:var(--muted);font-weight:400}
+.designs-menu .dm-all{margin:.4rem 0 0;padding:.4rem .5rem 0;border-top:1px solid var(--line);font-size:.88rem}
+@media print{.designs-menu,.skip{display:none}}
+
+/* Long lists folded on phones (review S7): the list stays one tap away, the map and the
+   source box stay in view. */
+details.fold{margin:.4rem 0 0}
+details.fold>summary{padding:.5rem .2rem;font-weight:600}
+details.fold>summary .muted{font-weight:400}

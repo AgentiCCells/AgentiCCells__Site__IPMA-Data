@@ -3,6 +3,7 @@
 // every built page at build time: a page in src/ writes <!--HEAD-->, <!--HEADER--> and
 // <!--FOOTER--> where these go. Node built-ins only. Code Apache-2.0; text CC BY 4.0.
 // Written by conductor.ipma-data@AgentiCCells.dinis, 2026-11-18, round 1.
+import { readFileSync } from 'node:fs';
 export const SITE = 'https://ipma-data.agenticcells.site';
 export const REPO = 'https://github.com/AgentiCCells/AgentiCCells__Site__IPMA-Data';
 export const SITE_NAME = 'IPMA data, drawn';
@@ -22,6 +23,9 @@ export const NAV = [
   ['/behind-the-scenes/', 'Behind the scenes'],
   ['/use-with-ai/', 'Use with AI'],
 ];
+// The six designs (src/designs.json), for the designs control in the header.
+// developer.ipma-data@AgentiCCells.dinis (instance D), round 2.
+export const DESIGNS = JSON.parse(readFileSync(new URL('../src/designs.json', import.meta.url), 'utf8')).designs;
 export const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 // path: the page's URL path, e.g. /warnings/. title, description: from the page itself.
@@ -55,9 +59,22 @@ export function header(path) {
   const links = NAV.map(([p, t]) => `<a href="${p}"${here(p) ? ' aria-current="page"' : ''}>${esc(t)}</a>`).join('');
   return `<a class="skip" href="#main">Skip to the content</a>
 <header class="site-head">
-<div class="bar"><a class="brand" href="/">${esc(SITE_NAME)}</a><nav class="nav" aria-label="Site">${links}</nav></div>
+<div class="bar"><a class="brand" href="/">${esc(SITE_NAME)}</a><nav class="nav" aria-label="Site">${links}</nav>${designsControl(path)}</div>
 <p class="disclaimer" role="note"><strong>${esc(DISCLAIMER)}</strong> This site is not IPMA's and is not official.</p>
 </header>`;
+}
+
+// The designs control: a <details> list of the six designs, the current one marked. It opens
+// and closes without JavaScript; /assets/js/designs-menu.js adds Escape and click-outside to
+// close it. The last item links to the chooser at /d/, so the control is never a dead end.
+export function designsControl(path) {
+  const cur = (DESIGNS.find(d => d.path !== '/' && path.startsWith(d.path)) || (path === '/d/' ? null : DESIGNS[0]));
+  const items = DESIGNS.map(d => {
+    const on = cur && d.slug === cur.slug;
+    return `<li><a href="${esc(d.path)}"${on ? ' aria-current="true"' : ''}><strong>${esc(d.name)}</strong>${on ? ' <span class="dm-on">(this design)</span>' : ''}<span>${esc(d.line)}</span></a></li>`;
+  }).join('');
+  return `<details class="designs-menu"><summary>Designs${cur ? `<span class="dm-now">: ${esc(cur.slug === 'main' ? 'main' : cur.name)}</span>` : ''}</summary>
+<div class="dm-panel"><p class="dm-head">Six designs, the same live data</p><ul>${items}</ul><p class="dm-all"><a href="/d/">Compare all six designs</a></p></div></details><script type="module" src="/assets/js/designs-menu.js"></script>`;
 }
 
 export function footer(path) {

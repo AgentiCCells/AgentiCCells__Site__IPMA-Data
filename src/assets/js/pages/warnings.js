@@ -2,6 +2,7 @@
 // with each warning's text, the collector's run strip, and MeteoAlarm's CAP feed as context.
 // Read live from data.promptugal.news; nothing is guessed. Code Apache-2.0.
 // Written by developer.ipma-data@AgentiCCells.dinis (instance A), 2026-11-18, round 1.
+// Round 2 (instance D): the long list and MeteoAlarm's table fold on phones (review S7).
 
 import { loadSource, ageBanner, provenance, loading, failure, runStrip, fmtUTC, fmtDay, h, s } from '../data.js';
 import { warningsBlock, warningTable, currentWarnings, lisbonNow, areaName, ORDER, HATCH, swatch, lvl, levelWord, ensureHatches } from '../map.js';
@@ -9,6 +10,7 @@ import { warningsBlock, warningTable, currentWarnings, lisbonNow, areaName, ORDE
 const IPMA_WARN = 'https://www.ipma.pt/en/otempo/prev-sam/';
 const MA_PAGE = 'https://www.meteoalarm.org/en/live/region/PT';
 const $ = id => document.getElementById(id);
+const wide = () => matchMedia('(min-width: 760px)').matches;
 
 // ---------- timeline ----------
 // x is time, from the earlier of now and the first start to the last end. IPMA's times have no
@@ -86,7 +88,7 @@ function meteoalarm(el, src, ipmaCount) {
     : h('p', {}, 'No CAP message in MeteoAlarm\'s feed is in force or upcoming now.');
   el.replaceChildren(...[ageBanner(src.latest, { subject: "MeteoAlarm's messages", page: MA_PAGE, pageLabel: 'meteoalarm.org' }), h('div', { class: 'panel' },
     h('p', {}, `MeteoAlarm: ${msgs.length} message${msgs.length === 1 ? '' : 's'} not expired now. IPMA's file: ${ipmaCount === null ? 'could not be read' : `${ipmaCount} warning${ipmaCount === 1 ? '' : 's'} in force or upcoming`}. The two are counted differently (a CAP message can be an update of another), so they are not matched one by one.`),
-    body,
+    msgs.length ? h('details', { class: 'fold', open: wide() }, h('summary', {}, `Show the ${msgs.length} message${msgs.length === 1 ? '' : 's'}`, ' ', h('span', { class: 'muted' }, '(area, level, event, onset, expires, issued)')), body) : body,
     h('p', { class: 'note' }, h('strong', {}, 'National service: '), at.national_service || 'IPMA, Instituto Português do Mar e da Atmosfera', '. ',
       'Via ', h('a', { href: 'https://www.meteoalarm.org/' }, 'www.meteoalarm.org'), '. Each message keeps its time of issue.'),
     h('p', { class: 'note' }, h('strong', {}, "MeteoAlarm's disclaimer: "), at.disclaimer || h('em', {}, 'the disclaimer was not in the file; see www.meteoalarm.org.'))),
@@ -107,8 +109,14 @@ async function main() {
   } else {
     warningsBlock(block, W, F, { tableId: 'list-h' });
     timeline(tl, W);
-    list.replaceChildren(h('div', { class: 'panel' }, warningTable(W.latest.data.active, { withText: true })), provenance(W));
     ipmaCount = currentWarnings(W.latest.data.active).rows.length;
+    // Review S7: at 390 px the stacked list with IPMA's text made this page about 17,000 px tall.
+    // It is folded on phones (open from 760 px up); the map's skip link opens it.
+    const fold = h('details', { class: 'fold', open: wide() },
+      h('summary', {}, ipmaCount ? `Show the ${ipmaCount} warning${ipmaCount === 1 ? '' : 's'} with IPMA's text` : 'Show the list', ' ', h('span', { class: 'muted' }, '(area, level, type, times, text in Portuguese)')),
+      h('div', { class: 'panel' }, warningTable(W.latest.data.active, { withText: true })));
+    list.replaceChildren(fold, provenance(W));
+    block.querySelector('.skiplink')?.addEventListener('click', () => { fold.open = true; });
   }
   runs.replaceChildren(h('div', { class: 'panel' }, runStrip(W.reads)));
   const M = await pM;
