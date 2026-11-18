@@ -4,49 +4,45 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Warnings | IPMA data, drawn</title>
-<meta name="description" content="IPMA weather warnings for the 18 mainland districts, Madeira and the Azores, drawn live on a map from data.promptugal.news, with the read time. Not a warning service.">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="IPMA data, drawn">
-<meta property="og:title" content="IPMA warnings, drawn">
-<meta property="og:description" content="IPMA weather warnings for Portugal on a map, read live from data.promptugal.news. Not a warning service: follow IPMA and ANEPC.">
-<meta property="og:url" content="https://ipma-data.agenticcells.site/warnings/">
-<meta name="twitter:card" content="summary">
-<link rel="stylesheet" href="/assets/site.css">
-<script src="/assets/ipma.js" defer></script>
+<meta name="description" content="IPMA's yellow, orange and red weather warnings for Portugal's 25 warning areas on a map and a timeline, with each warning's text, read live from data.promptugal.news, and MeteoAlarm's feed as context. Not a warning service.">
+<!--HEAD-->
 </head>
-<body>
-<p class="notice"><strong>Not a warning service.</strong> For warnings and safety, follow IPMA (<a href="https://www.ipma.pt">ipma.pt</a>) and ANEPC.</p>
-<header class="site"><div class="wrap">
-<a class="brand" href="/">IPMA data, drawn</a>
-<nav class="main" aria-label="Main">
-<a href="/">Portugal now</a>
-<a href="/warnings/" aria-current="page">Warnings</a>
-<a href="/forecasts/">Forecasts</a>
-<a href="/observations/">Observations</a>
-<a href="/fire-risk/">Fire risk</a>
-<a href="/sea/">Sea</a>
-<a href="/uv/">UV</a>
-<a href="/storm-charles/">Storm Charles</a>
-<a href="/how-it-works/">How it works</a>
-<a href="/use-with-ai/">Use with AI</a>
-</nav>
-</div></header>
-<main class="wrap">
-<h1>Weather warnings</h1>
-<p class="lede">IPMA issues weather warnings for 18 mainland districts, for areas of Madeira and for the groups of islands of the Azores, at four levels: green, yellow, orange and red. This page draws the warnings in PrompTugal.news's latest copy of IPMA's file. It can be behind IPMA; check <a href="https://www.ipma.pt">ipma.pt</a> before acting on anything.</p>
-<div data-ipma="warnings">
-<p class="status loading">This page needs JavaScript: it reads the warnings from data.promptugal.news. Without it, see <a href="https://www.ipma.pt">ipma.pt</a>.</p>
-</div>
+<body data-sources="ipma-warnings ipma-fire-risk meteoalarm-pt">
+<!--HEADER-->
+<main id="main">
+<h1>Warnings</h1>
+<p class="lede">IPMA issues weather warnings for the 18 mainland districts, four areas of Madeira and the three island groups of the Azores, at four levels: green, yellow, orange and red. This page draws the warnings in PrompTugal.news's latest copy of IPMA's file. It can be behind IPMA: check <a href="https://www.ipma.pt/en/otempo/prev-sam/">ipma.pt</a> before acting on anything.</p>
+<noscript><p class="status fail">This page draws IPMA's data with JavaScript in your browser. Without it nothing can be shown here; see <a href="https://www.ipma.pt/en/otempo/prev-sam/">ipma.pt</a>.</p></noscript>
 
-<h2>MeteoAlarm's feed for Portugal</h2>
-<p>MeteoAlarm publishes Portugal's warnings as a CAP feed. PrompTugal.news collects it too; here are its records as read.</p>
-<div data-ipma="meteoalarm">
-<p class="status loading">This part needs JavaScript.</p>
-</div>
+<section aria-labelledby="map-h">
+<h2 id="map-h">Warnings by area</h2>
+<div id="warnings-block"><p class="status loading">Reading IPMA's warnings from data.promptugal.news...</p></div>
+</section>
+
+<section aria-labelledby="tl-h">
+<h2 id="tl-h">Timeline of warnings</h2>
+<p class="note">One row per area and type of warning, in force now or later. IPMA's times are Portugal local time without a time zone, and are shown as IPMA gives them. The first spell of each warning starts at the time IPMA issued its file, not at the real onset.</p>
+<div id="timeline"><p class="status loading">Reading IPMA's warnings from data.promptugal.news...</p></div>
+</section>
+
+<section aria-labelledby="list-h">
+<h2 id="list-h" tabindex="-1">Every warning, with IPMA's text</h2>
+<div id="list"><p class="status loading">Reading IPMA's warnings from data.promptugal.news...</p></div>
+</section>
+
+<section aria-labelledby="runs-h">
+<h2 id="runs-h">When the collector read IPMA's file</h2>
+<p class="note">PrompTugal.news's collector logs each run in reads.json: whether the read worked and whether IPMA's file had changed. It holds no past warnings.</p>
+<div id="runs"><p class="status loading">Reading the collector's log from data.promptugal.news...</p></div>
+</section>
+
+<section aria-labelledby="meteoalarm-h">
+<h2 id="meteoalarm-h">Context: MeteoAlarm's feed for Portugal</h2>
+<p class="note">MeteoAlarm (EUMETNET) republishes Portugal's warnings as CAP messages. They come from IPMA, the national weather service, and are shown here as context beside IPMA's own file, not as a second source of truth. MeteoAlarm's times are UTC.</p>
+<div id="meteoalarm"><p class="status loading">Reading MeteoAlarm's feed from data.promptugal.news...</p></div>
+</section>
 </main>
-<footer class="site"><div class="wrap">
-<p><strong>Not a warning service.</strong> For warnings and safety, follow IPMA (<a href="https://www.ipma.pt">ipma.pt</a>) and ANEPC. Weather data: IPMA, via <a href="https://data.promptugal.news">data.promptugal.news</a>. This site is not IPMA's and is not official.</p>
-<p>Version __VERSION__ · Made by the <a href="https://github.com/AgentiCCells/AgentiCCells__Site__Factory">AgentiCCells site factory</a> · Code Apache-2.0, text CC BY 4.0 · No ads, no tracking.</p>
-</div></footer>
+<!--FOOTER-->
+<script type="module" src="/assets/js/pages/warnings.js"></script>
 </body>
 </html>

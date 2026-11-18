@@ -3,44 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Observations | IPMA data, drawn</title>
-<meta name="description" content="The latest hourly observation from each IPMA surface station, drawn on a map by air temperature, live from data.promptugal.news, with the read time.">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="IPMA data, drawn">
-<meta property="og:title" content="IPMA station observations, drawn">
-<meta property="og:description" content="The latest hourly reading from IPMA's surface stations, on a map, read live from data.promptugal.news.">
-<meta property="og:url" content="https://ipma-data.agenticcells.site/observations/">
-<meta name="twitter:card" content="summary">
-<link rel="stylesheet" href="/assets/site.css">
-<script src="/assets/ipma.js" defer></script>
+<title>Stations | IPMA data, drawn</title>
+<meta name="description" content="The latest hour's readings from IPMA's weather stations in mainland Portugal, Madeira and the Azores: temperature and wind on a map, and every measure in a sortable table, read live from data.promptugal.news.">
+<!--HEAD-->
 </head>
-<body>
-<p class="notice"><strong>Not a warning service.</strong> For warnings and safety, follow IPMA (<a href="https://www.ipma.pt">ipma.pt</a>) and ANEPC.</p>
-<header class="site"><div class="wrap">
-<a class="brand" href="/">IPMA data, drawn</a>
-<nav class="main" aria-label="Main">
-<a href="/">Portugal now</a>
-<a href="/warnings/">Warnings</a>
-<a href="/forecasts/">Forecasts</a>
-<a href="/observations/" aria-current="page">Observations</a>
-<a href="/fire-risk/">Fire risk</a>
-<a href="/sea/">Sea</a>
-<a href="/uv/">UV</a>
-<a href="/storm-charles/">Storm Charles</a>
-<a href="/how-it-works/">How it works</a>
-<a href="/use-with-ai/">Use with AI</a>
-</nav>
-</div></header>
-<main class="wrap">
-<h1>Station observations</h1>
-<p class="lede">The latest hourly reading from each of IPMA's surface weather stations: air temperature, wind, humidity, pressure and rain. Stations sometimes miss a reading; IPMA marks those with -99, and this page leaves them out rather than drawing them.</p>
-<div data-ipma="observations">
-<p class="status loading">This page needs JavaScript: it reads the observations from data.promptugal.news.</p>
-</div>
+<body data-sources="ipma-observations ipma-fire-risk">
+<!--HEADER-->
+<main id="main">
+<h1>Stations</h1>
+<p class="lede">IPMA's surface weather stations report every hour. This page shows the latest hour in PrompTugal.news's copy of IPMA's file: which stations reported, their temperature and wind on a map, and every measure in a table. Stations often report late, so the latest hour is the emptiest.</p>
+<noscript><p class="status fail">This page draws IPMA's data with JavaScript in your browser. Without it nothing can be shown here; see <a href="https://www.ipma.pt/en/otempo/obs.superficie/">ipma.pt</a>.</p></noscript>
+
+<section aria-labelledby="map-h">
+<h2 id="map-h">The latest hour on the map</h2>
+<div id="obs"><p class="status loading">Reading IPMA's station readings from data.promptugal.news...</p></div>
+</section>
+
+<section aria-labelledby="tbl-h">
+<h2 id="tbl-h">Every station</h2>
+<p class="note">Choose a column heading to sort by it; choose it again to reverse. Missing values read "none" and sort last.</p>
+<div id="table"><p class="status loading">Reading IPMA's station readings from data.promptugal.news...</p></div>
+</section>
+
+<section aria-labelledby="runs-h">
+<h2 id="runs-h">When the collector read IPMA's file</h2>
+<div id="runs"><p class="status loading">Reading the collector's log from data.promptugal.news...</p></div>
+</section>
 </main>
-<footer class="site"><div class="wrap">
-<p><strong>Not a warning service.</strong> For warnings and safety, follow IPMA (<a href="https://www.ipma.pt">ipma.pt</a>) and ANEPC. Weather data: IPMA, via <a href="https://data.promptugal.news">data.promptugal.news</a>. This site is not IPMA's and is not official.</p>
-<p>Version __VERSION__ · Made by the <a href="https://github.com/AgentiCCells/AgentiCCells__Site__Factory">AgentiCCells site factory</a> · Code Apache-2.0, text CC BY 4.0 · No ads, no tracking.</p>
-</div></footer>
+<!--FOOTER-->
+<script type="module" src="/assets/js/pages/observations.js"></script>
 </body>
 </html>

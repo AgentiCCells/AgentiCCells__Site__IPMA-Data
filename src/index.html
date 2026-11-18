@@ -3,16 +3,52 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>IPMA data, drawn</title>
-<meta name="description" content="Portugal's public weather data from IPMA, drawn live from data.promptugal.news, with the Storm Charles archive. Not a warning service: follow IPMA.">
+<title>Portugal now | IPMA data, drawn</title>
+<meta name="description" content="IPMA's weather warnings for Portugal on a map, the next days' forecast for Lisboa, Porto, Faro and Funchal, and when each IPMA file was last read, drawn live in your browser from data.promptugal.news. Not a warning service.">
 <!--HEAD-->
 </head>
-<body data-sources="ipma-warnings ipma-city-forecasts">
+<body data-sources="ipma-warnings ipma-city-forecasts ipma-observations ipma-fire-risk ipma-sea ipma-uv meteoalarm-pt">
 <!--HEADER-->
 <main id="main">
-<h1>IPMA data, drawn</h1>
-<p class="lede">Portugal's public weather data from IPMA, drawn live from data.promptugal.news, with the Storm Charles archive.</p>
+<h1>Portugal now</h1>
+<p class="lede">IPMA's warnings, forecasts and readings, read live in your browser from data.promptugal.news. Every figure is IPMA's, and each box says when it was read. This page can be behind IPMA: check <a href="https://www.ipma.pt">ipma.pt</a> before acting on anything.</p>
+<noscript><p class="status fail">This page draws IPMA's data with JavaScript in your browser. Without it nothing can be shown here; see <a href="https://www.ipma.pt">ipma.pt</a>.</p></noscript>
+
+<section aria-labelledby="w-h">
+<h2 id="w-h">Warnings by area</h2>
+<div id="warnings-block"><p class="status loading">Reading IPMA's warnings from data.promptugal.news...</p></div>
+</section>
+
+<section aria-labelledby="fc-h">
+<h2 id="fc-h">Forecast for four places</h2>
+<p class="note">IPMA's daily forecast for Lisboa, Porto, Faro and Funchal. All 35 places are on the <a href="/forecasts/">Forecasts</a> page.</p>
+<div id="forecast"><p class="status loading">Reading IPMA's forecasts from data.promptugal.news...</p></div>
+</section>
+
+<section aria-labelledby="w-table-h">
+<h2 id="w-table-h" tabindex="-1">Warnings as a table</h2>
+<div id="warnings-table"><p class="status loading">Reading IPMA's warnings from data.promptugal.news...</p></div>
+</section>
+
+<section aria-labelledby="st-h">
+<h2 id="st-h">Every source, as last read</h2>
+<p class="note">When PrompTugal.news's collector last read each file from IPMA (and MeteoAlarm). Fresh: read in the last 3 hours. Stale: 3 to 24 hours. Old: more than 24 hours, so the figures may no longer hold.</p>
+<div class="panel"><ul class="status-list" id="status"><li><span>All sources</span><span class="muted">Reading from data.promptugal.news...</span></li></ul></div>
+</section>
+
+<section aria-labelledby="pages-h">
+<h2 id="pages-h">Each source, drawn</h2>
+<ul class="page-links">
+<li><a href="/warnings/"><strong>Warnings</strong><span>The map, a timeline by area and type, each warning's text, and MeteoAlarm's feed as context.</span></a></li>
+<li><a href="/forecasts/"><strong>Forecasts</strong><span>Five days for 35 places: temperature range, chance of rain, weather and wind.</span></a></li>
+<li><a href="/observations/"><strong>Stations</strong><span>The latest hour's readings from IPMA's stations, on a map and in a table.</span></a></li>
+<li><a href="/fire-risk/"><strong>Fire risk</strong><span>IPMA's fire risk class for 278 municipalities, for three days.</span></a></li>
+<li><a href="/sea/"><strong>Sea</strong><span>Wave heights and sea temperature for 12 coastal places.</span></a></li>
+<li><a href="/uv/"><strong>UV</strong><span>The UV index by place and day, in the WHO bands.</span></a></li>
+</ul>
+</section>
 </main>
 <!--FOOTER-->
+<script type="module" src="/assets/js/pages/home.js"></script>
 </body>
 </html>

@@ -126,14 +126,16 @@ export function loading(el, what) {
 export function failure(el, what, result, ipmaPage) {
   el.replaceChildren(h('div', { class: 'status fail', role: 'alert' },
     h('strong', {}, `Could not read ${what}. `),
-    `${result?.error || 'unknown error'}. Nothing is shown in its place: this page does not guess. `,
+    `${(e => e.charAt(0).toUpperCase() + e.slice(1))(result?.error || 'unknown error')}. Nothing is shown in its place: this page does not guess. `,
     result?.url ? h('a', { href: result.url }, 'The file') : null, result?.url ? '. ' : null,
     ipmaPage ? h('span', {}, 'See IPMA directly: ', h('a', { href: ipmaPage }, ipmaPage.replace(/^https?:\/\//, '')), '.') : null));
 }
 
 // The provenance box beside every chart: IPMA as the source, the read time (and how stale),
 // the source card's terms, and links to the files. src is a loadSource() result.
-export function provenance(src, { note } = {}) {
+// Options: note (a line under the box), pageLabel (the link text for latest.provenance.page;
+// "IPMA page" unless given, e.g. "MeteoAlarm page").
+export function provenance(src, { note, pageLabel = 'IPMA page' } = {}) {
   const L = src.latest?.ok ? src.latest.data : null;
   const C = src.card?.ok ? src.card.data : null;
   const u = urls(src.id);
@@ -142,7 +144,7 @@ export function provenance(src, { note } = {}) {
   const terms = C?.terms?.summary || L?.provenance?.terms;
   const publisher = C?.publisher || 'IPMA, Instituto Português do Mar e da Atmosfera';
   return h('aside', { class: `prov prov-${st.level}`, 'aria-label': 'Source and terms' },
-    h('p', {}, h('strong', {}, 'Source: '), publisher, L?.provenance?.page ? [' (', h('a', { href: L.provenance.page }, 'IPMA page'), ')'] : null,
+    h('p', {}, h('strong', {}, 'Source: '), publisher, L?.provenance?.page ? [' (', h('a', { href: L.provenance.page }, pageLabel), ')'] : null,
       ', collected by PrompTugal.news and read live from ', h('a', { href: u.page }, 'data.promptugal.news'), '.'),
     h('p', {}, h('strong', {}, 'Read: '), readAt ? fmtUTC(readAt) : 'unknown', ' ', h('span', { class: `age age-${st.level}` }, `(${st.text})`)),
     h('p', {}, h('strong', {}, 'Terms: '), terms || h('em', {}, 'the source card could not be read; see the card before reuse'),
@@ -158,13 +160,19 @@ export function runStrip(readsResult) {
   if (!runs.length) return h('p', { class: 'status' }, 'No collector runs recorded yet.');
   const w = 14, gap = 4, H = 26;
   const svg = s('svg', { viewBox: `0 0 ${runs.length * (w + gap)} ${H}`, width: runs.length * (w + gap), height: H, role: 'img', 'aria-label': `${runs.length} collector runs, oldest on the left` });
+  // changed is true, false, or the string "first read" on the very first run (data notes, round 1):
+  // only true means the bytes changed.
   runs.forEach((r, i) => {
-    const changed = (r.reads || []).some(x => x.changed);
-    const cls = r.failed ? 'run-fail' : changed ? 'run-changed' : 'run-same';
+    const changed = (r.reads || []).some(x => x.changed === true);
+    const first = !changed && (r.reads || []).some(x => x.changed === 'first read');
+    const cls = r.failed ? 'run-fail' : changed ? 'run-changed' : first ? 'run-first' : 'run-same';
     const t = s('rect', { x: i * (w + gap), y: 2, width: w, height: H - 4, rx: 3, class: cls });
-    t.append(s('title', {}, `${fmtUTC(r.at)}: ${r.ok} read ok, ${r.failed} failed${changed ? ', data changed' : ', data unchanged'}`));
+    t.append(s('title', {}, `${fmtUTC(r.at)}: ${r.ok} read ok, ${r.failed} failed${changed ? ', data changed' : first ? ', first read' : ', data unchanged'}`));
     svg.append(t);
   });
-  return h('figure', { class: 'runs' }, svg, h('figcaption', {}, `The collector's last ${runs.length} runs (from reads.json), oldest first. `,
-    h('span', { class: 'key run-changed' }), ' new data ', h('span', { class: 'key run-same' }), ' unchanged ', h('span', { class: 'key run-fail' }), ' a read failed.'));
+  const ul = h('ul', { class: 'sr-runs', style: 'position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)' },
+    runs.map(r => { const c = (r.reads || []).some(x => x.changed === true); const f = !c && (r.reads || []).some(x => x.changed === 'first read');
+      return h('li', {}, `${fmtUTC(r.at)}: ${r.ok} read ok, ${r.failed} failed, ${c ? 'data changed' : f ? 'first read' : 'data unchanged'}`); }));
+  return h('figure', { class: 'runs' }, h('div', { class: 'table-wrap' }, svg), ul, h('figcaption', {}, `The collector's last ${runs.length} runs (from reads.json), oldest first. `,
+    h('span', { class: 'key run-changed' }), ' new data ', h('span', { class: 'key run-same' }), ' unchanged ', h('span', { class: 'key run-first' }), ' first read ', h('span', { class: 'key run-fail' }), ' a read failed.'));
 }
